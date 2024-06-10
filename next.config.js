@@ -11,6 +11,9 @@ const nextConfig = {
   prettier: {
     ignoreDuringBuilds: true,
   },
+  experimental: {
+    missingSuspenseWithCSRBailout: false,
+  },
 };
 
 module.exports = withSvgr(nextConfig);
