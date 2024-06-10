@@ -35,6 +35,7 @@
       "plugins": ["@typescript-eslint/eslint-plugin"],
       "extends": ["plugin:@typescript-eslint/recommended", "prettier"],
       "rules": {
+        "no-unused-vars": "warn",
         "@typescript-eslint/explicit-function-return-type": "off",
         "@typescript-eslint/explicit-module-boundary-types": "off",
         "no-use-before-define": [0],

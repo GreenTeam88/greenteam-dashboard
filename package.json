@@ -1,6 +1,6 @@
 {
-  "name": "furnies",
-  "description": "Furnies project",
+  "name": "greenteam-dashboard",
+  "description": "GreenTeam Dashboard project",
   "version": "1.0.0",
   "private": true,
   "license": "MIT",
@@ -19,9 +19,37 @@
     ]
   },
   "dependencies": {
+    "@hookform/resolvers": "3.4.2",
+    "@newhighsco/next-plugin-svgr": "3.0.129",
+    "@radix-ui/react-checkbox": "1.0.4",
+    "@radix-ui/react-dialog": "1.0.5",
+    "@radix-ui/react-dropdown-menu": "2.0.6",
+    "@radix-ui/react-label": "2.0.2",
+    "@radix-ui/react-popover": "1.0.7",
+    "@radix-ui/react-select": "2.0.0",
+    "@radix-ui/react-separator": "1.0.3",
+    "@radix-ui/react-slot": "1.0.2",
+    "@radix-ui/react-tooltip": "1.0.7",
+    "@svgr/webpack": "8.1.0",
+    "@tanstack/react-table": "8.17.3",
+    "class-variance-authority": "0.7.0",
+    "clsx": "2.1.1",
+    "cmdk": "1.0.0",
+    "date-fns": "3.6.0",
+    "lucide-react": "0.378.0",
     "next": "14.1.1",
+    "next-react-svg": "1.2.0",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-day-picker": "8.10.1",
+    "react-dom": "18.2.0",
+    "react-dropzone": "14.2.3",
+    "react-hook-form": "7.51.5",
+    "react-select": "5.8.0",
+    "sonner": "1.4.41",
+    "tailwind-merge": "2.3.0",
+    "tailwindcss-animate": "1.0.7",
+    "zod": "3.23.8",
+    "zustand": "4.5.2"
   },
   "devDependencies": {
     "@commitlint/cli": "18.6.1",
@@ -32,6 +60,7 @@
     "@types/react-dom": "18.2.19",
     "@typescript-eslint/eslint-plugin": "7.1.0",
     "@typescript-eslint/parser": "7.1.0",
+    "autoprefixer": "10.4.19",
     "eslint": "8.57.0",
     "eslint-config-next": "14.1.1",
     "eslint-config-prettier": "9.1.0",
@@ -40,8 +69,10 @@
     "eslint-plugin-prettier": "5.1.3",
     "husky": "9.0.11",
     "lint-staged": "15.2.2",
+    "postcss": "8.4.38",
     "prettier": "3.2.5",
     "prettier-plugin-sort-json": "3.1.0",
+    "tailwindcss": "3.4.3",
     "typescript": "5.3.3"
   }
 }
