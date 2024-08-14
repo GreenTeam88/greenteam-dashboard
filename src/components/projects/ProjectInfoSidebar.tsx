@@ -1,11 +1,9 @@
 'use client';
 
-import { X } from 'lucide-react';
 import * as React from 'react';
 
 import { CustomToolTip } from '@/components/custom/CustomToolTip';
-import { Button } from '@/components/ui/button';
-import { closeModal } from '@/store/ModalStore';
+import InfoSidebar from '@/components/InfoSidebar';
 import { Project } from '@/types';
 
 interface ProjectInfoSidebarProps {
@@ -29,16 +27,13 @@ export default function ProjectInfoSidebar({ data }: ProjectInfoSidebarProps) {
   }
   // console.log(data);
   return (
-    <aside className={'absolute bg-white h-full w-[400px] right-0 flex flex-col'}>
-      <div className={'py-5 px-10 flex justify-between items-center border-b border-b-borderBlack10'}>
-        <h4 className={'text-xl leading-6'}>Project details</h4>
-        <X onClick={closeModal} className={'cursor-pointer'} />
-      </div>
-      <div className={'flex flex-col py-6 px-10 gap-y-6 overflow-y-auto'}>
+    <InfoSidebar text={'project'} onDelete={() => console.log('Project deleted!')}>
+      <InfoSidebar.SidebarHeader title={'Project details'} />
+      <InfoSidebar.SidebarContent>
         <div className={'flex flex-col'}>
           {Object.keys(data).map((key) => {
             return (
-              <div key={key} className={'flex justify-between items-center py-6 border-b border-b-borderBlack10'}>
+              <InfoSidebar.SidebarContentItemDivider key={key}>
                 <h5 className={'text-textBlack font-semibold text-base leading-5'}>{key}</h5>
                 {key === 'Status' ? (
                   <div
@@ -47,24 +42,14 @@ export default function ProjectInfoSidebar({ data }: ProjectInfoSidebarProps) {
                     {data[key]}
                   </div>
                 ) : (
-                  // @ts-ignore
+                  // @ts-expect-error text => string
                   <CustomToolTip triggerClassName={'text-textBlack text-base leading-5'} text={data[key]} limit={20} />
                 )}
-              </div>
+              </InfoSidebar.SidebarContentItemDivider>
             );
           })}
         </div>
-        <div className={'grid grid-cols-2 gap-x-4 items-center justify-between'}>
-          <Button
-            className={'py-2.5 px-5 text-sm border rounded-lg border-borderSecondaryOrange text-textSecondaryOrange'}
-          >
-            Delete project
-          </Button>
-          <Button className={'py-2.5 px-5 text-sm border rounded-lg text-textBlack border-borderBlack10'}>
-            Edit project
-          </Button>
-        </div>
-      </div>
-    </aside>
+      </InfoSidebar.SidebarContent>
+    </InfoSidebar>
   );
 }

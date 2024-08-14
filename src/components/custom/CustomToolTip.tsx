@@ -9,6 +9,7 @@ interface CustomToolTipProps {
 }
 
 export function CustomToolTip({ text, limit = 10, triggerClassName, textClassName }: CustomToolTipProps) {
+  if (!text) return null;
   if (limit >= text.length) return text;
   return (
     <TooltipProvider delayDuration={400}>

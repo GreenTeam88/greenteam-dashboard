@@ -22,7 +22,7 @@ export default function RememberFor({ value, onChange }: RememberForProps) {
           Remember for 30 Days
         </label>
       </div>
-      <Link href={'/auth/login'} className={'font-semibold text-sm text-textSecondaryOrange'}>
+      <Link href={'/auth/forgot-password'} className={'font-semibold text-sm text-textSecondaryOrange'}>
         Forgot password
       </Link>
     </div>

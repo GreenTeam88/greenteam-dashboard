@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 import useModalStore from '@/store/ModalStore';
 
 export default function CustomModal() {
-  const { isOpen, closeModal, content } = useModalStore();
+  const { isOpen, content } = useModalStore();
 
   useEffect(() => {
     if (isOpen) {

@@ -12,6 +12,7 @@ import { ReactComponent as Logo } from '@/assets/icons/Logo.svg';
 import { ReactComponent as PersonIcon } from '@/assets/icons/PersonIcon.svg';
 import { ReactComponent as PlanIcon } from '@/assets/icons/PlanIcon.svg';
 import { ReactComponent as QuestionIcon } from '@/assets/icons/QuestionIcon.svg';
+import { ReactComponent as SubcontractorIcon } from '@/assets/icons/SubcontractorIcon.svg';
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -19,10 +20,16 @@ export default function Sidebar() {
     { text: 'Projects', href: '/dashboard/projects', icon: FolderIcon, active: pathname.includes('/projects') },
     { text: 'Clients', href: '/dashboard/clients', icon: PersonIcon, active: pathname.includes('/clients') },
     { text: 'Quotations', href: '/dashboard/quotations', icon: LayersIcon, active: pathname.includes('/quotations') },
-    { text: 'Invoicing', href: '/', icon: DocumentIcon, active: pathname.includes('/invoicing') },
-    { text: 'Pricelist', href: '/', icon: EuroIcon, active: pathname.includes('/pricelist') },
-    { text: 'Planning', href: '/', icon: PlanIcon, active: pathname.includes('/planning') },
-    { text: 'FAQ', href: '/', icon: QuestionIcon, active: pathname.includes('/faq') },
+    { text: 'Invoicing', href: '/dashboard/invoicing', icon: DocumentIcon, active: pathname.includes('/invoicing') },
+    { text: 'Pricelist', href: '/dashboard/pricelist', icon: EuroIcon, active: pathname.includes('/pricelist') },
+    {
+      text: 'Subcontractors',
+      href: '/dashboard/subcontractors',
+      icon: SubcontractorIcon,
+      active: pathname.includes('/subcontractors'),
+    },
+    { text: 'Planning', href: '/dashboard/planning', icon: PlanIcon, active: pathname.includes('/planning') },
+    { text: 'FAQ', href: '/dashboard/faqs', icon: QuestionIcon, active: pathname.includes('/faqs') },
   ];
   return (
     <aside className={'bg-white flex flex-col h-full w-[200px] border-r border-r-borderBlack10'}>

@@ -24,8 +24,8 @@ export default function CustomCombobox({
   placeholder,
   data,
   notFoundText = 'Not found.',
-  popoverBtnClassName,
-  popoverContentClassName,
+  popoverBtnClassName = '!m-0 w-full text-sm text-textBlack font-[400] border-borderGray rounded-lg py-3 px-5 h-auto',
+  popoverContentClassName = 'w-[600px]',
 }: CustomComboboxProps) {
   const [open, setOpen] = React.useState(false);
   // const [value, setValue] = React.useState('');
@@ -45,29 +45,30 @@ export default function CustomCombobox({
           <ChevronDown className="ml-2 h-4 w-4 shrink-0" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className={cn('w-[200px] p-0 bg-white', popoverContentClassName)}>
+      <PopoverContent className={cn('popover-content-width-full p-0 bg-white', popoverContentClassName)}>
         <Command>
           <CommandInput placeholder={placeholder} />
           <CommandList>
             <CommandEmpty>{notFoundText}</CommandEmpty>
             <CommandGroup>
-              {data.map((d) => (
-                <CommandItem
-                  className={cn(
-                    value === d.value && 'bg-bgLightGreen text-textGreenPrimary font-medium',
-                    'hover:bg-bgBlack5'
-                  )}
-                  key={d.value}
-                  value={d.value}
-                  onSelect={() => {
-                    setValue(d.value);
-                    setOpen(false);
-                  }}
-                >
-                  <Check className={cn('mr-2 h-4 w-4', value === d.value ? 'opacity-100' : 'opacity-0')} />
-                  {d.label}
-                </CommandItem>
-              ))}
+              {data &&
+                data.map((d) => (
+                  <CommandItem
+                    className={cn(
+                      value === d.value && 'bg-bgLightGreen text-textGreenPrimary font-medium',
+                      'hover:bg-bgBlack5'
+                    )}
+                    key={d.value}
+                    value={d.value}
+                    onSelect={() => {
+                      setValue(d.value);
+                      setOpen(false);
+                    }}
+                  >
+                    <Check className={cn('mr-2 h-4 w-4', value === d.value ? 'opacity-100' : 'opacity-0')} />
+                    {d.label}
+                  </CommandItem>
+                ))}
             </CommandGroup>
           </CommandList>
         </Command>

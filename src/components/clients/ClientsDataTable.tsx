@@ -1,9 +1,10 @@
 'use client';
 
-import { ColumnDef } from '@tanstack/react-table';
+import { ColumnDef, Row } from '@tanstack/react-table';
 import { MoreHorizontal } from 'lucide-react';
 import * as React from 'react';
 
+import ClientInfoSidebar from '@/components/clients/ClientInfoSidebar';
 import CustomDataTable from '@/components/custom/CustomDataTable';
 import { CustomToolTip } from '@/components/custom/CustomToolTip';
 import { Button } from '@/components/ui/button';
@@ -65,6 +66,25 @@ export default function ClientsDataTable({ activeFilter, setActiveFilter }: Clie
       color: 'text-statusRed',
     },
   ];
+
+  function getDataFromRow(row: Row<Client>) {
+    const obj: Omit<Client, 'id'> = {
+      'Client Type': row.getValue('Client Type'),
+      'Full name': row.getValue('Full name'),
+      Address: row.getValue('Address'),
+      'House number': row.getValue('House number'),
+      'Extra address info': row.getValue('Extra address info'),
+      'Postal code': row.getValue('Postal code'),
+      City: row.getValue('City'),
+      Country: row.getValue('Country'),
+      Email: row.getValue('Email'),
+      'Telephone 1': row.getValue('Telephone 1'),
+      'Telephone 2': row.getValue('Telephone 2'),
+    };
+
+    return obj;
+  }
+
   const clientsColumns: ColumnDef<Client>[] = [
     {
       id: 'select',
@@ -142,6 +162,11 @@ export default function ClientsDataTable({ activeFilter, setActiveFilter }: Clie
                   <DropdownMenuItem
                     key={item.text}
                     className={`${item.color} hover:bg-bgLightGreenHover hover:font-[500] duration-200 text-sm`}
+                    onClick={() => {
+                      if (item.text === 'Details') {
+                        openModal(<ClientInfoSidebar id={+row.id} data={getDataFromRow(row)} />);
+                      }
+                    }}
                   >
                     {item.text}
                   </DropdownMenuItem>

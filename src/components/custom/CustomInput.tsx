@@ -5,8 +5,8 @@ interface CustomInputProps {
   type: string;
   placeholder: string;
   className?: string;
-  value?: string;
-  onChange?: (value: string) => void;
+  value?: string | number;
+  onChange?: (value: string | number) => void;
 }
 
 export default function CustomInput({ type, placeholder, className, value, onChange }: CustomInputProps) {

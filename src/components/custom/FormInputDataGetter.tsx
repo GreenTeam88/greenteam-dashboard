@@ -3,9 +3,9 @@
 import { memo } from 'react';
 
 import CustomInput from '@/components/custom/CustomInput';
+import CustomPasswordInput from '@/components/custom/CustomPasswordInput';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { PasswordInput } from '@/components/ui/password-input';
-import CustomPasswordInput from "@/components/custom/CustomPasswordInput";
 
 interface FormInputDataGetterProps {
   form: any;
@@ -13,9 +13,17 @@ interface FormInputDataGetterProps {
   label: string;
   placeholder: string;
   isPassword?: boolean;
+  type?: 'text' | 'email' | 'number' | 'password' | 'tel';
 }
 
-function FormInputDataGetter({ form, name, label, placeholder, isPassword = false }: FormInputDataGetterProps) {
+function FormInputDataGetter({
+  form,
+  name,
+  label,
+  placeholder,
+  isPassword = false,
+  type = 'text',
+}: FormInputDataGetterProps) {
   return (
     <FormField
       control={form.control}
@@ -44,7 +52,7 @@ function FormInputDataGetter({ form, name, label, placeholder, isPassword = fals
                 className={
                   '!m-0 !ring-transparent !outline-transparent h-auto border py-3 px-5 rounded-lg border-borderGray text-sm text-textBlack40'
                 }
-                type={'text'}
+                type={type}
                 placeholder={placeholder}
               />
             )}

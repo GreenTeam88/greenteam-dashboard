@@ -60,7 +60,7 @@ export default function LoginForm() {
 
         <h5 className={'text-center text-base text-textBlack80'}>
           Don’t have an account?
-          <Link className={'font-semibold ml-1 text-textSecondaryOrange'} href={'/auth/login'}>
+          <Link className={'font-semibold ml-1 text-textSecondaryOrange'} href={'/auth/register'}>
             Sign up
           </Link>
         </h5>
