@@ -4,7 +4,7 @@ import { Inter } from 'next/font/google';
 import { Toaster } from 'sonner';
 
 import CustomModal from '@/components/custom/CustomModal';
-
+import QueryProvider from '@/providers/QueryProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -13,7 +13,7 @@ export default function RootLayout({ children }: { auth: React.ReactNode; childr
     <html lang="en">
       <body className={inter.className}>
         <CustomModal />
-        {children}
+        <QueryProvider>{children}</QueryProvider>
         <Toaster duration={2500} />
       </body>
     </html>

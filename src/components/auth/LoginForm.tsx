@@ -10,6 +10,7 @@ import RememberFor from '@/components/auth/RememberFor';
 import CreateButton from '@/components/custom/CreateButton';
 import FormInputDataGetter from '@/components/custom/FormInputDataGetter';
 import { Form } from '@/components/ui/form';
+import { useLogin } from '@/queryHooks/auth';
 
 const loginFormSchema = z.object({
   email: z.string({ message: 'Email is required' }).email({ message: 'Email is not valid' }),
@@ -18,6 +19,7 @@ const loginFormSchema = z.object({
 });
 
 export default function LoginForm() {
+  const { mutate } = useLogin();
   const form = useForm<z.infer<typeof loginFormSchema>>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -28,7 +30,7 @@ export default function LoginForm() {
   });
   const onInvalid = (errors: any) => console.error(errors);
   async function onSubmit(values: z.infer<typeof loginFormSchema>) {
-    await loginAction(values);
+    mutate({ email: values.email, password: values.password });
   }
   return (
     <Form {...form}>

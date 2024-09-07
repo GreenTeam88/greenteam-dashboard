@@ -1,5 +1,5 @@
 import { ReactComponent as LogoWhite } from '@/assets/icons/LogoWhite.svg';
-import RegisterForm from "@/components/auth/RegisterForm";
+import RegisterForm from '@/components/auth/RegisterForm';
 
 export default async function Home() {
   return (

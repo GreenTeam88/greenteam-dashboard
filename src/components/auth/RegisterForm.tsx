@@ -10,6 +10,7 @@ import RememberFor from '@/components/auth/RememberFor';
 import CreateButton from '@/components/custom/CreateButton';
 import FormInputDataGetter from '@/components/custom/FormInputDataGetter';
 import { Form } from '@/components/ui/form';
+import { useRegister } from '@/queryHooks/auth';
 
 const registerFormSchema = z.object({
   firstName: z.string({ message: 'First name is required' }),
@@ -20,17 +21,25 @@ const registerFormSchema = z.object({
 });
 
 export default function RegisterForm() {
+  const { mutate } = useRegister();
   const form = useForm<z.infer<typeof registerFormSchema>>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {},
   });
   const onInvalid = (errors: any) => console.error(errors);
   async function onSubmit(values: z.infer<typeof registerFormSchema>) {
-    await loginAction(values);
+    // await loginAction(values);
+    mutate({
+      email: values.email,
+      password: values.password,
+    });
   }
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit, onInvalid)} className={'w-[450px] h-full max-w-[90%] flex flex-col gap-y-8'}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit, onInvalid)}
+        className={'w-[450px] h-full max-w-[90%] flex flex-col gap-y-8'}
+      >
         <div className={'flex flex-col gap-y-2 items-center'}>
           <h2 className={'font-semibold text-[2rem] leading-[3rem]'}>Register</h2>
           <h5 className={'text-textBlack80 text-base'}>Welcome to Greenteam! Please enter your details</h5>
