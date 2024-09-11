@@ -5,12 +5,10 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { loginAction } from '@/app/actions/loginAction';
 import RememberFor from '@/components/auth/RememberFor';
 import CreateButton from '@/components/custom/CreateButton';
 import FormInputDataGetter from '@/components/custom/FormInputDataGetter';
 import { Form } from '@/components/ui/form';
-import { useRegister } from '@/queryHooks/auth';
 
 const registerFormSchema = z.object({
   firstName: z.string({ message: 'First name is required' }),
