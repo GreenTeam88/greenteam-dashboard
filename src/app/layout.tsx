@@ -1,3 +1,5 @@
+'use client';
+
 import './globals.css';
 
 import { Inter } from 'next/font/google';
@@ -6,6 +8,7 @@ import { Toaster } from 'sonner';
 import CustomModal from '@/components/custom/CustomModal';
 import QueryProvider from '@/providers/QueryProvider';
 
+export const dynamic = 'force-dynamic';
 const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({ children }: { auth: React.ReactNode; children: React.ReactNode }) {
