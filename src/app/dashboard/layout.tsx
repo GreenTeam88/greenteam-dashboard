@@ -14,8 +14,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const { checkAuthClient } = useAuth();
   const { data: session, isSuccess } = checkAuthClient;
   useEffect(() => {
-    if (isSuccess && session) {
-      router.replace('/dashboard/projects');
+    if (isSuccess && !session) {
+      router.replace('/auth/login');
     }
   }, [isSuccess, session, router]);
   return (
