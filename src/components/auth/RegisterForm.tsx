@@ -9,6 +9,7 @@ import RememberFor from '@/components/auth/RememberFor';
 import CreateButton from '@/components/custom/CreateButton';
 import FormInputDataGetter from '@/components/custom/FormInputDataGetter';
 import { Form } from '@/components/ui/form';
+import { useAuth } from '@/queryHooks/auth';
 
 const registerFormSchema = z.object({
   firstName: z.string({ message: 'First name is required' }),
@@ -19,7 +20,8 @@ const registerFormSchema = z.object({
 });
 
 export default function RegisterForm() {
-  const { mutate } = useRegister();
+  const { register } = useAuth();
+  const { mutate } = register;
   const form = useForm<z.infer<typeof registerFormSchema>>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {},
