@@ -5,12 +5,11 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { loginAction } from '@/app/actions/loginAction';
 import RememberFor from '@/components/auth/RememberFor';
 import CreateButton from '@/components/custom/CreateButton';
 import FormInputDataGetter from '@/components/custom/FormInputDataGetter';
 import { Form } from '@/components/ui/form';
-import { useLogin } from '@/queryHooks/auth';
+import { useAuth } from '@/queryHooks/auth';
 
 const loginFormSchema = z.object({
   email: z.string({ message: 'Email is required' }).email({ message: 'Email is not valid' }),
@@ -19,7 +18,8 @@ const loginFormSchema = z.object({
 });
 
 export default function LoginForm() {
-  const { mutate } = useLogin();
+  const { login } = useAuth();
+  const { mutate, isPending } = login;
   const form = useForm<z.infer<typeof loginFormSchema>>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -56,7 +56,9 @@ export default function LoginForm() {
               value={form.getValues('rememberMe')}
               onChange={(value) => form.setValue('rememberMe', value)}
             />
-            <CreateButton type={'submit'}>Login</CreateButton>
+            <CreateButton className={'disabled:opacity-50'} disabled={isPending} type={'submit'}>
+              Login
+            </CreateButton>
           </div>
         </div>
 

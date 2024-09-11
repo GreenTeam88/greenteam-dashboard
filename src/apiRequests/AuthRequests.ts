@@ -1,5 +1,7 @@
 import { baseApiUrl } from '@/config/envConfig';
 
+export const dynamic = 'force-dynamic';
+
 interface ApiResponse {
   data?: any;
   error?: string;
@@ -32,9 +34,12 @@ export async function createUser(email: string, password: string): Promise<ApiRe
   }
 }
 
-export async function loginUser(email: string, password: string): Promise<ApiResponse> {
+interface LoginResponse {
+  message: string;
+}
+export async function loginUser(email: string, password: string): Promise<LoginResponse> {
   if (!email || !password) {
-    return { error: 'Email and password are required' };
+    throw new Error('Email and password are required');
   }
 
   const endpoint = `${baseApiUrl}/auth/login`;
@@ -47,15 +52,48 @@ export async function loginUser(email: string, password: string): Promise<ApiRes
       },
       body: JSON.stringify({ email, password }),
     });
-
-    if (!response.ok) {
-      return { error: 'An unexpected error occurred' };
-    }
-    //get cookie from response
-    // const cookie = response.headers.get('set-cookie');
     const data = await response.json();
-    return { data };
+    if (!data.success) {
+      throw new Error(data.message);
+    }
+    return {
+      message: data.data,
+    };
+  } catch (e: any) {
+    throw new Error(e?.message || 'An unexpected error occurred');
+  }
+}
+
+export async function checkAuthFn(): Promise<boolean> {
+  const endpoint = `${baseApiUrl}/auth/current`;
+  try {
+    const response = await fetch(endpoint, {
+      method: 'GET',
+      credentials: 'include',
+      cache: 'no-store',
+    });
+    const data = await response.json();
+    // console.log(data);
+    return data.success;
   } catch (e) {
-    return { error: 'An unexpected error occurred' };
+    return false;
+  }
+}
+
+export async function logoutUser(): Promise<boolean> {
+  const endpoint = `${baseApiUrl}/auth/logout`;
+  try {
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      credentials: 'include',
+      cache: 'no-store',
+    });
+    const data = await response.json();
+    if (!data.success) {
+      throw new Error(data.message);
+    }
+    return data.success;
+  } catch (e: any) {
+    throw new Error(e?.message || 'Unexpected error occurred');
   }
 }

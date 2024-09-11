@@ -14,7 +14,7 @@ export default function RootLayout({ children }: { auth: React.ReactNode; childr
       <body className={inter.className}>
         <CustomModal />
         <QueryProvider>{children}</QueryProvider>
-        <Toaster duration={2500} />
+        <Toaster duration={2500} richColors={true} />
       </body>
     </html>
   );

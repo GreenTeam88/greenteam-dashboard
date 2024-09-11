@@ -1,9 +1,23 @@
-import React from 'react';
+'use client';
+
+import { redirect, useRouter } from 'next/navigation';
+import React, { useEffect } from 'react';
 
 import Navbar from '@/components/Navbar';
 import Sidebar from '@/components/Sidebar';
+import { useAuth } from '@/queryHooks/auth';
+import { useUserStore } from '@/store/UserStore';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+  // const { isAuthenticated } = useUserStore();
+  const router = useRouter();
+  const { checkAuthClient } = useAuth();
+  const { data: session, isSuccess } = checkAuthClient;
+  useEffect(() => {
+    if (isSuccess && session) {
+      router.replace('/dashboard/projects');
+    }
+  }, [isSuccess, session, router]);
   return (
     <div className={'flex w-full h-full'}>
       <Sidebar />

@@ -1,12 +1,12 @@
 'use client';
 
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
 import { ReactComponent as BellIcon } from '@/assets/icons/BellIcon.svg';
 import { ReactComponent as ChevronDownIcon } from '@/assets/icons/ChevronDownIcon.svg';
 import { ReactComponent as SearchIcon } from '@/assets/icons/SearchIcon.svg';
 import userAvatar from '@/assets/userAvatar.png';
+import AvatarPopup from '@/components/account/AvatarPopup';
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -36,16 +36,17 @@ export default function Navbar() {
       <div>
         <div className={'flex gap-6 items-center'}>
           <BellIcon />
-          <div className={'flex gap-4'}>
-            <Image src={userAvatar} alt={'user avatar'} />
-            <div className={'flex flex-col'}>
-              <h5 className={'text-sm text-textBlack80'}>John Doe</h5>
-              <h6 className={'text-[0.75rem] leading-[1.125rem] text-textBlack40'}>Admin</h6>
-            </div>
-            <div className={'flex justify-center items-center'}>
-              <ChevronDownIcon />
-            </div>
-          </div>
+          {/*<div className={'flex gap-4'}>*/}
+          {/*  <Image src={userAvatar} alt={'user avatar'} />*/}
+          {/*  <div className={'flex flex-col'}>*/}
+          {/*    <h5 className={'text-sm text-textBlack80'}>John Doe</h5>*/}
+          {/*    <h6 className={'text-[0.75rem] leading-[1.125rem] text-textBlack40'}>Admin</h6>*/}
+          {/*  </div>*/}
+          {/*  <div className={'flex justify-center items-center'}>*/}
+          {/*    <ChevronDownIcon />*/}
+          {/*  </div>*/}
+          {/*</div>*/}
+          <AvatarPopup />
         </div>
       </div>
     </header>
