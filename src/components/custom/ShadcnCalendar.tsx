@@ -15,7 +15,7 @@ export default function ShadcnCalendar() {
                 <div
                   className={cn(
                     'h-[60px] flex items-center justify-center border border-[#E0E0E0]',
-                    j % 8 === 0 ? 'flex-[0.5]' : 'flex-1',
+                    j % 8 === 0 ? 'flex-[0.5]' : 'flex-1'
                   )}
                   key={j}
                 >
