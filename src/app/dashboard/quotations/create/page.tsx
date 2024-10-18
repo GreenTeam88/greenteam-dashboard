@@ -42,42 +42,40 @@ export default function Home() {
       quotationPrices: [],
     },
   });
-  const btns = [
-    {
-      id: 1,
-      icon: <EyeIcon />,
-      text: 'Preview',
-    },
-    {
-      id: 2,
-      icon: <SaveIcon />,
-      text: 'Draft',
-    },
-  ];
+
+  function onSubmit(values: z.infer<typeof quotationCreateFormSchema>) {
+    console.log(values);
+  }
+
   return (
     <div className={'bg-bgLightGreen w-full h-full p-5'}>
       <Form {...form}>
-        <form className={'w-full flex flex-col gap-y-6'}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className={'w-full flex flex-col gap-y-6'}>
           <div className={'flex justify-between items-center'}>
             <div className={'flex items-center gap-x-4'}>
-              {btns.map((btn) => {
-                return (
-                  <Button
-                    className={
-                      'py-2.5 px-5 gap-x-2.5 flex items-center justify-center rounded-lg border border-borderBlack10'
-                    }
-                    key={btn.text}
-                  >
-                    {btn.icon}
-                    <span className={'text-sm text-textBlack'}>{btn.text}</span>
-                  </Button>
-                );
-              })}
+              <Button
+                className={
+                  'py-2.5 px-5 gap-x-2.5 flex items-center justify-center rounded-lg border border-borderBlack10'
+                }
+                type="submit"
+              >
+                <EyeIcon />
+                <span className={'text-sm text-textBlack'}>Preview</span>
+              </Button>
+              <Button
+                className={
+                  'py-2.5 px-5 gap-x-2.5 flex items-center justify-center rounded-lg border border-borderBlack10'
+                }
+              >
+                <SaveIcon />
+                <span className={'text-sm text-textBlack'}>Draft</span>
+              </Button>
             </div>
             <CreateButton asChild={true}>
               <Link href={'/'}>Send</Link>
             </CreateButton>
           </div>
+
           <div className={'p-6 bg-white rounded-lg border flex flex-col gap-y-4 border-borderBlack10'}>
             <h3 className={'text-xl leading-6 text-textDarkBlack'}>Quotation</h3>
             <div className={'flex flex-col gap-y-4'}>
@@ -120,6 +118,7 @@ export default function Home() {
               <FormDateGetter form={form} name={'expireDate'} placeholder={'DD/MM/YYY'} label={'Expire date'} />
             </div>
           </div>
+
           <PriceTable form={form} />
         </form>
       </Form>
