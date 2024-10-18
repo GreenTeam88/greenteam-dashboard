@@ -1,7 +1,7 @@
 'use client';
 
 import { ReactComponent as LogoWhite } from '@/assets/icons/LogoWhite.svg';
-import ForgotPasswordForm from "@/components/auth/ForgotPasswordForm";
+import ForgotPasswordForm from '@/components/auth/ForgotPasswordForm';
 
 export default function Home() {
   return (

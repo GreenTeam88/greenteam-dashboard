@@ -15,10 +15,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { ThreeDotsDropDownMenu } from '@/constants';
 import { subcontractors } from '@/mockDatas/subcontractorsPageDatas';
 import { openModal } from '@/store/ModalStore';
 import { Subcontractor } from '@/types';
-import { ThreeDotsDropDownMenu } from "@/constants";
 
 export default function SubcontractorsDataTable() {
   type DataType = {

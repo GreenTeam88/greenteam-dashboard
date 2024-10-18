@@ -1,9 +1,10 @@
 'use client';
 
+import { MapPin } from 'lucide-react';
+import { memo } from 'react';
+
 import CustomInput from '@/components/custom/CustomInput';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { MapPin } from "lucide-react";
-import { memo } from "react";
 
 interface ClientCityGetterProps {
   form: any;

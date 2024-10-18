@@ -1,13 +1,13 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import CreateButton from '@/components/custom/CreateButton';
 import FormInputDataGetter from '@/components/custom/FormInputDataGetter';
 import { Form } from '@/components/ui/form';
-import Link from "next/link";
 
 const forgotPasswordSchema = z.object({
   email: z.string({ message: 'Email is required' }).email({ message: 'Email is not valid' }),

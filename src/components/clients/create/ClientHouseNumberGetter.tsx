@@ -1,8 +1,9 @@
 'use client';
 
+import { memo } from 'react';
+
 import CustomInput from '@/components/custom/CustomInput';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { memo } from "react";
 
 interface ClientHouseNumberGetterProps {
   form: any;

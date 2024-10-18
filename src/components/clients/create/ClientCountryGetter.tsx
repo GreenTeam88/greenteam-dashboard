@@ -1,10 +1,11 @@
 'use client';
 
+import { memo } from 'react';
+
 import CustomInput from '@/components/custom/CustomInput';
 import { CustomSelect } from '@/components/custom/CustomSelect';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { countries } from '@/mockDatas/clientCreateDatas';
-import { memo } from "react";
 
 interface ClientCountryGetterProps {
   form: any;
