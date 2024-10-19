@@ -9,7 +9,7 @@ interface QuestionInfoSidebarProps {
   data: Omit<FaqQuestion, 'id'>;
 }
 
-export default function QuestionInfoSidebar({ id, data }: QuestionInfoSidebarProps) {
+export default function QuestionInfoSidebar({ data }: QuestionInfoSidebarProps) {
   return (
     <InfoSidebar text={'question'} onDelete={() => console.log('Question deleted!')}>
       <InfoSidebar.SidebarHeader title={'Question details'} />
@@ -27,3 +27,4 @@ export default function QuestionInfoSidebar({ id, data }: QuestionInfoSidebarPro
     </InfoSidebar>
   );
 }
+// removed id from props

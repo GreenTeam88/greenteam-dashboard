@@ -5,7 +5,8 @@ import { memo } from 'react';
 import CustomInput from '@/components/custom/CustomInput';
 import CustomPasswordInput from '@/components/custom/CustomPasswordInput';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { PasswordInput } from '@/components/ui/password-input';
+
+// import { PasswordInput } from '@/components/ui/password-input';
 
 interface FormInputDataGetterProps {
   form: any;

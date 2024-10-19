@@ -1,9 +1,8 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-
+// import { zodResolver } from '@hookform/resolvers/zod';
+// import { useForm } from 'react-hook-form';
+// import { z } from 'zod';
 import ProfilePhoto from '@/assets/userAvatar.png';
 import FormInputDataGetter from '@/components/custom/FormInputDataGetter';
 import { Button } from '@/components/ui/button';

@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { CustomToolTip } from '@/components/custom/CustomToolTip';
 import InfoSidebar from '@/components/InfoSidebar';
-import { Invoice, SidebarDataType, Subcontractor } from '@/types';
+import { Invoice, SidebarDataType } from '@/types'; // , Subcontractor
 
 interface InvoicingInfoSidebarProps {
   data: SidebarDataType<Invoice>;

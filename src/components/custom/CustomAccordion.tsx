@@ -1,4 +1,4 @@
-import { Trash2 } from 'lucide-react';
+// import { Trash2 } from 'lucide-react';
 import React from 'react';
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';

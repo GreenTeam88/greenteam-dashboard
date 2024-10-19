@@ -3,35 +3,32 @@
 import {
   ColumnDef,
   ColumnFiltersState,
-  ColumnSizingState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  Row,
   SortingState,
   useReactTable,
   VisibilityState,
 } from '@tanstack/react-table';
-import { ChevronDown, MoreHorizontal } from 'lucide-react';
+// import { ChevronDown, MoreHorizontal } from 'lucide-react';
 import * as React from 'react';
-import { useState } from 'react';
+// import { useState } from 'react';
 import { FiEdit } from 'react-icons/fi';
 
-import { CustomToolTip } from '@/components/custom/CustomToolTip';
-import { ColumnResizer } from '@/components/custom/TableColumnResizer';
-import ProjectInfoSidebar from '@/components/projects/ProjectInfoSidebar';
-import { Button } from '@/components/ui/button';
+// import { CustomToolTip } from '@/components/custom/CustomToolTip';
+// import { ColumnResizer } from '@/components/custom/TableColumnResizer';
+// import ProjectInfoSidebar from '@/components/projects/ProjectInfoSidebar';
+// import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Input } from '@/components/ui/input';
+// import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 interface CustomDataTableProps<T> {

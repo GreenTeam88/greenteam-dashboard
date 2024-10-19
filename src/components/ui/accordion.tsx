@@ -1,7 +1,7 @@
 'use client';
 
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
-import { ChevronDown, SquarePen, Trash2 } from 'lucide-react';
+import { ChevronDown } from 'lucide-react'; // SquarePen, Trash2
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
