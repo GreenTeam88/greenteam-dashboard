@@ -38,3 +38,5 @@ jobs:
 
       - name: Check commits messages
         uses: wagoid/commitlint-github-action@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
