@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid';
-import { useState } from 'react';
+// import { useState } from 'react';
 import { useWatch } from 'react-hook-form';
 import { FiTrash2 } from 'react-icons/fi';
 
@@ -147,7 +147,8 @@ export default function PriceTable({ form }: { form: any }) {
           })}
         </div>
         <div>
-          {quotationPrices.map((price, index) => {
+          {quotationPrices.map((price) => {
+            // index
             return (
               <div key={price.id} className={'border-b border-b-borderGray h-16 flex items-center justify-between'}>
                 <div className={'flex-[0.5] flex items-center justify-center'}>

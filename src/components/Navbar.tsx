@@ -3,9 +3,9 @@
 import { usePathname } from 'next/navigation';
 
 import { ReactComponent as BellIcon } from '@/assets/icons/BellIcon.svg';
-import { ReactComponent as ChevronDownIcon } from '@/assets/icons/ChevronDownIcon.svg';
+// import { ReactComponent as ChevronDownIcon } from '@/assets/icons/ChevronDownIcon.svg';
 import { ReactComponent as SearchIcon } from '@/assets/icons/SearchIcon.svg';
-import userAvatar from '@/assets/userAvatar.png';
+// import userAvatar from '@/assets/userAvatar.png';
 import AvatarPopup from '@/components/account/AvatarPopup';
 
 export default function Navbar() {
@@ -23,7 +23,10 @@ export default function Navbar() {
     }
   }
   return (
-    <header className={'py-3 flex items-center justify-between px-10 border-b border-b-borderBlack10'}>
+    <header
+      className="flex items-center justify-between px-10 border-b border-b-borderBlack10"
+      style={{ paddingTop: '12px', paddingBottom: '10px' }}
+    >
       <div className={'900:hidden'}>
         <h2 className={'text-textDarkBlack text-[1.25rem] leading-[1.5rem]'}>{getHeaderTitle()}</h2>
       </div>

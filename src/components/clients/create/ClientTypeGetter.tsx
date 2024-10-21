@@ -2,7 +2,8 @@
 
 import { Briefcase, User } from 'lucide-react';
 import { memo } from 'react';
-import { useWatch } from 'react-hook-form';
+
+// import { useWatch } from 'react-hook-form';
 
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';

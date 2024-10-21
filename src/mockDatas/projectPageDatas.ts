@@ -1,4 +1,4 @@
-import { Project } from '@/components/custom/DataTable';
+import { Project } from '@/types';
 
 export const projects: Project[] = [
   {

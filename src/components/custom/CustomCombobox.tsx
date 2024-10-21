@@ -1,8 +1,9 @@
 'use client';
 
-import { Check, ChevronDown, ChevronsUpDown } from 'lucide-react';
+import { Check, ChevronDown } from 'lucide-react'; // removed  ChevronsUpDown
 import * as React from 'react';
-import { HTMLProps } from 'react';
+
+// import { HTMLProps } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';

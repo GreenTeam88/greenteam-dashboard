@@ -1,12 +1,13 @@
 'use client';
 
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation'; // removed redirect
 import React, { useEffect } from 'react';
 
 import Navbar from '@/components/Navbar';
 import Sidebar from '@/components/Sidebar';
 import { useAuth } from '@/queryHooks/auth';
-import { useUserStore } from '@/store/UserStore';
+
+// import { useUserStore } from '@/store/UserStore';  make sure to delete the unused components :)
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   // const { isAuthenticated } = useUserStore();

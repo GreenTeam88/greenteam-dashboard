@@ -1,8 +1,5 @@
-//@ts-nocheck
-'use client';
-
 import React from 'react';
-import Select from 'react-select';
+import Select, { MultiValue } from 'react-select';
 
 import { cn } from '@/lib/utils';
 import { Option } from '@/types';
@@ -26,19 +23,16 @@ export default function CustomMultiSelect({
   inputClassName,
   placeholderClassName,
   selectMenuClassName,
-  menuListClassName,
-  menuListActiveClassName,
-  menuListHoverClassName,
 }: ICustomMultiSelect) {
   return (
     <Select
       classNames={{
-        control: (state) => cn('!ring-transparent !cursor-pointer !outline-transparent !shadow-none', inputClassName),
-        valueContainer: (state) => cn('!p-0'),
-        indicatorSeparator: (state) => cn('!h-0 !w-0'),
-        dropdownIndicator: (state) => cn('!p-0 !h-4 !w-4 !m-0 !text-textBlack !font-[400]'),
-        placeholder: (state) => cn(placeholderClassName),
-        menu: (state) => cn(selectMenuClassName),
+        control: () => cn('!ring-transparent !cursor-pointer !outline-transparent !shadow-none', inputClassName),
+        valueContainer: () => cn('!p-0'),
+        indicatorSeparator: () => cn('!h-0 !w-0'),
+        dropdownIndicator: () => cn('!p-0 !h-4 !w-4 !m-0 !text-textBlack !font-[400]'),
+        placeholder: () => cn(placeholderClassName),
+        menu: () => cn(selectMenuClassName),
       }}
       theme={(theme) => ({
         ...theme,
@@ -56,8 +50,9 @@ export default function CustomMultiSelect({
       closeMenuOnSelect={false}
       defaultValue={[]}
       isMulti
-      onChange={(selectedOptions) => {
-        setData(selectedOptions);
+      onChange={(selectedOptions: MultiValue<Option>) => {
+        // Ensure correct type assignment by casting if necessary :)
+        setData(selectedOptions.map((option) => ({ value: option.value, label: option.label })));
       }}
       options={data}
     />

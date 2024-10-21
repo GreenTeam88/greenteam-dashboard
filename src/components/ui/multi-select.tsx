@@ -1,8 +1,8 @@
 import { cva } from 'class-variance-authority';
-import { CheckIcon, ChevronDown, WandSparkles, XCircle, XIcon } from 'lucide-react';
+import { CheckIcon, ChevronDown, WandSparkles, XIcon } from 'lucide-react'; // removed XCircle
 import * as React from 'react';
 
-import { Badge } from '@/components/ui/badge';
+// import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
   Command,
@@ -63,12 +63,12 @@ const MultiSelectFormField = React.forwardRef<HTMLButtonElement, MultiSelectForm
       menuClassName,
       placeholderClassName,
       menuListItemsClassName,
-      variant,
-      asChild = false,
+      // variant,
+      // asChild = false,
       options,
       defaultValue,
       onValueChange,
-      disabled,
+      // disabled,
       placeholder,
       animation = 0,
       ...props

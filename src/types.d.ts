@@ -17,17 +17,16 @@ export type Project = {
 
 export type Client = {
   id: string;
-  'Full name': string;
-  'Client Type': string;
+  Fullname: string;
+  ClientType: string;
   Address: string;
-  'Extra address info'?: string;
-  'House number': string;
-  'Postal code': string;
+  // Extraaddressinfo?: string;
+  Housenumber: string;
+  // Postalcode: string;
   City: string;
   Country: string;
   Email: string;
-  'Telephone 1': string;
-  'Telephone 2': string;
+  Telephone: string;
 };
 
 export interface FaqQuestion {
