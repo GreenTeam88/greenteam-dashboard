@@ -87,17 +87,25 @@ type SidebarDataType<T> = {
 // Pricelist Needed Types :
 
 export interface SubcontractorPrice {
+  id: string;
   name: string;
   prices: Float[];
 }
 
-export interface Subservice {
-  name: string;
-  price: Float;
-  unit: string;
-}
+// export interface Subservice {
+//   name: string;
+//   price: Float;
+//   unit: string;
+// }
 export interface Service {
   name: string;
   subservices: Subservice[];
   subcontractors: SubcontractorPrice[];
+}
+
+export interface Subservice {
+  id: string;
+  name: string;
+  price: number;
+  unit: string;
 }

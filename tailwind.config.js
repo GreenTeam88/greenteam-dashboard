@@ -5,6 +5,14 @@ module.exports = {
     extend: {
       gridTemplateColumns: {
         'custom-9': '1fr repeat(8, 2fr)',
+        24: 'repeat(24, minmax(0, 1fr))',
+        34: 'repeat(24, minmax(0, 1fr))',
+      },
+      gridColumn: {
+        'span-13': 'span 13 / span 13',
+        'span-14': 'span 14 / span 14',
+        'span-19': 'span 19 / span 19',
+        'span-24': 'span 19 / span 19',
       },
       borderColor: {
         borderBlack10: '#1C1C1C1A',
@@ -45,6 +53,7 @@ module.exports = {
       screens: {
         1200: { max: '1200px' },
         900: { max: '900px' },
+        'lg-custom': { max: '1440px' },
       },
       keyframes: {
         'accordion-down': {

@@ -10,7 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
+import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/components/ui/table';
 import { Service } from '@/types';
 
 export default function ServiceTable({ service }: { service: Service }) {
@@ -37,35 +37,37 @@ export default function ServiceTable({ service }: { service: Service }) {
   return (
     <div className="shadow-md mb-4 rounded-lg overflow-hidden">
       <Table className="min-w-full bg-white divide-y divide-gray-200 ">
-        <TableRow className="rounded-t-lg">
-          <TableCell className="min-w-96 px-6 py-4  text-sm font-bold rounded-tl-lg ">{service.name}</TableCell>
-          {service.subservices.map((subservice, index) => (
-            <TableCell className=" w-52 px-6 py-3 text-left text-sm  font-bold max-w-52 " key={index}>
-              {subservice.name}
+        <TableHeader>
+          <TableRow className="rounded-t-lg">
+            <TableCell className="min-w-96 px-6 py-4  text-sm font-bold rounded-tl-lg ">{service.name}</TableCell>
+            {service.subservices.map((subservice, index) => (
+              <TableCell className=" w-52 px-6 py-3 text-left text-sm  font-bold max-w-52 " key={index}>
+                {subservice.name}
+              </TableCell>
+            ))}
+            <TableCell className="w-0">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="h-8 w-8 p-0">
+                    <MoreVertical className="h-4 w-4 outline-none" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className={'bg-white'} align="end">
+                  {ThreeDotsDropDownMenu.map((item) => {
+                    return (
+                      <DropdownMenuItem
+                        key={item.text}
+                        className={`${item.color} hover:bg-bgLightGreenHover hover:font-[500] duration-200 text-sm`}
+                      >
+                        {item.text}
+                      </DropdownMenuItem>
+                    );
+                  })}
+                </DropdownMenuContent>
+              </DropdownMenu>
             </TableCell>
-          ))}
-          <TableCell className="w-0">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="h-8 w-8 p-0">
-                  <MoreVertical className="h-4 w-4 outline-none" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className={'bg-white'} align="end">
-                {ThreeDotsDropDownMenu.map((item) => {
-                  return (
-                    <DropdownMenuItem
-                      key={item.text}
-                      className={`${item.color} hover:bg-bgLightGreenHover hover:font-[500] duration-200 text-sm`}
-                    >
-                      {item.text}
-                    </DropdownMenuItem>
-                  );
-                })}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </TableCell>
-        </TableRow>
+          </TableRow>
+        </TableHeader>
 
         <TableBody className="rounded-md">
           <TableRow className="bg-orange-50 cursor-pointer" onClick={handleExpandAccordion}>
