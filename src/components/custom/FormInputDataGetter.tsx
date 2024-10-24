@@ -1,12 +1,9 @@
 'use client';
 
-import { memo } from 'react';
-
-import CustomInput from '@/components/custom/CustomInput';
-import CustomPasswordInput from '@/components/custom/CustomPasswordInput';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { PasswordInput } from '@/components/ui/password-input';
+import { Input } from '../ui/input';
 
-// import { PasswordInput } from '@/components/ui/password-input';
 
 interface FormInputDataGetterProps {
   form: any;
@@ -17,13 +14,12 @@ interface FormInputDataGetterProps {
   type?: 'text' | 'email' | 'number' | 'password' | 'tel';
 }
 
-function FormInputDataGetter({
+export default function FormInputDataGetter({
   form,
   name,
   label,
   placeholder,
   isPassword = false,
-  type = 'text',
 }: FormInputDataGetterProps) {
   return (
     <FormField
@@ -34,27 +30,20 @@ function FormInputDataGetter({
           <FormLabel className={'font-normal text-textBlack80 text-sm'}>{label}</FormLabel>
           <FormControl>
             {isPassword ? (
-              <CustomPasswordInput
-                value={field.value ?? ''}
-                onChange={(value) => {
-                  form.setValue(name, value);
-                }}
+              <PasswordInput
+                {...field}
+                placeholder={placeholder}
                 className={
                   '!m-0 !ring-transparent !outline-transparent h-auto border py-3 px-5 rounded-lg border-borderGray text-sm text-textBlack40'
                 }
-                placeholder={placeholder}
               />
             ) : (
-              <CustomInput
-                value={field.value ?? ''}
-                onChange={(value) => {
-                  form.setValue(name, value);
-                }}
+              <Input
+                {...field}
+                placeholder={placeholder}
                 className={
                   '!m-0 !ring-transparent !outline-transparent h-auto border py-3 px-5 rounded-lg border-borderGray text-sm text-textBlack40'
                 }
-                type={type}
-                placeholder={placeholder}
               />
             )}
           </FormControl>
@@ -64,4 +53,3 @@ function FormInputDataGetter({
     />
   );
 }
-export default memo(FormInputDataGetter);
