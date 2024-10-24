@@ -1,10 +1,10 @@
 'use client';
 
-import { ColumnDef, Row } from '@tanstack/react-table';
+import { ColumnDef } from '@tanstack/react-table'; //Row
 import { MoreHorizontal } from 'lucide-react';
 import * as React from 'react';
 
-import ClientInfoSidebar from '@/components/clients/ClientInfoSidebar';
+// import ClientInfoSidebar from '@/components/clients/ClientInfoSidebar';
 import CustomDataTable from '@/components/custom/CustomDataTable';
 import { CustomToolTip } from '@/components/custom/CustomToolTip';
 import { Button } from '@/components/ui/button';
@@ -16,10 +16,10 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
-import { clients } from '@/mockDatas/clientPageDatas';
+// import { clients } from '@/mockDatas/clientPageDatas';
 import { quotations } from '@/mockDatas/quotationPageDatas';
-import { openModal } from '@/store/ModalStore';
-import { Client, Project, Quotation } from '@/types';
+// import { openModal } from '@/store/ModalStore';
+import { Quotation } from '@/types'; // removed Client, Project,
 
 interface QuotationsDataTableProps {
   activeFilter: string;
@@ -81,22 +81,22 @@ export default function QuotationsDataTable({ activeFilter, setActiveFilter }: Q
     },
   ];
 
-  function getDataFromRow(row: Row<Quotation>) {
-    const obj: Quotation = {
-      id: row.getValue('id'),
-      quotationNumber: row.getValue('quotationNumber'),
-      category: row.getValue('category'),
-      details: row.getValue('details'),
-      date: row.getValue('date'),
-      name: row.getValue('name'),
-      address: row.getValue('address'),
-      city: row.getValue('city'),
-      amount: row.getValue('amount'),
-      telephone: row.getValue('telephone'),
-      status: row.getValue('status'),
-    };
-    return obj;
-  }
+  // function getDataFromRow(row: Row<Quotation>) {
+  //   const obj: Quotation = {
+  //     id: row.getValue('id'),
+  //     quotationNumber: row.getValue('quotationNumber'),
+  //     category: row.getValue('category'),
+  //     details: row.getValue('details'),
+  //     date: row.getValue('date'),
+  //     name: row.getValue('name'),
+  //     address: row.getValue('address'),
+  //     city: row.getValue('city'),
+  //     amount: row.getValue('amount'),
+  //     telephone: row.getValue('telephone'),
+  //     status: row.getValue('status'),
+  //   };
+  //   return obj;
+  // }
 
   const clientsColumns: ColumnDef<Quotation>[] = [
     {
@@ -171,7 +171,8 @@ export default function QuotationsDataTable({ activeFilter, setActiveFilter }: Q
     {
       id: 'actions',
       enableHiding: false,
-      cell: ({ row }) => {
+      cell: () => {
+        // removed row from args
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

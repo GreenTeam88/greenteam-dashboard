@@ -1,12 +1,12 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+// import { useState } from 'react';
+import { useForm } from 'react-hook-form'; // removed SubmitHandler,
 import { z } from 'zod';
 
 import CreateButton from '@/components/custom/CreateButton';
-import CustomDropzone from '@/components/custom/CustomDropzone';
+// import CustomDropzone from '@/components/custom/CustomDropzone';
 import CategoryInfoGetter from '@/components/projects/create/CategoryInfoGetter';
 import ClientInfoGetter from '@/components/projects/create/ClientInfoGetter';
 import ClientPreferenceGetter from '@/components/projects/create/ClientPreferenceGetter';
@@ -64,6 +64,13 @@ export default function Home() {
     console.log(values);
   }
 
+  //Converting the numeric values to strings for Floor numbers
+
+  const modifiedFloorNumberData = floorNumberData.map((item) => ({
+    value: item.value.toString(),
+    label: item.label.toString(),
+  }));
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit, onInvalid)} className={'bg-bgLightGreen w-full h-full p-5'}>
@@ -88,7 +95,7 @@ export default function Home() {
               </div>
               <div className={'w-full grid grid-cols-2 gap-x-6'}>
                 <HousePartsGetter form={form} housePartData={housePartsData} />
-                <FloorNumberGetter form={form} floorNumberData={floorNumberData} />
+                <FloorNumberGetter form={form} floorNumberData={modifiedFloorNumberData} />
               </div>
               <div className={'w-full grid grid-cols-2 gap-x-6'}>
                 <DateGetter form={form} />

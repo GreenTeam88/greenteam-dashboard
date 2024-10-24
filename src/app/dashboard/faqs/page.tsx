@@ -18,7 +18,7 @@ export default function Home() {
   useEffect(() => {
     const obj: QuestionsObj = {};
     FaqQuestions.forEach((question) => {
-      const { category, ...rest } = question;
+      const { category } = question; // removed ...rest not used in the code
       if (!obj[category]) {
         obj[category] = [question];
       } else {

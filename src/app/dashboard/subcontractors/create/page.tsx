@@ -10,6 +10,8 @@ import FormInputDataGetter from '@/components/custom/FormInputDataGetter';
 import UploadGetter from '@/components/projects/create/UploadGetter';
 import { Form } from '@/components/ui/form';
 
+// to add a controller comonent after for the slect  input
+
 const subcontractorCreateFormSchema = z.object({
   subcontractorNumber: z.string(),
   speciality: z.string(),
@@ -36,6 +38,20 @@ export default function Home() {
   const onSubmit = (data: z.infer<typeof subcontractorCreateFormSchema>) => {
     console.log(data);
   };
+
+  // tempo data to display on selecet form
+  const postalCodeData = [
+    { value: '10001', label: '10001' },
+    { value: '10002', label: '10002' },
+  ]; // Add real postal codes here
+  const cityData = [
+    { value: 'New York', label: 'New York' },
+    { value: 'Los Angeles', label: 'Los Angeles' },
+  ]; // Add real cities here
+  const countryData = [
+    { value: 'USA', label: 'USA' },
+    { value: 'Canada', label: 'Canada' },
+  ]; // Add real countries here
   return (
     <div className={'size-full bg-bgLightGreen p-5'}>
       <Form {...form}>
@@ -102,11 +118,27 @@ export default function Home() {
                   label={'Postal code'}
                   placeholder={'Input postal code'}
                   name={'postalCode'}
+                  data={postalCodeData}
+                  notFoundText="No postal codes found"
                 />
-                <FormComboboxGetter form={form} label={'City'} placeholder={'Input city'} name={'city'} />
+                <FormComboboxGetter
+                  form={form}
+                  label={'City'}
+                  placeholder={'Input city'}
+                  name={'city'}
+                  data={cityData}
+                  notFoundText="No cities found"
+                />
               </div>
               <div className={'grid grid-cols-2 gap-x-4 items-center'}>
-                <FormComboboxGetter form={form} label={'Country'} placeholder={'Input country'} name={'country'} />
+                <FormComboboxGetter
+                  form={form}
+                  label={'Country'}
+                  placeholder={'Input country'}
+                  name={'country'}
+                  data={countryData}
+                  notFoundText="No countries found"
+                />
                 <FormInputDataGetter
                   type={'email'}
                   form={form}

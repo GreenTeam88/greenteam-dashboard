@@ -1,8 +1,9 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+// import { zodResolver } from '@hookform/resolvers/zod';
+// import { useForm } from 'react-hook-form';
+// import { z } from 'zod';
+import Image from 'next/image';
 
 import ProfilePhoto from '@/assets/userAvatar.png';
 import FormInputDataGetter from '@/components/custom/FormInputDataGetter';
@@ -17,7 +18,8 @@ export default function ProfileSection({ form }: ProfileSectionProps) {
     <div className={'p-6 flex flex-col gap-y-6'}>
       <div className={'flex items-center gap-x-6'}>
         <div className={'size-16'}>
-          <img src={ProfilePhoto.src} alt={'Profile Photo'} className={'w-full h-full rounded-full'} />
+          {/* <img src={ProfilePhoto.src} alt={'Profile Photo'} className={'w-full h-full rounded-full'} /> */}
+          <Image src={ProfilePhoto} alt={'Profile Photo'} layout="fill" className={'w-full h-full rounded-full'} />
         </div>
         <div className={'flex items-center gap-x-4'}>
           <Button className={'py-2.5 px-5 rounded-lg h-auto bg-bgPrimaryGreen text-sm text-white'} type={'button'}>

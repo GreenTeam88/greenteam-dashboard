@@ -2,7 +2,7 @@
 
 import { ChevronDownIcon, LogOut, User } from 'lucide-react';
 import Image from 'next/image';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation'; // removed redirect,
 import { useEffect } from 'react';
 
 import userAvatar from '@/assets/userAvatar.png';

@@ -4,7 +4,15 @@ module.exports = {
   theme: {
     extend: {
       gridTemplateColumns: {
-        'custom-9': '1fr repeat(8, 2fr)'
+        'custom-9': '1fr repeat(8, 2fr)',
+        24: 'repeat(24, minmax(0, 1fr))',
+        34: 'repeat(24, minmax(0, 1fr))',
+      },
+      gridColumn: {
+        'span-13': 'span 13 / span 13',
+        'span-14': 'span 14 / span 14',
+        'span-19': 'span 19 / span 19',
+        'span-24': 'span 19 / span 19',
       },
       borderColor: {
         borderBlack10: '#1C1C1C1A',
@@ -40,25 +48,26 @@ module.exports = {
         statusDanger: '#FF895B',
         statusOrange: '#FFA500',
         statusRed: '#EB5757',
-        black20: '#1C1C1C33'
+        black20: '#1C1C1C33',
       },
       screens: {
         1200: { max: '1200px' },
         900: { max: '900px' },
+        'lg-custom': { max: '1440px' },
       },
       keyframes: {
-        "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
+        'accordion-down': {
+          from: { height: '0' },
+          to: { height: 'var(--radix-accordion-content-height)' },
         },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
+        'accordion-up': {
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: '0' },
         },
       },
       animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
       },
     },
   },

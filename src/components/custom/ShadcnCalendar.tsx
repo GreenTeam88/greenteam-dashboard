@@ -3,8 +3,8 @@ import { cn } from '@/lib/utils';
 
 export default function ShadcnCalendar() {
   // 9 by 18 table
-  const boxClassname = 'py-4 px-6';
-  const borderClassname = 'border border-[#E0E0E0]';
+  // const boxClassname = 'py-4 px-6';
+  // const borderClassname = 'border border-[#E0E0E0]';
   return (
     <div className="flex flex-col w-full bg-white">
       {Array.from({ length: 18 }).map((_, i) => {

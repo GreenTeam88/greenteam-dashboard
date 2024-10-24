@@ -23,7 +23,7 @@ import { ThreeDotsDropDownMenu } from '@/constants';
 import { cn } from '@/lib/utils';
 import { invoices } from '@/mockDatas/invoicingPageDatas';
 import { openModal } from '@/store/ModalStore';
-import { Invoice, SidebarDataType, Subcontractor } from '@/types';
+import { Invoice, SidebarDataType } from '@/types'; // Subcontractor
 
 function TotalAmountBox(totalAmount: string, status: Invoice['status']) {
   const StatusBoxClass =

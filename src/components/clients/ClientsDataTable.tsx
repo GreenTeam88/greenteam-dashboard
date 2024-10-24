@@ -18,7 +18,7 @@ import {
 import { cn } from '@/lib/utils';
 import { clients } from '@/mockDatas/clientPageDatas';
 import { openModal } from '@/store/ModalStore';
-import { Client, Project } from '@/types';
+import { Client } from '@/types'; //Project
 
 interface ClientsDataTableProps {
   activeFilter: string;
@@ -69,17 +69,17 @@ export default function ClientsDataTable({ activeFilter, setActiveFilter }: Clie
 
   function getDataFromRow(row: Row<Client>) {
     const obj: Omit<Client, 'id'> = {
-      'Client Type': row.getValue('Client Type'),
-      'Full name': row.getValue('Full name'),
+      ClientType: row.getValue('Client Type'),
+      Fullname: row.getValue('Full name'),
       Address: row.getValue('Address'),
-      'House number': row.getValue('House number'),
-      'Extra address info': row.getValue('Extra address info'),
-      'Postal code': row.getValue('Postal code'),
+      Housenumber: row.getValue('House number'),
+      // Extraaddressinfo: row.getValue('Extra address info'),
+      // 'Postal code': row.getValue('Postal code'),
       City: row.getValue('City'),
       Country: row.getValue('Country'),
       Email: row.getValue('Email'),
-      'Telephone 1': row.getValue('Telephone 1'),
-      'Telephone 2': row.getValue('Telephone 2'),
+      Telephone: row.getValue('Telephone 1'),
+      // 'Telephone 2': row.getValue('Telephone 2'),
     };
 
     return obj;

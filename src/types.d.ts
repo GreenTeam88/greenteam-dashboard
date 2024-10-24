@@ -17,17 +17,16 @@ export type Project = {
 
 export type Client = {
   id: string;
-  'Full name': string;
-  'Client Type': string;
+  Fullname: string;
+  ClientType: string;
   Address: string;
-  'Extra address info'?: string;
-  'House number': string;
-  'Postal code': string;
+  // Extraaddressinfo?: string;
+  Housenumber: string;
+  // Postalcode: string;
   City: string;
   Country: string;
   Email: string;
-  'Telephone 1': string;
-  'Telephone 2': string;
+  Telephone: string;
 };
 
 export interface FaqQuestion {
@@ -88,17 +87,25 @@ type SidebarDataType<T> = {
 // Pricelist Needed Types :
 
 export interface SubcontractorPrice {
+  id: string;
   name: string;
   prices: Float[];
 }
 
-export interface Subservice {
-  name: string;
-  price: Float;
-  unit: string;
-}
+// export interface Subservice {
+//   name: string;
+//   price: Float;
+//   unit: string;
+// }
 export interface Service {
   name: string;
   subservices: Subservice[];
   subcontractors: SubcontractorPrice[];
+}
+
+export interface Subservice {
+  id: string;
+  name: string;
+  price: number;
+  unit: string;
 }
