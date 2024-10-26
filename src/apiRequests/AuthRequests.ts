@@ -7,6 +7,7 @@ interface ApiResponse {
   error?: string;
 }
 
+// Enhanced createUser function
 export async function createUser(email: string, password: string): Promise<ApiResponse> {
   if (!email || !password) {
     return { error: 'Email and password are required' };
@@ -23,23 +24,26 @@ export async function createUser(email: string, password: string): Promise<ApiRe
       body: JSON.stringify({ email, password }),
     });
 
+    const data = await response.json();
     if (!response.ok) {
-      return { error: 'An unexpected error occurred' };
+      return { error: data.error || 'An unexpected error occurred' };
     }
 
-    const data = await response.json();
     return { data };
-  } catch (e) {
-    return { error: 'An unexpected error occurred' };
+  } catch (e: any) {
+    return { error: e.message || 'An unexpected error occurred' };
   }
 }
 
 interface LoginResponse {
-  message: string;
+  message?: string; // Now optional
+  error?: string; // Added to handle error scenarios
 }
+
+// Updated loginUser function
 export async function loginUser(email: string, password: string): Promise<LoginResponse> {
   if (!email || !password) {
-    throw new Error('Email and password are required');
+    return { error: 'Email and password are required' };
   }
 
   const endpoint = `${baseApiUrl}/auth/login`;
@@ -53,17 +57,26 @@ export async function loginUser(email: string, password: string): Promise<LoginR
       body: JSON.stringify({ email, password }),
     });
     const data = await response.json();
-    if (!data.success) {
-      throw new Error(data.message);
+    if (!response.ok) {
+      // Log response status for debugging
+      // console.log(`Login failed with status: ${response.status}`);
+      // Handle different types of HTTP errors explicitly
+      if (response.status === 401) {
+        return { error: 'Authentication failed. Check credentials.' };
+      } else if (response.status === 500) {
+        return { error: 'Server error. Please try again later.' };
+      }
+      return { error: data.error || 'Login failed due to server error' };
     }
-    return {
-      message: data.data,
-    };
+
+    return data.success;
   } catch (e: any) {
-    throw new Error(e?.message || 'An unexpected error occurred');
+    // console.error(`Error during login: ${e.toString()}`);
+    return { error: e.message || 'An unexpected error occurred' };
   }
 }
 
+// Debugging added for checkAuthFn
 export async function checkAuthFn(): Promise<boolean> {
   const endpoint = `${baseApiUrl}/auth/current`;
   try {
@@ -73,13 +86,16 @@ export async function checkAuthFn(): Promise<boolean> {
       cache: 'no-store',
     });
     const data = await response.json();
-    // console.log(data);
+    // console.log('Response Status:', response.status); // Debugging status
+    // console.log('Response Data:', data); // Debugging data
     return data.success;
   } catch (e) {
+    console.error('Check authentication failed:', e); // Debugging error
     return false;
   }
 }
 
+// Handling errors correctly in logoutUser
 export async function logoutUser(): Promise<boolean> {
   const endpoint = `${baseApiUrl}/auth/logout`;
   try {
@@ -89,11 +105,12 @@ export async function logoutUser(): Promise<boolean> {
       cache: 'no-store',
     });
     const data = await response.json();
-    if (!data.success) {
-      throw new Error(data.message);
+    if (!response.ok) {
+      throw new Error(data.error || 'Logout failed');
     }
     return data.success;
-  } catch (e: any) {
-    throw new Error(e?.message || 'Unexpected error occurred');
+  } catch (e) {
+    console.error('Logout failed:', e); // Debugging error
+    return false;
   }
 }

@@ -1,11 +1,15 @@
-import { ReactComponent as LogoWhite } from '@/assets/icons/LogoWhite.svg';
-import LoginForm from '@/components/auth/LoginForm';
+'use client';
 
-export default async function Home() {
+import React from 'react';
+
+import LoginForm from '@/components/auth/LoginForm';
+import withPublicAccess from '@/hoc/withPublicAccess'; // Adjust the import path according to your project structure
+
+function LoginPage() {
   return (
     <div className={'flex h-full'}>
       <div className={'bg-bgPrimaryGreen flex-1 flex justify-center items-center'}>
-        <LogoWhite />
+        {/* Possibly place a logo here */}
       </div>
       <div className={'bg-white flex-[2] flex justify-center items-center'}>
         <LoginForm />
@@ -13,3 +17,5 @@ export default async function Home() {
     </div>
   );
 }
+
+export default withPublicAccess(LoginPage);
