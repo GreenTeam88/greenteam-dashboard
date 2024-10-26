@@ -90,7 +90,7 @@ export async function checkAuthFn(): Promise<boolean> {
     // console.log('Response Data:', data); // Debugging data
     return data.success;
   } catch (e) {
-    console.error('Check authentication failed:', e); // Debugging error
+    // console.error('Check authentication failed:', e); // Debugging error
     return false;
   }
 }
@@ -110,7 +110,9 @@ export async function logoutUser(): Promise<boolean> {
     }
     return data.success;
   } catch (e) {
-    console.error('Logout failed:', e); // Debugging error
+    // console.error('Logout failed:', e); // Debugging error
     return false;
   }
 }
+
+//yahya
