@@ -7,7 +7,8 @@ interface ApiResponse {
   error?: string;
 }
 
-// Enhanced createUser function
+//change the return value of check ayth from boolean to data
+
 export async function createUser(email: string, password: string): Promise<ApiResponse> {
   if (!email || !password) {
     return { error: 'Email and password are required' };
@@ -36,11 +37,10 @@ export async function createUser(email: string, password: string): Promise<ApiRe
 }
 
 interface LoginResponse {
-  message?: string; // Now optional
-  error?: string; // Added to handle error scenarios
+  message?: string;
+  error?: string;
 }
 
-// Updated loginUser function
 export async function loginUser(email: string, password: string): Promise<LoginResponse> {
   if (!email || !password) {
     return { error: 'Email and password are required' };
@@ -58,9 +58,6 @@ export async function loginUser(email: string, password: string): Promise<LoginR
     });
     const data = await response.json();
     if (!response.ok) {
-      // Log response status for debugging
-      // console.log(`Login failed with status: ${response.status}`);
-      // Handle different types of HTTP errors explicitly
       if (response.status === 401) {
         return { error: 'Authentication failed. Check credentials.' };
       } else if (response.status === 500) {
@@ -71,12 +68,10 @@ export async function loginUser(email: string, password: string): Promise<LoginR
 
     return data.success;
   } catch (e: any) {
-    // console.error(`Error during login: ${e.toString()}`);
     return { error: e.message || 'An unexpected error occurred' };
   }
 }
 
-// Debugging added for checkAuthFn
 export async function checkAuthFn(): Promise<boolean> {
   const endpoint = `${baseApiUrl}/auth/current`;
   try {
@@ -86,16 +81,13 @@ export async function checkAuthFn(): Promise<boolean> {
       cache: 'no-store',
     });
     const data = await response.json();
-    // console.log('Response Status:', response.status); // Debugging status
-    // console.log('Response Data:', data); // Debugging data
+
     return data.success;
   } catch (e) {
-    // console.error('Check authentication failed:', e); // Debugging error
     return false;
   }
 }
 
-// Handling errors correctly in logoutUser
 export async function logoutUser(): Promise<boolean> {
   const endpoint = `${baseApiUrl}/auth/logout`;
   try {
@@ -110,9 +102,6 @@ export async function logoutUser(): Promise<boolean> {
     }
     return data.success;
   } catch (e) {
-    // console.error('Logout failed:', e); // Debugging error
     return false;
   }
 }
-
-//yahya

@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import React, { createContext, useContext, useEffect } from 'react';
 
+import LoadingPageWithSpinner from '@/components/ui/LoadingPageWithSpinner';
 import { useAuth } from '@/queryHooks/auth';
 
 interface SessionContextType {
@@ -22,6 +23,9 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
       router.replace('/auth/login');
     }
   }, [isLoading, isAuthenticated, router]);
+  if (isLoading) {
+    return <LoadingPageWithSpinner message="Loading ! Please wait..." minLoadingTime={3500} />;
+  }
 
   return (
     <SessionContext.Provider value={{ isAuthenticated: !!isAuthenticated, loading: isLoading }}>
