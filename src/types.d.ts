@@ -29,6 +29,22 @@ export type Client = {
   Telephone: string;
 };
 
+export type newClient = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  adress: string;
+  houseNumber: string;
+  extraAddressInfo: string;
+  preferedLanguege: string;
+  postalCde: string;
+  City: string;
+  country: string;
+  email: string;
+  telephone1: string;
+  telephone2: string;
+};
+
 export interface FaqQuestion {
   id: number;
   category: string;

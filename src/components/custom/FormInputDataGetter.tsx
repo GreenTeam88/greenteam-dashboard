@@ -11,6 +11,7 @@ interface FormInputDataGetterProps {
   placeholder: string;
   isPassword?: boolean;
   type?: 'text' | 'email' | 'number' | 'password' | 'tel';
+  required?: boolean;
 }
 
 export default function FormInputDataGetter({
@@ -19,6 +20,7 @@ export default function FormInputDataGetter({
   label,
   placeholder,
   isPassword = false,
+  required = false,
 }: FormInputDataGetterProps) {
   return (
     <FormField
@@ -40,6 +42,7 @@ export default function FormInputDataGetter({
               <Input
                 {...field}
                 placeholder={placeholder}
+                required={required}
                 className={
                   '!m-0 !ring-transparent !outline-transparent h-auto border py-3 px-5 rounded-lg border-borderGray text-sm text-textBlack40'
                 }

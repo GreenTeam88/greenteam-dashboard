@@ -28,6 +28,7 @@ function ClientExtraAddressInfoGetter({ form }: ClientExtraAddressInfoGetterProp
               }
               type={'text'}
               placeholder={'Input extra business address'}
+              required
             />
           </FormControl>
           <FormMessage />
