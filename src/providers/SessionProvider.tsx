@@ -19,7 +19,7 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
   const { data: isAuthenticated, isLoading } = checkAuthClient;
 
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
+    if (!isAuthenticated) {
       router.replace('/auth/login');
     }
   }, [isLoading, isAuthenticated, router]);

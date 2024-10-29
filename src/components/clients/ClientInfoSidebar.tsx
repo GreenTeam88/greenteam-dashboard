@@ -20,15 +20,12 @@ export default function ClientInfoSidebar({ data }: ClientInfoSidebarProps) {
       <InfoSidebar.SidebarContent>
         {Object.keys(data).map((key) => {
           const dataKey = key as DataKeyType;
+          const tooltipText = data[dataKey];
           return (
-            data[dataKey] && (
+            tooltipText !== undefined && (
               <InfoSidebar.SidebarContentItemDivider key={dataKey}>
                 <h5 className={'text-textBlack font-semibold text-base leading-5'}>{key}</h5>
-                <CustomToolTip
-                  triggerClassName={'text-textBlack text-base leading-5'}
-                  text={data[dataKey]}
-                  limit={20}
-                />
+                <CustomToolTip triggerClassName={'text-textBlack text-base leading-5'} text={tooltipText} limit={20} />
               </InfoSidebar.SidebarContentItemDivider>
             )
           );

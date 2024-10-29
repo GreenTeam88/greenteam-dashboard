@@ -18,73 +18,93 @@ import {
 import { cn } from '@/lib/utils';
 import { clients } from '@/mockDatas/clientPageDatas';
 import { openModal } from '@/store/ModalStore';
-import { Client } from '@/types'; //Project
+import { Client } from '@/types';
 
 interface ClientsDataTableProps {
   activeFilter: string;
   setActiveFilter: (value: string) => void;
 }
 
-const ClientsTableHeader = ({ activeFilter, setActiveFilter }: ClientsDataTableProps) => {
-  const filterTypeProjects = ['All', 'Private', 'Business Client'];
+// Helper function to filter data based on active filter
+const getFilteredData = (data: Client[], filter: string): Client[] => {
+  if (filter === 'All') return data;
+  return data.filter((client) => client.ClientType === filter);
+};
+
+// Filter Header Component
+const ClientsTableHeader: React.FC<ClientsDataTableProps> = ({ activeFilter, setActiveFilter }) => {
+  const filterTypes = ['All', 'Private', 'Business Client'];
+
   return (
-    <div className={'border-b border-b-borderGray flex items-center'}>
-      {filterTypeProjects.map((fType) => {
-        return (
-          <button
-            onClick={() => setActiveFilter(fType)}
-            key={fType}
-            className={cn('p-3', activeFilter === fType && 'border-b-2 border-green-700')}
+    <div className="border-b border-b-borderGray flex items-center">
+      {filterTypes.map((type) => (
+        <button
+          key={type}
+          onClick={() => setActiveFilter(type)}
+          className={cn('p-3', activeFilter === type && 'border-b-2 border-green-700')}
+        >
+          <h5
+            className={cn('text-sm text-textBlack40', activeFilter === type && 'text-textGreenPrimary font-semibold')}
           >
-            <h5
-              className={cn(
-                'text-sm text-textBlack40',
-                activeFilter === fType && 'text-textGreenPrimary font-semibold'
-              )}
-            >
-              {fType}
-            </h5>
-          </button>
-        );
-      })}
+            {type}
+          </h5>
+        </button>
+      ))}
     </div>
   );
 };
 
-export default function ClientsDataTable({ activeFilter, setActiveFilter }: ClientsDataTableProps) {
-  const ThreeDotsDropDownMenu = [
-    {
-      text: 'Details',
-      color: 'text-textBlack',
-    },
-    {
-      text: 'Edit',
-      color: 'text-textGreenPrimary',
-    },
-    {
-      text: 'Delete',
-      color: 'text-statusRed',
-    },
+// Dropdown Menu Component
+const ActionDropdownMenu: React.FC<{ row: Row<Client> }> = ({ row }) => {
+  const menuItems = [
+    { text: 'Details', color: 'text-textBlack' },
+    { text: 'Edit', color: 'text-textGreenPrimary' },
+    { text: 'Delete', color: 'text-statusRed' },
   ];
 
-  function getDataFromRow(row: Row<Client>) {
-    const obj: Omit<Client, 'id'> = {
-      ClientType: row.getValue('Client Type'),
-      Fullname: row.getValue('Full name'),
-      Address: row.getValue('Address'),
-      Housenumber: row.getValue('House number'),
-      // Extraaddressinfo: row.getValue('Extra address info'),
-      // 'Postal code': row.getValue('Postal code'),
-      City: row.getValue('City'),
-      Country: row.getValue('Country'),
-      Email: row.getValue('Email'),
-      Telephone: row.getValue('Telephone 1'),
-      // 'Telephone 2': row.getValue('Telephone 2'),
-    };
+  const handleMenuClick = (action: string) => {
+    if (action === 'Details') {
+      openModal(<ClientInfoSidebar id={+row.id} data={getDataFromRow(row)} />);
+    }
+  };
 
-    return obj;
+  function getDataFromRow(row: Row<Client>): Omit<Client, 'id'> {
+    return {
+      ClientType: row.getValue('ClientType') as string,
+      Fullname: row.getValue('Full name') as string,
+      Address: row.getValue('Address') as string,
+      Housenumber: row.getValue('House number') as string,
+      City: row.getValue('City') as string,
+      Country: row.getValue('Country') as string,
+      Email: row.getValue('Email') as string,
+      Telephone: row.getValue('Telephone') as string,
+    };
   }
 
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="h-8 w-8 p-0">
+          <MoreHorizontal className="h-4 w-4 outline-none" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="bg-white" align="end">
+        {menuItems.map((item) => (
+          <DropdownMenuItem
+            key={item.text}
+            className={`${item.color} hover:bg-bgLightGreenHover hover:font-[500] duration-200 text-sm`}
+            onClick={() => handleMenuClick(item.text)}
+          >
+            {item.text}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};
+
+// Main DataTable Component
+const ClientsDataTable: React.FC<ClientsDataTableProps> = ({ activeFilter, setActiveFilter }) => {
   const clientsColumns: ColumnDef<Client>[] = [
     {
       id: 'select',
@@ -106,84 +126,58 @@ export default function ClientsDataTable({ activeFilter, setActiveFilter }: Clie
       enableHiding: false,
     },
     {
-      accessorKey: 'Full name',
+      accessorKey: 'Fullname',
       header: 'Full name',
-      cell: ({ row }) => <p className={'cursor-pointer inline-block'}>{row.getValue('Full name')}</p>,
+      cell: ({ row }) => <p className="cursor-pointer">{row.getValue('Fullname')}</p>,
     },
-    {
-      accessorKey: 'Client Type',
-      header: 'Client Type',
-      // cell: ({ row }) => <CustomToolTip text={row.getValue('Date')} />,
-    },
+    { accessorKey: 'ClientType', header: 'Client Type' },
     {
       accessorKey: 'Address',
       header: 'Address',
-      cell: ({ row }) => <CustomToolTip limit={17} text={row.getValue('Address')} />,
+      cell: ({ row }) => <CustomToolTip limit={17} text={row.getValue('Address') as string} />,
     },
     {
-      accessorKey: 'House number',
+      accessorKey: 'Housenumber',
       header: 'House number',
-      cell: ({ row }) => <CustomToolTip limit={15} text={row.getValue('House number')} />,
+      cell: ({ row }) => <CustomToolTip limit={15} text={row.getValue('Housenumber') as string} />,
     },
     {
       accessorKey: 'City',
       header: 'City',
-      cell: ({ row }) => <CustomToolTip limit={15} text={row.getValue('City')} />,
+      cell: ({ row }) => <CustomToolTip limit={15} text={row.getValue('City') as string} />,
     },
     {
       accessorKey: 'Country',
       header: 'Country',
-      cell: ({ row }) => <CustomToolTip limit={15} text={row.getValue('Country')} />,
+      cell: ({ row }) => <CustomToolTip limit={15} text={row.getValue('Country') as string} />,
     },
     {
       accessorKey: 'Email',
       header: 'Email',
-      cell: ({ row }) => <CustomToolTip limit={10} text={row.getValue('Email')} />,
+      cell: ({ row }) => <CustomToolTip limit={10} text={row.getValue('Email') as string} />,
     },
     {
       accessorKey: 'Telephone',
       header: 'Telephone',
-      cell: ({ row }) => <CustomToolTip limit={10} text={row.getValue('Telephone')} />,
+      cell: ({ row }) => <CustomToolTip limit={10} text={row.getValue('Telephone') as string} />,
     },
     {
       id: 'actions',
       enableHiding: false,
-      cell: ({ row }) => {
-        return (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <MoreHorizontal className="h-4 w-4 outline-none" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className={'bg-white'} align="end">
-              {ThreeDotsDropDownMenu.map((item) => {
-                return (
-                  <DropdownMenuItem
-                    key={item.text}
-                    className={`${item.color} hover:bg-bgLightGreenHover hover:font-[500] duration-200 text-sm`}
-                    onClick={() => {
-                      if (item.text === 'Details') {
-                        openModal(<ClientInfoSidebar id={+row.id} data={getDataFromRow(row)} />);
-                      }
-                    }}
-                  >
-                    {item.text}
-                  </DropdownMenuItem>
-                );
-              })}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        );
-      },
+      cell: ({ row }) => <ActionDropdownMenu row={row} />,
     },
   ];
+
+  // Filter data based on active filter
+  const filteredData = getFilteredData(clients, activeFilter);
 
   return (
     <CustomDataTable<Client>
       columns={clientsColumns}
-      data={clients}
+      data={filteredData} // Use filtered data
       header={<ClientsTableHeader activeFilter={activeFilter} setActiveFilter={setActiveFilter} />}
     />
   );
-}
+};
+
+export default ClientsDataTable;

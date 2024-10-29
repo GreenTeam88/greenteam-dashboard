@@ -7,8 +7,6 @@ interface ApiResponse {
   error?: string;
 }
 
-//change the return value of check ayth from boolean to data
-
 export async function createUser(email: string, password: string): Promise<ApiResponse> {
   if (!email || !password) {
     return { error: 'Email and password are required' };
@@ -25,25 +23,23 @@ export async function createUser(email: string, password: string): Promise<ApiRe
       body: JSON.stringify({ email, password }),
     });
 
-    const data = await response.json();
     if (!response.ok) {
-      return { error: data.error || 'An unexpected error occurred' };
+      return { error: 'An unexpected error occurred' };
     }
 
+    const data = await response.json();
     return { data };
-  } catch (e: any) {
-    return { error: e.message || 'An unexpected error occurred' };
+  } catch (e) {
+    return { error: 'An unexpected error occurred' };
   }
 }
 
 interface LoginResponse {
-  message?: string;
-  error?: string;
+  message: string;
 }
-
 export async function loginUser(email: string, password: string): Promise<LoginResponse> {
   if (!email || !password) {
-    return { error: 'Email and password are required' };
+    throw new Error('Email and password are required');
   }
 
   const endpoint = `${baseApiUrl}/auth/login`;
@@ -57,18 +53,15 @@ export async function loginUser(email: string, password: string): Promise<LoginR
       body: JSON.stringify({ email, password }),
     });
     const data = await response.json();
-    if (!response.ok) {
-      if (response.status === 401) {
-        return { error: 'Authentication failed. Check credentials.' };
-      } else if (response.status === 500) {
-        return { error: 'Server error. Please try again later.' };
-      }
-      return { error: data.error || 'Login failed due to server error' };
+    console.log('data ok', data);
+    if (!data.success) {
+      throw new Error(data.message);
     }
-
-    return data.success;
+    return {
+      message: data.data,
+    };
   } catch (e: any) {
-    return { error: e.message || 'An unexpected error occurred' };
+    throw new Error(e?.message || 'An unexpected error occurred');
   }
 }
 
@@ -97,11 +90,11 @@ export async function logoutUser(): Promise<boolean> {
       cache: 'no-store',
     });
     const data = await response.json();
-    if (!response.ok) {
-      throw new Error(data.error || 'Logout failed');
+    if (!data.success) {
+      throw new Error(data.message);
     }
     return data.success;
-  } catch (e) {
-    return false;
+  } catch (e: any) {
+    throw new Error(e?.message || 'Unexpected error occurred');
   }
 }
