@@ -1,7 +1,12 @@
+'use client';
+
+import React from 'react';
+
 import { ReactComponent as LogoWhite } from '@/assets/icons/LogoWhite.svg';
 import RegisterForm from '@/components/auth/RegisterForm';
+import withPublicAccess from '@/hoc/withPublicAccess';
 
-export default async function Home() {
+function RegisterPage() {
   return (
     <div className={'flex h-full'}>
       <div className={'bg-bgPrimaryGreen flex-1 flex justify-center items-center'}>
@@ -13,3 +18,5 @@ export default async function Home() {
     </div>
   );
 }
+
+export default withPublicAccess(RegisterPage);

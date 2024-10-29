@@ -4,7 +4,6 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/comp
 import { PasswordInput } from '@/components/ui/password-input';
 import { Input } from '../ui/input';
 
-
 interface FormInputDataGetterProps {
   form: any;
   name: string;

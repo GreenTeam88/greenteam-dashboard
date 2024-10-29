@@ -25,8 +25,8 @@ export function useAuth() {
     onError: (error) => {
       toast.error(error.message);
     },
-    onSuccess: (data) => {
-      toast.success(data.message);
+    onSuccess: () => {
+      toast.success('Logged in successfully');
       router.replace('/dashboard/projects');
     },
   });
@@ -49,8 +49,8 @@ export function useAuth() {
   });
 
   return {
-    register: registerMutation,
     login: loginMutation,
+    register: registerMutation,
     checkAuthClient: checkAuthQuery,
     logout: logoutMutation,
   };
