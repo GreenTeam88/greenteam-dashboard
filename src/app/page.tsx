@@ -16,3 +16,7 @@ export default function Home() {
     </div>
   );
 }
+
+// to modify after and do the loading screen instead of the redirecting to
+
+// use router for redirecting instead of href for better ux

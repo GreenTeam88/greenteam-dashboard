@@ -18,18 +18,24 @@ export default function ClientInfoSidebar({ data }: ClientInfoSidebarProps) {
     <InfoSidebar text={'client'} onDelete={() => console.log('Client deleted!')}>
       <InfoSidebar.SidebarHeader title={'Client details'} />
       <InfoSidebar.SidebarContent>
-        {Object.keys(data).map((key) => {
-          const dataKey = key as DataKeyType;
-          const tooltipText = data[dataKey];
-          return (
-            tooltipText !== undefined && (
-              <InfoSidebar.SidebarContentItemDivider key={dataKey}>
-                <h5 className={'text-textBlack font-semibold text-base leading-5'}>{key}</h5>
-                <CustomToolTip triggerClassName={'text-textBlack text-base leading-5'} text={tooltipText} limit={20} />
-              </InfoSidebar.SidebarContentItemDivider>
-            )
-          );
-        })}
+        {Object.keys(data)
+          .filter((key) => key !== 'id') // Exclude 'id' from the keys
+          .map((key) => {
+            const dataKey = key as DataKeyType;
+            const tooltipText = data[dataKey];
+            return (
+              tooltipText !== undefined && (
+                <InfoSidebar.SidebarContentItemDivider key={dataKey}>
+                  <h5 className={'text-textBlack font-semibold text-base leading-5'}>{key}</h5>
+                  <CustomToolTip
+                    triggerClassName={'text-textBlack text-base leading-5'}
+                    text={tooltipText}
+                    limit={20}
+                  />
+                </InfoSidebar.SidebarContentItemDivider>
+              )
+            );
+          })}
       </InfoSidebar.SidebarContent>
     </InfoSidebar>
   );
