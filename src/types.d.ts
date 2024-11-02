@@ -30,10 +30,10 @@ export type Project = {
 // };
 export type Client = {
   id: string;
-  Fullname: string;
+  FullName: string;
   ClientType: string; // Limit values to 'Private' or 'Business Client' 'Private' | 'Business Client'
   Address: string;
-  Housenumber: string;
+  HouseNumber: string;
   City: string;
   Country: string;
   Email: string;

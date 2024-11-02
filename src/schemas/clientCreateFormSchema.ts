@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const clientCreateFormSchema = z
   .object({
-    clientType: z.enum(['Private', 'Business Client']),
+    clientType: z.enum(['Private', 'Business']),
     firstName: z.string().min(1, { message: 'First Name is required' }).max(255).optional(),
     lastName: z.string().min(1, { message: 'Last Name is required' }).max(255).optional(),
     clientNumber: z.string().optional(), // to be changed later
@@ -60,7 +60,7 @@ export const clientCreateFormSchema = z
           path: ['clientNumber'],
         });
       }
-    } else if (data.clientType === 'Business Client') {
+    } else if (data.clientType === 'Business') {
       // Business client-specific validations
       if (!data.companyName) {
         ctx.addIssue({

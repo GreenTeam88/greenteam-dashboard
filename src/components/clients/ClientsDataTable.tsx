@@ -1,7 +1,7 @@
 'use client';
 
 import { ColumnDef, Row } from '@tanstack/react-table';
-import { MoreHorizontal } from 'lucide-react';
+import { MoreVertical } from 'lucide-react';
 import React, { useMemo } from 'react';
 
 import ClientInfoSidebar from '@/components/clients/ClientInfoSidebar';
@@ -25,19 +25,17 @@ interface ClientsDataTableProps {
   setActiveFilter: (value: string) => void;
 }
 
-// Helper function to filter data based on active filter
 const getFilteredData = (data: Client[], filter: string): Client[] => {
   if (filter === 'All') return data;
   return data.filter((client) => client.ClientType === filter);
 };
 
-// ClientsTableHeader component now receives count as a prop
 const ClientsTableHeader: React.FC<
   ClientsDataTableProps & { counts: { all: number; private: number; business: number } }
 > = ({ activeFilter, setActiveFilter, counts }) => {
   return (
     <div className="border-b border-b-borderGray flex items-center">
-      {['All', 'Private', 'Business Client'].map((type, index) => {
+      {['All', 'Private', 'Business'].map((type, index) => {
         const count = index === 0 ? counts.all : index === 1 ? counts.private : counts.business;
         const isActive = activeFilter === type;
         return (
@@ -83,7 +81,7 @@ const ActionDropdownMenu: React.FC<{ row: Row<Client> }> = ({ row }) => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="h-8 w-8 p-0">
-          <MoreHorizontal className="h-4 w-4 outline-none" />
+          <MoreVertical className="h-4 w-4 outline-none" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="bg-white" align="end">
@@ -101,28 +99,7 @@ const ActionDropdownMenu: React.FC<{ row: Row<Client> }> = ({ row }) => {
   );
 };
 
-// Main DataTable Component
-const ClientsDataTable: React.FC<ClientsDataTableProps> = ({ activeFilter, setActiveFilter }) => {
-  const counts = useMemo(
-    () => ({
-      all: clients.length,
-      private: clients.filter((client) => client.ClientType === 'Private').length,
-      business: clients.filter((client) => client.ClientType === 'Business Client').length,
-    }),
-    [clients]
-  );
-
-  const filteredData = getFilteredData(clients, activeFilter);
-
-  return (
-    <CustomDataTable<Client>
-      columns={clientsColumns}
-      data={filteredData}
-      header={<ClientsTableHeader activeFilter={activeFilter} setActiveFilter={setActiveFilter} counts={counts} />}
-    />
-  );
-};
-
+// Define clientsColumns outside of the component for better structure
 const clientsColumns: ColumnDef<Client>[] = [
   {
     id: 'select',
@@ -144,9 +121,9 @@ const clientsColumns: ColumnDef<Client>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'Fullname',
-    header: 'Full name',
-    cell: ({ row }) => <p className="cursor-pointer">{row.getValue('Fullname')}</p>,
+    accessorKey: 'FullName',
+    header: 'Full Name',
+    cell: ({ row }) => <p className="cursor-pointer">{row.getValue('FullName')}</p>,
   },
   { accessorKey: 'ClientType', header: 'Client Type' },
   {
@@ -155,9 +132,9 @@ const clientsColumns: ColumnDef<Client>[] = [
     cell: ({ row }) => <CustomToolTip limit={17} text={row.getValue('Address') as string} />,
   },
   {
-    accessorKey: 'Housenumber',
-    header: 'House number',
-    cell: ({ row }) => <CustomToolTip limit={15} text={row.getValue('Housenumber') as string} />,
+    accessorKey: 'HouseNumber',
+    header: 'House Number',
+    cell: ({ row }) => <CustomToolTip limit={15} text={row.getValue('HouseNumber') as string} />,
   },
   {
     accessorKey: 'City',
@@ -185,5 +162,32 @@ const clientsColumns: ColumnDef<Client>[] = [
     cell: ({ row }) => <ActionDropdownMenu row={row} />,
   },
 ];
+
+const ClientsDataTable: React.FC<ClientsDataTableProps> = ({ activeFilter, setActiveFilter }) => {
+  const counts = useMemo(
+    () => ({
+      all: clients.length,
+      private: clients.filter((client) => client.ClientType === 'Private').length,
+      business: clients.filter((client) => client.ClientType === 'Business').length,
+    }),
+    [] // Removed 'clients' from dependency array as it's not a reactivity source
+  );
+
+  const filteredData = getFilteredData(clients, activeFilter);
+
+  return (
+    <CustomDataTable
+      columns={clientsColumns}
+      data={filteredData}
+      onRowClick={(client) => {
+        const clientDetails = clients.find((c) => c.id === client.id);
+        if (clientDetails) {
+          openModal(<ClientInfoSidebar id={+client.id} data={clientDetails} />);
+        }
+      }}
+      header={<ClientsTableHeader activeFilter={activeFilter} setActiveFilter={setActiveFilter} counts={counts} />}
+    />
+  );
+};
 
 export default ClientsDataTable;
