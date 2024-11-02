@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <div className={'bg-bgLightGreen w-full h-full p-5'}>
       <h1>
-        Redirecting to <a href={'/dashboard/projects'}>dashboard</a>
+        Redirecting to Dashboard <a href={'/dashboard/projects'}>dashboard</a>
       </h1>
     </div>
   );
