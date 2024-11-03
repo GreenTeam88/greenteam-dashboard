@@ -28,6 +28,7 @@ function ClientPostalCodeGetter({ form }: ClientPostalCodeGetterProps) {
               }
               type={'text'}
               placeholder={'Input postal code'}
+              required
             />
           </FormControl>
           <FormMessage />

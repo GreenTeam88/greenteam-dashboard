@@ -27,6 +27,7 @@ function ClientAddressGetter({ form }: ClientAddressGetterProps) {
               }
               type={'text'}
               placeholder={'Input address'}
+              required
             />
           </FormControl>
           <FormMessage />

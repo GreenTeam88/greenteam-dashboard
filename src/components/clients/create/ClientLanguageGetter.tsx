@@ -2,34 +2,34 @@
 
 import { memo } from 'react';
 
-import CitySelect from '@/components/custom/CitySelect';
+import { CustomSelect } from '@/components/custom/CustomSelect';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 
-interface ClientCityGetterProps {
+interface ClientLanguageGetterProps {
   form: any;
-  cities: string[]; // Cities array for the selected country
+  languages: { label: string; value: string; icon?: string }[]; // Language options with optional icon
 }
 
-function ClientCityGetter({ form, cities }: ClientCityGetterProps) {
+function ClientLanguageGetter({ form, languages }: ClientLanguageGetterProps) {
   return (
     <FormField
       control={form.control}
-      name="city"
+      name="preferredLanguage"
       render={({ field }) => (
         <FormItem className="flex flex-col gap-y-[0.875rem]">
-          <FormLabel className="font-normal text-textBlack80 text-sm">City</FormLabel>
+          <FormLabel className="font-normal text-textBlack80 text-sm">Preferred Language</FormLabel>
           <FormControl>
-            <CitySelect
+            <CustomSelect
               itemActiveClassName="bg-bgLightGreenHover font-semibold"
               triggerClassName="!m-0 h-auto w-full !ring-transparent !outline-transparent py-3 px-5 border border-borderGray rounded-lg text-sm text-textBlack"
               contentClassName="bg-white"
               itemClassName="text-sm text-textBlack hover:bg-bgLightGreenHover"
-              cities={cities} // Pass cities here instead of data
+              data={languages}
               setValue={(value) => {
-                form.setValue('city', value); // Use 'city' instead of 'Cities' for the form field name
+                form.setValue('preferredLanguage', value);
               }}
               value={field.value ?? ''}
-              placeholder="Select City"
+              placeholder="Select language"
             />
           </FormControl>
           <FormMessage />
@@ -39,4 +39,4 @@ function ClientCityGetter({ form, cities }: ClientCityGetterProps) {
   );
 }
 
-export default memo(ClientCityGetter);
+export default memo(ClientLanguageGetter);

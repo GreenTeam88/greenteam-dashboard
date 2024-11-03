@@ -15,18 +15,60 @@ export type Project = {
   Status: 'FINISHED' | 'APPROVED' | 'PENDING' | 'ON HOLD' | 'DECLINED';
 };
 
+// export type Client = {
+//   id: string;
+//   Fullname: string;
+//   ClientType: string;
+//   Address: string;
+//   // Extraaddressinfo?: string;
+//   Housenumber: string;
+//   // Postalcode: string;
+//   City: string;
+//   Country: string;
+//   Email: string;
+//   Telephone: string;
+// };
 export type Client = {
   id: string;
-  Fullname: string;
-  ClientType: string;
+  FullName: string;
+  ClientType: string; // Limit values to 'Private' or 'Business Client' 'Private' | 'Business Client'
   Address: string;
-  // Extraaddressinfo?: string;
-  Housenumber: string;
-  // Postalcode: string;
+  HouseNumber: string;
   City: string;
   Country: string;
   Email: string;
   Telephone: string;
+  Telephone2?: string;
+
+  // Fields for Private clients
+  ExtraAddressInfo?: string;
+  PreferredLanguage?: string;
+  PostalCode?: string;
+
+  // Fields for Business clients
+  CompanyName?: string;
+  ClientNumber?: string;
+  ChamberOfCommerceNumber?: string;
+  VATTaxNumber?: string;
+  BusinessAddress?: string;
+  ExtraBusinessAddressInfo?: string;
+};
+
+export type newClient = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  clientType: string;
+  adress: string;
+  houseNumber: string;
+  extraAddressInfo: string;
+  preferedLanguege: string;
+  postalCde: string;
+  City: string;
+  country: string;
+  email: string;
+  telephone1: string;
+  telephone2: string;
 };
 
 export interface FaqQuestion {

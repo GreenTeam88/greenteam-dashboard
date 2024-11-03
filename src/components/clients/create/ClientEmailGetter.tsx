@@ -30,6 +30,7 @@ function ClientEmailGetter({ form }: ClientEmailGetterProps) {
                 }
                 type={'email'}
                 placeholder={'Input email'}
+                required
               />
               <div className={'absolute right-0 top-0 flex items-center justify-center h-full mr-2'}>
                 <Mail className={'text-textBlack size-4'} />

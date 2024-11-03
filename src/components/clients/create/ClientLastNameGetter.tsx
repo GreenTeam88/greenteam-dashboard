@@ -28,6 +28,7 @@ function ClientLastNameGetter({ form }: ClientLastNameGetterProps) {
               }
               type={'text'}
               placeholder={'Input last name'}
+              required
             />
           </FormControl>
           <FormMessage />
