@@ -13,15 +13,15 @@ interface ProjectInfoSidebarProps {
 export default function ProjectInfoSidebar({ data }: ProjectInfoSidebarProps) {
   function statusColor(status: Project['Status']) {
     switch (status) {
-      case 'FINISHED':
+      case 'Finished':
         return 'text-statusSuccess border-statusSuccess';
-      case 'APPROVED':
+      case 'Approved':
         return 'text-statusInfo border-statusInfo';
-      case 'PENDING':
+      case 'Pending':
         return 'text-statusDanger border-statusDanger';
-      case 'ON HOLD':
+      case 'On Hold':
         return 'text-statusOrange border-statusOrange';
-      case 'DECLINED':
+      case 'Declined':
         return 'text-statusRed border-statusRed';
     }
   }

@@ -4,15 +4,15 @@ export type Option = {
 };
 export type Project = {
   id: string;
-  'Project number': string;
-  Date: string;
+  ProjectNumber: string;
   Category: string;
   Details: string;
+  Date: string;
   Name: string;
   Address: string;
   City: string;
   Telephone: string;
-  Status: 'FINISHED' | 'APPROVED' | 'PENDING' | 'ON HOLD' | 'DECLINED';
+  Status: 'Finished' | 'Approved' | 'Pending' | 'On Hold' | 'Declined';
 };
 
 // export type Client = {
