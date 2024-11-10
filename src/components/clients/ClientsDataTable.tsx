@@ -34,7 +34,7 @@ const ClientsTableHeader: React.FC<
   ClientsDataTableProps & { counts: { all: number; private: number; business: number } }
 > = ({ activeFilter, setActiveFilter, counts }) => {
   return (
-    <div className="border-b border-b-borderGray flex items-center">
+    <div className="border-b rounded-md bg-white border-b-borderGray flex items-center">
       {['All', 'Private', 'Business'].map((type, index) => {
         const count = index === 0 ? counts.all : index === 1 ? counts.private : counts.business;
         const isActive = activeFilter === type;

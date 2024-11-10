@@ -1,34 +1,33 @@
-'use client';
-
-import { CustomSel } from '@/components/custom/CustomSel';
+// import CustomCombobox from '@/components/custom/CustomCombobox';
+import { QuotationSelect } from '@/components/custom/QuotationSelect';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Quotation } from '@/types';
 
-interface CategoryInfoGetterProps {
-  categories: { value: string; label: string }[];
-  form: any; // Added form as a prop
+interface QuotationNumberGetterProps {
+  quotations: Quotation[];
+  form: any;
 }
 
-export default function CategoryInfoGetter({ categories, form }: CategoryInfoGetterProps) {
+export function QuotationGetter({ quotations, form }: QuotationNumberGetterProps) {
   return (
     <FormField
       control={form.control}
-      name={'category'}
+      name={'quotation'}
       render={({ field }) => (
-        <FormItem className={'w-full flex flex-col gap-y-[0.875rem]'}>
-          <FormLabel className={'font-normal text-textBlack80 text-sm'}>Category</FormLabel>
+        <FormItem className={'flex flex-col gap-y-[0.875rem]'}>
+          <FormLabel className={'font-normal text-textBlack80 text-sm'}>Quotation</FormLabel>
           <FormControl>
-            <CustomSel
+            <QuotationSelect
               itemActiveClassName="bg-bgLightGreenHover font-semibold"
               triggerClassName="!m-0 h-auto w-full !ring-transparent !outline-transparent py-3 px-5 border border-borderGray rounded-lg text-sm text-textBlack"
               contentClassName="bg-white"
               itemClassName="text-sm text-textBlack hover:bg-bgLightGreenHover"
-              data={categories}
+              data={quotations}
               setValue={(value: any) => {
-                form.setValue('category', value);
-                field.onChange(value);
+                form.setValue('preferredLanguage', value);
               }}
-              value={field.value ?? categories[0]?.value}
-              placeholder="Select Category"
+              value={field.value ?? ''}
+              placeholder="Assign quotaion"
             />
           </FormControl>
           <FormMessage />

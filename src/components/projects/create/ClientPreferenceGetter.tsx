@@ -25,6 +25,7 @@ export default function ClientPreferenceGetter({ form }: ClientPreferenceGetterP
               }
               type={'text'}
               placeholder={'Input client preferences'}
+              required
             />
           </FormControl>
           <FormMessage />

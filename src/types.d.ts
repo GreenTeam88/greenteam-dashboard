@@ -2,6 +2,18 @@ export type Option = {
   value: string;
   label: string;
 };
+// export type Project = {
+//   id: string;
+//   ProjectNumber: string;
+//   Category: string;
+//   Details: string;
+//   Date: string;
+//   Name: string;
+//   Address: string;
+//   City: string;
+//   Telephone: string;
+//   Status: 'Finished' | 'Approved' | 'Pending' | 'On Hold' | 'Declined';
+// };
 export type Project = {
   id: string;
   ProjectNumber: string;
@@ -13,21 +25,16 @@ export type Project = {
   City: string;
   Telephone: string;
   Status: 'Finished' | 'Approved' | 'Pending' | 'On Hold' | 'Declined';
+  clientPreferences: string;
+  projectName: string;
+  floorNumber: number[];
+  projectDateStart: string;
+  projectDateEnd: string;
+  subcontractor: string;
+  HousePart: string[];
+  files: any;
 };
 
-// export type Client = {
-//   id: string;
-//   Fullname: string;
-//   ClientType: string;
-//   Address: string;
-//   // Extraaddressinfo?: string;
-//   Housenumber: string;
-//   // Postalcode: string;
-//   City: string;
-//   Country: string;
-//   Email: string;
-//   Telephone: string;
-// };
 export type Client = {
   id: string;
   FullName: string;
@@ -101,6 +108,7 @@ export interface QuotationPrice {
   priceInclTax: number;
 }
 export interface Subcontractor {
+  id: number;
   companyName: string;
   commerceNumber: string;
   vatTaxNumber: string;
@@ -134,11 +142,6 @@ export interface SubcontractorPrice {
   prices: Float[];
 }
 
-// export interface Subservice {
-//   name: string;
-//   price: Float;
-//   unit: string;
-// }
 export interface Service {
   name: string;
   subservices: Subservice[];
