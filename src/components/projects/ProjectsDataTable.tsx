@@ -84,7 +84,8 @@ const ActionDropdownMenu: React.FC<{ row: Row<Project> }> = ({ row }) => {
     { text: 'Delete', action: 'Delete', color: 'text-statusRed' },
   ];
 
-  const handleMenuClick = (action: string, projectId: string) => {
+  const handleMenuClick = (event: React.MouseEvent<HTMLElement>, action: string, projectId: string) => {
+    event.stopPropagation();
     const projectDetails = projects.find((project) => project.id === projectId);
     switch (action) {
       case 'Details':
@@ -120,7 +121,7 @@ const ActionDropdownMenu: React.FC<{ row: Row<Project> }> = ({ row }) => {
           <DropdownMenuItem
             key={item.text}
             className={`${item.color} hover:bg-bgLightGreenHover hover:font-[500] duration-200 text-sm`}
-            onClick={() => handleMenuClick(item.text, row.original.id)}
+            onClick={(e) => handleMenuClick(e, item.text, row.original.id)}
           >
             {item.text}
           </DropdownMenuItem>
@@ -210,12 +211,12 @@ const ProjectsDataTable: React.FC<ProjectDataTableProps> = ({ activeFilter, setA
     <CustomDataTable
       columns={projectsColumns}
       data={filteredProjects}
-      // onRowClick={(project) => {
-      //   const clientDetails = projects.find((p) => p.id === project.id);
-      //   if (clientDetails) {
-      //     openModal(<ProjectInfoSidebar id={+project.id} data={clientDetails} />);
-      //   }
-      // }}
+      onRowClick={(project) => {
+        const clientDetails = projects.find((p) => p.id === project.id);
+        if (clientDetails) {
+          openModal(<ProjectInfoSidebar id={+project.id} data={clientDetails} />);
+        }
+      }}
       header={<ProjectsTableHeader activeFilter={activeFilter} setActiveFilter={setActiveFilter} counts={counts} />}
     />
   );

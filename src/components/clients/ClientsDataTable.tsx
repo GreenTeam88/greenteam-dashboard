@@ -68,12 +68,26 @@ const ActionDropdownMenu: React.FC<{ row: Row<Client> }> = ({ row }) => {
     { text: 'Delete', color: 'text-statusRed' },
   ];
 
-  const handleMenuClick = (action: string, clientId: string) => {
-    if (action === 'Details') {
-      const clientDetails = clients.find((client) => client.id === clientId);
-      if (clientDetails) {
-        openModal(<ClientInfoSidebar id={+clientId} data={clientDetails} />);
-      }
+  const handleMenuClick = (event: React.MouseEvent<HTMLElement>, action: string, clientId: string) => {
+    event.stopPropagation(); // Stop the event from propagating
+
+    const clientDetails = clients.find((client) => client.id === clientId);
+    switch (action) {
+      case 'Details':
+        if (clientDetails) {
+          openModal(<ClientInfoSidebar id={+clientId} data={clientDetails} />);
+        }
+        break;
+      case 'Edit':
+        // Handle edit action
+        console.log('Edit:', clientId);
+        break;
+      case 'Delete':
+        // Handle delete action
+        console.log('Delete:', clientId);
+        break;
+      default:
+        console.log('No action identified');
     }
   };
 
@@ -89,7 +103,7 @@ const ActionDropdownMenu: React.FC<{ row: Row<Client> }> = ({ row }) => {
           <DropdownMenuItem
             key={item.text}
             className={`${item.color} hover:bg-bgLightGreenHover hover:font-[500] duration-200 text-sm`}
-            onClick={() => handleMenuClick(item.text, row.original.id)}
+            onClick={(e) => handleMenuClick(e, item.text, row.original.id)}
           >
             {item.text}
           </DropdownMenuItem>

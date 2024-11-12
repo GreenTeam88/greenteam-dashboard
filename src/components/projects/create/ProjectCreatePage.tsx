@@ -23,7 +23,8 @@ import {
 } from '@/mockDatas/projectCreateFormDatas';
 import { projectCreateFormSchema } from '@/schemas/projectCreateFromSchema';
 import FloorNumberGetter from './FloorNumberGetter';
-import ProjectGetter from './ProjectGetter';
+import ProjectNameGetter from './ProjectNameGetter';
+import ProjectNumberGetter from './ProjectNumberGetter';
 import { QuotationGetter } from './QotationGetter';
 
 export default function ProjectCreateForm() {
@@ -43,7 +44,6 @@ export default function ProjectCreateForm() {
       subcontractor: '',
       details: '',
       files: undefined,
-      // other fields as necessary
     },
   });
 
@@ -67,16 +67,16 @@ export default function ProjectCreateForm() {
           <div className={'flex flex-col bg-white border border-borderBlack10 p-6 rounded-lg gap-y-4'}>
             <h4 className={'text-xl leading-6 text-textBlack font-medium'}>Project information</h4>
             <div className={'flex flex-col gap-y-4'}>
-              <div className="grid grid-cols-1 gap-x-6">
-                <ProjectGetter form={form} />
-              </div>
               <div className={'grid grid-cols-2 gap-x-6'}>
                 <QuotationGetter quotations={quotations} form={form} />
-
-                <CategoryInfoGetter form={form} categories={categoriesData} />
+                <ProjectNumberGetter form={form} />
               </div>
               <div className={'grid grid-cols-2 gap-x-6'}>
+                <CategoryInfoGetter form={form} categories={categoriesData} />
                 <SubcontractorGetter form={form} subcontractors={subcontractors} />
+              </div>
+              <div className="grid grid-cols-2 gap-x-6">
+                <ProjectNameGetter form={form} />
                 <ClientPreferenceGetter form={form} />
               </div>
 

@@ -31,8 +31,8 @@ export const categoriesData = [
 ];
 export const housePartsData = [
   {
-    value: 'housePart1',
-    label: 'House Part 1',
+    value: 'okokok ',
+    label: 'Housokoke Part 1',
   },
   {
     value: 'housePart2',

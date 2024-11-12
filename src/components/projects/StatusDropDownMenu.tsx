@@ -47,19 +47,28 @@ const StatusDropdownMenu: React.FC<StatusDropdownMenuProps> = ({ row, status }) 
   }, [status]);
 
   const [isDialogOpen, setDialogOpen] = useState(false);
-  const [selectedStatus, setSelectedStatus] = useState<Project['Status'] | null>(null);
+  const [selectedStatus, setSelectedStatus] = useState<Project['Status']>(currentStatus);
 
-  const openConfirmationDialog = (newStatus: Project['Status']) => {
+  const openConfirmationDialog = (newStatus: Project['Status'], event?: React.MouseEvent) => {
+    if (event) {
+      event.stopPropagation();
+    }
     setSelectedStatus(newStatus);
     setDialogOpen(true);
   };
 
-  const closeDialog = () => {
+  const closeDialog = (event?: React.MouseEvent) => {
+    if (event) {
+      event.stopPropagation();
+    }
     setDialogOpen(false);
-    setSelectedStatus(null);
+    setSelectedStatus(currentStatus);
   };
 
-  const handleConfirmStatusChange = () => {
+  const handleConfirmStatusChange = (event?: React.MouseEvent) => {
+    if (event) {
+      event.stopPropagation();
+    }
     if (selectedStatus) {
       setCurrentStatus(selectedStatus); // Update the local state to the new status
       // To impliment this for back end backend
@@ -75,7 +84,11 @@ const StatusDropdownMenu: React.FC<StatusDropdownMenuProps> = ({ row, status }) 
             {currentStatus}
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="center" className="bg-white rounded-xl border border-gray-200 p-2">
+        <DropdownMenuContent
+          align="center"
+          className="bg-white rounded-xl border border-gray-200 p-2"
+          onClick={(event) => event.stopPropagation()} // Stop all propagation from here
+        >
           {validStatuses.map((option) => (
             <DropdownMenuItem
               key={option}
@@ -92,6 +105,7 @@ const StatusDropdownMenu: React.FC<StatusDropdownMenuProps> = ({ row, status }) 
         onClose={closeDialog}
         onConfirm={handleConfirmStatusChange}
         projectNumber={row.original.ProjectNumber}
+        projectStatus={selectedStatus}
       />
     </>
   );
