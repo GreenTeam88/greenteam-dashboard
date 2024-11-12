@@ -1,6 +1,5 @@
 'use client';
 
-// import CustomCombobox from '@/components/custom/CustomCombobox';
 import CustomDatePicker from '@/components/custom/CustomDatePicker';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 
@@ -8,14 +7,14 @@ interface DateGetterProps {
   form: any;
 }
 
-export default function DateGetter({ form }: DateGetterProps) {
+export default function ToDateGetter({ form }: DateGetterProps) {
   return (
     <FormField
       control={form.control}
-      name={'projectDateStart'}
+      name={'projectDateEnd'}
       render={({ field }) => (
         <FormItem className={'flex flex-col gap-y-[0.875rem]'}>
-          <FormLabel className={'font-normal text-textBlack80 text-sm'}>Date</FormLabel>
+          <FormLabel className={'font-normal text-textBlack80 text-sm'}>To</FormLabel>
           <FormControl>
             <CustomDatePicker
               btnClassName={
@@ -25,7 +24,7 @@ export default function DateGetter({ form }: DateGetterProps) {
               placeholder={'DD/MM/YYYY'}
               date={field.value}
               setDate={(date) => {
-                form.setValue('projectDateStart', date, { shouldValidate: true });
+                form.setValue('projectDateEnd', date, { shouldValidate: true });
               }}
             />
           </FormControl>

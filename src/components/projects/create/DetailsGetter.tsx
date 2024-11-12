@@ -22,7 +22,9 @@ export default function DetailsGetter({ form }: DetailsGetterProps) {
               setValue={(value) => {
                 form.setValue('details', value);
               }}
-              className={'!m-0 !ring-transparent !outline-transparent h-[150px] border border-borderGray py-3 px-5'}
+              className={
+                '!m-0 !ring-transparent !outline-transparent h-[150px] border border-borderGray py-3 px-5 focus:border-green-500'
+              }
               placeholder={'Input general details'}
             />
           </FormControl>

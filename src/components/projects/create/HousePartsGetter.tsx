@@ -20,31 +20,6 @@ export default function HousePartsGetter({ housePartData, form }: HousePartsGett
         <FormItem className={'flex flex-col gap-y-[0.875rem]'}>
           <FormLabel className={'font-normal text-textBlack80 text-sm'}>Parts of a house</FormLabel>
           <FormControl>
-            {/*<CustomCombobox*/}
-            {/*  value={field.value}*/}
-            {/*  setValue={(value) => {*/}
-            {/*    form.setValue('houseParts', value);*/}
-            {/*  }}*/}
-            {/*  placeholder={'Parts of a house'}*/}
-            {/*  notFoundText={'Part not found.'}*/}
-            {/*  data={housePartData}*/}
-            {/*  popoverBtnClassName={*/}
-            {/*    '!m-0 w-full text-sm text-textBlack font-[400] border-borderGray rounded-lg py-3 px-5 h-auto'*/}
-            {/*  }*/}
-            {/*  popoverContentClassName={'w-[300px]'}*/}
-            {/*/>*/}
-            {/*<CustomMultiSelect*/}
-            {/*  inputClassName={*/}
-            {/*    '!border-borderBlack10 !rounded-lg !py-3 !px-5 !h-auto !text-sm !text-textBlack !font-[400] !w-full'*/}
-            {/*  }*/}
-            {/*  placeholderClassName={'!text-textBlack !text-sm !font-[400]'}*/}
-            {/*  selectMenuClassName={'!border-borderBlack10 !rounded-lg'}*/}
-            {/*  data={housePartData}*/}
-            {/*  setData={(options) => {*/}
-            {/*    form.setValue('houseParts', options);*/}
-            {/*  }}*/}
-            {/*  placeholder={'Parts of a house'}*/}
-            {/*/>*/}
             <ShadcnCustomMultiSelect
               btnClassName={
                 '!m-0 w-full text-sm text-textBlack font-[400] border-borderGray rounded-lg py-3 px-5 h-auto'

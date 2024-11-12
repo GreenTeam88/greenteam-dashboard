@@ -8,9 +8,18 @@ interface CustomInputProps {
   className?: string;
   value?: string | number;
   onChange?: (value: string | number) => void;
+  required?: boolean;
 }
 
-export default function CustomInput({ type, placeholder, className, value, onChange, name }: CustomInputProps) {
+export default function CustomInput({
+  type,
+  placeholder,
+  className,
+  value,
+  onChange,
+  name,
+  required,
+}: CustomInputProps) {
   return (
     <Input
       name={name}
@@ -19,6 +28,7 @@ export default function CustomInput({ type, placeholder, className, value, onCha
       type={type}
       placeholder={placeholder}
       className={cn(className)}
+      required={required}
     />
   );
 }

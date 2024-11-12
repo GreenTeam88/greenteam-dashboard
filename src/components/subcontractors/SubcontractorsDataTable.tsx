@@ -30,6 +30,10 @@ export default function SubcontractorsDataTable() {
 
   function getDataFromRow(row: Row<Subcontractor>): DataType {
     const data: DataType = {
+      id: {
+        text: 'ID',
+        value: row.getValue('id'),
+      },
       companyName: {
         text: 'Company Name',
         value: row.getValue('companyName'),

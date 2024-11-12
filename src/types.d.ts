@@ -2,31 +2,80 @@ export type Option = {
   value: string;
   label: string;
 };
+// export type Project = {
+//   id: string;
+//   ProjectNumber: string;
+//   Category: string;
+//   Details: string;
+//   Date: string;
+//   Name: string;
+//   Address: string;
+//   City: string;
+//   Telephone: string;
+//   Status: 'Finished' | 'Approved' | 'Pending' | 'On Hold' | 'Declined';
+// };
 export type Project = {
   id: string;
-  'Project number': string;
-  Date: string;
+  ProjectNumber: string;
   Category: string;
   Details: string;
+  Date: string;
   Name: string;
   Address: string;
   City: string;
   Telephone: string;
-  Status: 'FINISHED' | 'APPROVED' | 'PENDING' | 'ON HOLD' | 'DECLINED';
+  Status: 'Finished' | 'Approved' | 'Pending' | 'On Hold' | 'Declined';
+  clientPreferences: string;
+  projectName: string;
+  floorNumber: number[];
+  projectDateStart: string;
+  projectDateEnd: string;
+  subcontractor: string;
+  HousePart: string[];
+  files: any;
 };
 
 export type Client = {
   id: string;
-  Fullname: string;
-  ClientType: string;
+  FullName: string;
+  ClientType: string; // Limit values to 'Private' or 'Business Client' 'Private' | 'Business Client'
   Address: string;
-  // Extraaddressinfo?: string;
-  Housenumber: string;
-  // Postalcode: string;
+  HouseNumber: string;
   City: string;
   Country: string;
   Email: string;
   Telephone: string;
+  Telephone2?: string;
+
+  // Fields for Private clients
+  ExtraAddressInfo?: string;
+  PreferredLanguage?: string;
+  PostalCode?: string;
+
+  // Fields for Business clients
+  CompanyName?: string;
+  ClientNumber?: string;
+  ChamberOfCommerceNumber?: string;
+  VATTaxNumber?: string;
+  BusinessAddress?: string;
+  ExtraBusinessAddressInfo?: string;
+};
+
+export type newClient = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  clientType: string;
+  adress: string;
+  houseNumber: string;
+  extraAddressInfo: string;
+  preferedLanguege: string;
+  postalCde: string;
+  City: string;
+  country: string;
+  email: string;
+  telephone1: string;
+  telephone2: string;
 };
 
 export interface FaqQuestion {
@@ -59,6 +108,7 @@ export interface QuotationPrice {
   priceInclTax: number;
 }
 export interface Subcontractor {
+  id: number;
   companyName: string;
   commerceNumber: string;
   vatTaxNumber: string;
@@ -92,11 +142,6 @@ export interface SubcontractorPrice {
   prices: Float[];
 }
 
-// export interface Subservice {
-//   name: string;
-//   price: Float;
-//   unit: string;
-// }
 export interface Service {
   name: string;
   subservices: Subservice[];

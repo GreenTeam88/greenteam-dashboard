@@ -10,7 +10,7 @@ import { cn } from '@/lib/utils';
 
 interface ClientTypeGetterProps {
   form: any;
-  activeType: 'Private' | 'Business Client';
+  activeType: 'Private' | 'Business';
 }
 
 function ClientTypeGetter({ form, activeType }: ClientTypeGetterProps) {
@@ -20,7 +20,7 @@ function ClientTypeGetter({ form, activeType }: ClientTypeGetterProps) {
       icon: User,
     },
     {
-      text: 'Business Client',
+      text: 'Business',
       icon: Briefcase,
     },
   ];

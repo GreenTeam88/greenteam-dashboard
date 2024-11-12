@@ -28,6 +28,7 @@ function ClientHouseNumberGetter({ form }: ClientHouseNumberGetterProps) {
               }
               type={'text'}
               placeholder={'Input Housenumber'}
+              required
             />
           </FormControl>
           <FormMessage />

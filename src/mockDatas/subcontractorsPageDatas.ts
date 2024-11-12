@@ -2,6 +2,7 @@ import { Subcontractor } from '@/types';
 
 export const subcontractors: Subcontractor[] = [
   {
+    id: 1,
     companyName: 'Company 1',
     commerceNumber: '4324324543',
     vatTaxNumber: '1234567890',
@@ -12,6 +13,7 @@ export const subcontractors: Subcontractor[] = [
     telephone: '(209) 555-0104',
   },
   {
+    id: 2,
     companyName: 'Company 2',
     commerceNumber: '4324324543',
     vatTaxNumber: '1234567890',
@@ -22,6 +24,7 @@ export const subcontractors: Subcontractor[] = [
     telephone: '(209) 555-0104',
   },
   {
+    id: 3,
     companyName: 'Company 3',
     commerceNumber: '4324324543',
     vatTaxNumber: '1234567890',
@@ -32,6 +35,7 @@ export const subcontractors: Subcontractor[] = [
     telephone: '(209) 555-0104',
   },
   {
+    id: 4,
     companyName: 'Company 4',
     commerceNumber: '4324324543',
     vatTaxNumber: '1234567890',
@@ -42,6 +46,7 @@ export const subcontractors: Subcontractor[] = [
     telephone: '(209) 555-0104',
   },
   {
+    id: 5,
     companyName: 'Company 5',
     commerceNumber: '4324324543',
     vatTaxNumber: '1234567890',

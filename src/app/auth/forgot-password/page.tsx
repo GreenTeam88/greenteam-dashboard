@@ -1,9 +1,12 @@
 'use client';
 
+import React from 'react';
+
 import { ReactComponent as LogoWhite } from '@/assets/icons/LogoWhite.svg';
 import ForgotPasswordForm from '@/components/auth/ForgotPasswordForm';
+import withPublicAccess from '@/hoc/withPublicAccess';
 
-export default function Home() {
+function ForgotPassword() {
   return (
     <div className={'flex h-full'}>
       <div className={'bg-bgPrimaryGreen flex-1 flex justify-center items-center'}>
@@ -15,3 +18,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default withPublicAccess(ForgotPassword);

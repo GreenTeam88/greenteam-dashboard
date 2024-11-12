@@ -64,7 +64,7 @@ function SidebarDeletePage({ text }: { text: string }) {
   );
 }
 
-export default function InfoSidebar({ children, text, onDelete }: InfoSidebarProps) {
+export default function ProjectBar({ children, text, onDelete }: InfoSidebarProps) {
   const [currentPage, setCurrentPage] = useState<'home' | 'delete'>('home');
 
   return (
@@ -88,7 +88,7 @@ function SidebarButtons() {
           'hover:bg-orange-600 hover:text-white'
         }
       >
-        Delete Client
+        Delete Project
       </Button>
       <Button
         className={
@@ -96,7 +96,7 @@ function SidebarButtons() {
           'hover:bg-white hover:text-green-700 hover:border-green-700'
         }
       >
-        Edit Client
+        Edit Project
       </Button>
     </div>
   );
@@ -111,19 +111,20 @@ function SidebarHeader({ title }: { title: string }) {
   );
 }
 
-InfoSidebar.SidebarHeader = memo(SidebarHeader);
+ProjectBar.SidebarHeader = memo(SidebarHeader);
 
 function SidebarContent({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col  px-10 space-y-3 overflow-y-auto">
+    <div className="flex flex-col  py-1 px-10 space-y-6 overflow-y-auto">
       {children}
+
       <SidebarButtons />
     </div>
   );
 }
-InfoSidebar.SidebarContent = memo(SidebarContent);
+ProjectBar.SidebarContent = memo(SidebarContent);
 
 function SidebarContentItemDivider({ children }: { children: React.ReactNode }) {
-  return <div className={'flex justify-between items-center py-3 border-b border-b-borderBlack10'}>{children}</div>;
+  return <div className={'flex justify-between items-center py-5 border-b border-b-borderBlack10'}>{children}</div>;
 }
-InfoSidebar.SidebarContentItemDivider = memo(SidebarContentItemDivider);
+ProjectBar.SidebarContentItemDivider = memo(SidebarContentItemDivider);

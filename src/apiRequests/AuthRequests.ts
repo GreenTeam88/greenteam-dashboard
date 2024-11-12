@@ -53,6 +53,7 @@ export async function loginUser(email: string, password: string): Promise<LoginR
       body: JSON.stringify({ email, password }),
     });
     const data = await response.json();
+    console.log('data ok', data);
     if (!data.success) {
       throw new Error(data.message);
     }
@@ -73,7 +74,7 @@ export async function checkAuthFn(): Promise<boolean> {
       cache: 'no-store',
     });
     const data = await response.json();
-    // console.log(data);
+
     return data.success;
   } catch (e) {
     return false;

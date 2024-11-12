@@ -15,7 +15,9 @@ export default function Home() {
           <Link href={'/dashboard/clients/create'}>Create Client</Link>
         </CreateButton>
       </div>
-      <ClientsDataTable activeFilter={filterType} setActiveFilter={setFilterType} />
+      <div className="py-5">
+        <ClientsDataTable activeFilter={filterType} setActiveFilter={setFilterType} />
+      </div>
     </div>
   );
 }

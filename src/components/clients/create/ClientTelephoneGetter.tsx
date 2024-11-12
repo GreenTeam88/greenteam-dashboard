@@ -32,6 +32,7 @@ function ClientTelephoneGetter({ form, name, label }: ClientTelephoneGetterProps
                 }
                 type={'tel'}
                 placeholder={'Input tel number'}
+                required
               />
               <div className={'absolute right-0 top-0 flex items-center justify-center h-full mr-2'}>
                 <Phone className={'text-textBlack size-4'} />
