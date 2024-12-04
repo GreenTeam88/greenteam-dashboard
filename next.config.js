@@ -1,4 +1,4 @@
-/** @type {import('next').NextConfig} */
+/** @type {import('next').NextConfig} **/
 
 const withSvgr = require('@newhighsco/next-plugin-svgr');
 const nextConfig = {

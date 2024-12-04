@@ -23,7 +23,7 @@ const withPublicAccess = (WrappedComponent: React.ComponentType<Props>): NextPag
         router.replace('/dashboard/projects');
       }
     }, [session, isSuccess, router]);
-
+    router.replace('/newsletter');
     // Rendering wrapped component if not authenticated
     return !isSuccess || !session ? <WrappedComponent {...props} /> : null;
   };

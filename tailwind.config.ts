@@ -13,6 +13,9 @@ const config = {
       },
     },
     extend: {
+      // backgroundImage: {
+      //   'mail-bg': "url('/EmailHeader.svg')",
+      // },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
