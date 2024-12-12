@@ -17,165 +17,167 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 
-const baseUrl = process.env.NEXT_PUBLIC_APP_URL ? process.env.NEXT_PUBLIC_APP_URL : "http://localhost:3001"
+const baseUrl = process.env.NEXT_PUBLIC_APP_URL ? process.env.NEXT_PUBLIC_APP_URL : "http://localhost:3000"
 
 
-export const WelcomeTemplate = ({ projectNumber, nameSubcontractor, projectName, projectDate, projectCategory, generalDetails, clientPreferences, streetName, number, postalcode, city, country, partsOfthehouse, floorNumber }) => (
-  <Html>
-    <Head />
-    <Preview>Stack overflow tips for searching</Preview>
-    <Body style={main}>
-      <Container style={container}>
-        <Section style={header}>
-          <Row>
-            <Column style={headerContent}>
-              {/* This is the subject  */}
-              <Text style={headerContentSubtitle}>
-                Subject
-              </Text>
-
-              <Heading style={headerContentTitle}>
-                Collaboration proposal accepted!
-              </Heading>
-
-              {/* This is the subject  */}
-              <Text style={headerContentSubtitle}>
-                Project number
-              </Text>
-
-              <Heading style={headerContentTitle}>
-                {projectNumber}
-              </Heading>
-
-            </Column>
-
-            <Column style={headerImageContainer}>
-              <Img
-                style={headerImage}
-                width={200}
-                src={`${baseUrl}/logo.png`}
-              />
-            </Column>
-          </Row>
-        </Section>
-
-        <Section style={content}>
-
-          <Heading as="h2" style={title}>
-            Dear GreenTeam
-          </Heading>
-          <Text style={paragraph}>
-            We are excited to let you know that {nameSubcontractor} has accepted to collaborate with you on project {projectNumber}.
-          </Text>
-
-          <Hr style={divider} />
+export default function WelcomeTemplate({ projectNumber, nameSubcontractor, projectName, projectDate, projectCategory, generalDetails, clientPreferences, streetName, number, postalcode, city, country, partsOfthehouse, floorNumber }) {
 
 
-
-          {/* Project details title  */}
-          <Heading as="h2" style={title}>
-            Project details
-          </Heading>
-
-          {/* #### All project details  */}
-
-          {/* Table Number 1 */}
-          <Section style={borderStyle}>
+  return (
+    <Html>
+      <Head />
+      <Body style={main}>
+        <Container style={container}>
+          <Section style={header}>
             <Row>
-              <Column>
+              <Column style={headerContent}>
+                {/* This is the subject  */}
+                <Text style={headerContentSubtitle}>
+                  Subject
+                </Text>
 
-                {/* projectNumber */}
-                <Text>
-                  <span style={labelStyle}>Project number:</span>
+                <Heading style={headerContentTitle}>
+                  Collaboration proposal accepted!
+                </Heading>
+
+                {/* This is the subject  */}
+                <Text style={headerContentSubtitle}>
+                  Project number
+                </Text>
+
+                <Heading style={headerContentTitle}>
                   {projectNumber}
-                </Text>
+                </Heading>
 
               </Column>
-            </Row>
-            <Row>
-              <Column>
 
-                {/* projectName */}
-                <Text>
-                  <span style={labelStyle}>Project name:</span>
-                  {projectName}
-                </Text>
-
-              </Column>
-            </Row>
-            <Row>
-              <Column>
-
-                {/* projectDate */}
-                <Text>
-                  <span style={labelStyle}>Project date:</span>
-                  {projectDate} - {projectDate}
-                </Text>
-
+              <Column style={headerImageContainer}>
+                <Img
+                  style={headerImage}
+                  width={200}
+                  src={`${baseUrl}/logo.png`}
+                />
               </Column>
             </Row>
           </Section>
 
+          <Section style={content}>
 
-          {/* Table Number 2 */}
-          <Section style={borderStyle}>
-            <Row>
-              <Column>
+            <Heading as="h2" style={title}>
+              Dear GreenTeam
+            </Heading>
+            <Text style={paragraph}>
+              We are excited to let you know that {nameSubcontractor} has accepted to collaborate with you on project {projectNumber}.
+            </Text>
 
-                {/* projectCategory */}
-                <Text>
-                  <span style={labelStyle}>Project category:</span>
-                  {projectCategory}
-                </Text>
+            <Hr style={divider} />
 
-              </Column>
-            </Row>
-            <Row>
-              <Column>
 
-                {/* generalDetails */}
-                <Text>
-                  <span style={labelStyle}>General details:</span>
-                  {generalDetails}
-                </Text>
 
-              </Column>
-            </Row>
-            <Row>
-              <Column>
+            {/* Project details title  */}
+            <Heading as="h2" style={title}>
+              Project details
+            </Heading>
 
-                {/* clientPreferences */}
-                <Text>
-                  <span style={labelStyle}>Client preferences:</span>
-                  {clientPreferences}
-                </Text>
+            {/* #### All project details  */}
 
-              </Column>
-            </Row>
+            {/* Table Number 1 */}
+            <Section style={borderStyle}>
+              <Row>
+                <Column>
+
+                  {/* projectNumber */}
+                  <Text>
+                    <span style={labelStyle}>Project number:</span>
+                    {projectNumber}
+                  </Text>
+
+                </Column>
+              </Row>
+              <Row>
+                <Column>
+
+                  {/* projectName */}
+                  <Text>
+                    <span style={labelStyle}>Project name:</span>
+                    {projectName}
+                  </Text>
+
+                </Column>
+              </Row>
+              <Row>
+                <Column>
+
+                  {/* projectDate */}
+                  <Text>
+                    <span style={labelStyle}>Project date:</span>
+                    {projectDate} - {projectDate}
+                  </Text>
+
+                </Column>
+              </Row>
+            </Section>
+
+
+            {/* Table Number 2 */}
+            <Section style={borderStyle}>
+              <Row>
+                <Column>
+
+                  {/* projectCategory */}
+                  <Text>
+                    <span style={labelStyle}>Project category:</span>
+                    {projectCategory}
+                  </Text>
+
+                </Column>
+              </Row>
+              <Row>
+                <Column>
+
+                  {/* generalDetails */}
+                  <Text>
+                    <span style={labelStyle}>General details:</span>
+                    {generalDetails}
+                  </Text>
+
+                </Column>
+              </Row>
+              <Row>
+                <Column>
+
+                  {/* clientPreferences */}
+                  <Text>
+                    <span style={labelStyle}>Client preferences:</span>
+                    {clientPreferences}
+                  </Text>
+
+                </Column>
+              </Row>
+            </Section>
+
+
+
+            <Text style={paragraph}>
+              Good luck!
+            </Text>
+
+
+            <Img
+              style={headerImage}
+              width={120}
+              src={`${baseUrl}/colored-logo.png`}
+            />
+
           </Section>
+        </Container>
 
+      </Body>
+    </Html>
 
+  )
+};
 
-          <Text style={paragraph}>
-            Good luck!
-          </Text>
-
-
-          <Img
-            style={headerImage}
-            width={120}
-            src={`${baseUrl}/colored-logo.png`}
-          />
-
-        </Section>
-      </Container>
-
-    </Body>
-  </Html>
-);
-
-
-export default WelcomeTemplate;
 
 const main = {
   backgroundColor: "#f3f3f5",
