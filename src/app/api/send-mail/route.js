@@ -1,6 +1,9 @@
 import nodemailer from 'nodemailer';
 import { render } from '@react-email/render'; // Correct import
 import WelcomeTemplate from '@/emails/welcome'; // Ensure this path is correct
+import path from 'path';
+
+
 
 export async function POST(req) {
   try {
@@ -46,6 +49,23 @@ export async function POST(req) {
     )
 
 
+    const logoPath = path.resolve('public/logo.png');  // Resolve to absolute path
+    const coloredLogoPath = path.resolve('public/colored-logo.png');  // Resolve to absolute path
+
+
+    // Attach images inline using CID
+    const attachments = [
+      {
+        filename: 'logo.png', // Image filename
+        path: logoPath,  // Path to image
+        cid: 'logo', // Unique Content-ID for referencing
+      },
+      {
+        filename: 'colored-logo.png', // Image filename
+        path: coloredLogoPath,  // Path to image
+        cid: 'colored-logo', // Unique Content-ID for referencing
+      },
+    ];
 
 
     const options = {
@@ -53,19 +73,13 @@ export async function POST(req) {
       to: email, // Recipient's email
       subject, // Subject
       html: emailHtml, // HTML content
+      attachments: attachments,
+
     };
 
 
     // Send the email
     await transporter.sendMail(options);
-
-    // await transporter.sendMail({
-    //   from: EMAIL_CONTACT_USER, // Sender email address
-    //   to: email, // Recipient's email
-    //   subject, // Subject
-    //   html: emailHtml, // HTML content
-    // });
-
 
 
     // Return success response

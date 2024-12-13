@@ -55,8 +55,10 @@ export default function WelcomeTemplate({ projectNumber, nameSubcontractor, proj
                 <Img
                   style={headerImage}
                   width={200}
-                  src={`${baseUrl}/logo.png`}
+                  src="cid:logo"
                 />
+
+
               </Column>
             </Row>
           </Section>
@@ -166,7 +168,9 @@ export default function WelcomeTemplate({ projectNumber, nameSubcontractor, proj
             <Img
               style={headerImage}
               width={120}
-              src={`${baseUrl}/colored-logo.png`}
+              // src={`${baseUrl}/colored-logo.png`}
+              src="cid:colored-logo"
+
             />
 
           </Section>
