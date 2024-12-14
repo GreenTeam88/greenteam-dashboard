@@ -4,7 +4,12 @@ const express = require('express')
 const app = express()
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const exphbs = require('express-handlebars');
+const path = require('path');
+
+
 const _PORT = process.env.PORT
+
 
 // Middlewares 
 app.use(express.urlencoded({ extended: false }))
@@ -19,6 +24,19 @@ app.use(cors({
     credentials: true
 }))
 
+
+
+
+// Set Handlebars as the template engine
+app.engine('hbs', exphbs.engine({ extname: '.hbs', defaultLayout: false }));
+app.set('view engine', 'hbs');
+
+
+// Set views directory
+app.set('views', path.join(__dirname, 'views'));
+
+// Serve static files from the "public" directory
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 // Importing the main and the router that going to handle all of the other requests 

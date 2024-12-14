@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {{!-- <title>{{title}}</title> --}}
+    {{!--
+    <link rel="stylesheet" href="/style.css"> --}}
+
+
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .w-fit {
+            width: fit-content;
+        }
+
+        .h-fit {
+            height: fit-content;
+        }
+
+        .main-container {
+            padding: 0;
+        }
+
+        div {
+            margin-bottom: 40px;
+            padding: 50px;
+        }
+
+        .p-x {
+            padding-top: 0;
+            padding-bottom: 0;
+            padding-left: 50px;
+            padding-right: 50px;
+        }
+
+        .no-padding {
+            padding: 0;
+        }
+
+
+
+        .paragraph {
+            font-size: 18px;
+        }
+
+
+
+        .header-box {
+            background: #217946;
+
+            display: flex;
+
+            width: 100%;
+            position: relative;
+        }
+
+        .header-box p,
+        .header-box h2 {
+            color: white;
+        }
+
+        .title-1 {
+            font-size: 30px;
+        }
+
+        .title-2 {
+            font-size: 24px;
+        }
+
+        .margin-top {
+            margin-top: 10px;
+        }
+
+        .margin-2-top {
+            margin-top: 20px;
+        }
+
+        .margin-bottom {
+            margin-bottom: 10px;
+        }
+
+        .margin-2-bottom {
+            margin-bottom: 30px;
+        }
+
+
+        .space {
+            margin-left: 30px;
+        }
+
+
+        .project-table {
+            background: #F569001A;
+            border: solid 1px Orange;
+            height: fit-content;
+        }
+
+
+        .table-item {
+            display: flex;
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+    <div class="main-container">
+
+        {{!-- The header of the template --}}
+        <div class="header-box">
+
+            <div class="no-padding" style="width: 100%;">
+
+                <p>Subject</p>
+                <h2 class="title-1 margin-2-bottom">Collaboration proposal accepted!</h2>
+
+                <p class="margin-top">Project number</p>
+                {{!-- This is the project name --}}
+                <h2 class="title-1">{{projectNumber}}</h2>
+
+            </div>
+
+            <img src="cid:logo" alt="Example Image" style="width: 250px; height: 150PX; ">
+
+        </div>
+
+
+
+        {{!-- The text for dear GreenTeam --}}
+        <div class="p-x">
+            <h2 class="margin-bottom title-2">Dear GreenTeam</h2>
+            <p class="paragraph">We are excited to let you know that <strong>{{nameSubcontractor}}</strong> has accepted
+                to collaborate
+                with you on project <strong>{{projectNumber}}</strong> .</p>
+        </div>
+
+
+
+
+        {{!-- Project details --}}
+        <div class="p-x h-fit">
+            <h2 class="margin-bottom title-2">Project details</h2>
+
+
+            {{!-- Project details table --}}
+            <div class="project-table">
+                <div class="no-padding table-item">
+                    <h2>Project number:</h2>
+                    <h2 class="space">{{projectNumber}}</h2>
+                </div>
+
+                <div class="no-padding table-item">
+                    <h2>Project name:</h2>
+                    <h2 class="space">{{projectName}}</h2>
+                </div>
+
+                <div class="no-padding table-item">
+                    <h2>Project date:</h2>
+                    <h2 class="space">{{projectDate}} - {{projectDate}}</h2>
+                </div>
+            </div>
+
+
+
+            <div class="project-table">
+                <div class="no-padding table-item">
+                    <h2>Project category:</h2>
+                    <h2 class="space">{{projectCategory}}</h2>
+                </div>
+
+                <div class="no-padding table-item">
+                    <h2>General details:</h2>
+                    <h2 class="space">{{generalDetails}}</h2>
+                </div>
+
+                <div class="no-padding table-item">
+                    <h2>Client preferences:</h2>
+                    <h2 class="space">{{clientPreferences}}</h2>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+        {{!-- Project location --}}
+        <div class="p-x h-fit">
+            <h2 class="margin-bottom title-2">Project location</h2>
+
+
+            {{!-- Project location table --}}
+            <div class="project-table">
+                <div class="no-padding table-item">
+                    <h2>Street name & number:</h2>
+                    <h2 class="space">{{streetName}} {{number}}</h2>
+                </div>
+
+                <div class="no-padding table-item">
+                    <h2>Postal code & City:</h2>
+                    <h2 class="space">{{postalcode}} {{city}}</h2>
+                </div>
+
+                <div class="no-padding table-item">
+                    <h2>Country:</h2>
+                    <h2 class="space">{{country}}</h2>
+                </div>
+                <div class="no-padding table-item">
+                    <h2>Parts of the house:</h2>
+                    <h2 class="space">{{partsOfthehouse}}</h2>
+                </div>
+                <div class="no-padding table-item">
+                    <h2>Floor number:</h2>
+                    <h2 class="space">{{floorNumber}}</h2>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+
+        <div>
+            <p class="paragraph">Good luck!</p>
+
+            <img class="margin-2-top" src="cid:colored-logo" alt="Example Image" style="width: 150px; height: 90PX; ">
+
+        </div>
+
+
+    </div>
+
+</body>
+
+</html>
