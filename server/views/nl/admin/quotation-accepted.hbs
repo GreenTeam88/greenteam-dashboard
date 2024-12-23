@@ -67,6 +67,8 @@
         }
 
 
+
+
         .header-box .image-container {
             display: flex;
         }
@@ -236,19 +238,16 @@
 
         {{!-- The header of the template --}}
         <div class="header-box container margin-2-bottom">
-            {{!-- <div class="show-on-mobile-only no-padding">
-                <img src="cid:logo" alt="Example Image" class="main-logo margin-bottom">
-            </div> --}}
 
 
             <div class="no-padding text-container">
 
-                <p>Subject</p>
-                <h2 class="title-1 margin-2-bottom">Collaboration proposal accepted!</h2>
+                <p>Onderwerp</p>
+                <h2 class="title-1 margin-2-bottom">Offerte geaccepteerd!</h2>
 
-                <p class="margin-top">Project number</p>
+                <p class="margin-top">Projectnummer</p>
                 {{!-- This is the project name --}}
-                <h2 class="title-1">{{projectNumber}}</h2>
+                <h2 class="title-1">{{quotationNumber}}</h2>
 
             </div>
 
@@ -263,124 +262,82 @@
 
         {{!-- The text for dear GreenTeam --}}
         <div class="p-x  margin-2-bottom">
-            <h2 class="margin-bottom title-1">Dear GreenTeam</h2>
-            <p class="paragraph">We are excited to let you know that <strong>{{nameSubcontractor}}</strong> has accepted
-                to collaborate
-                with you on project <strong>{{projectNumber}}</strong>.</p>
+            <h2 class="margin-bottom title-1">Beste GreenTeam,</h2>
+            <p class="paragraph">
+                We zijn verheugd u te laten weten dat {{clientFirstname}} {{clientLastname}} offerte {{quotationNumber}}
+                heeft geaccepteerd!
+            </p>
         </div>
 
 
 
 
-        {{!-- Project details --}}
         <div class="p-x h-fit">
-            <h2 class="margin-bottom title-2">Project details</h2>
 
-
-            {{!-- Project details table --}}
+            {{!-- Table --}}
             <div class="project-table container">
                 <div class="no-padding table-item margin-bottom">
-                    <h2 class="title-2 table-title">Project number:</h2>
-                    <h2 class="title-2 space">{{projectNumber}}</h2>
+                    <h2 class="title-2 table-title">Klanttype:</h2>
+                    <h2 class="title-2 space">{{clientType}}</h2>
                 </div>
 
                 <div class="no-padding table-item margin-bottom">
-                    <h2 class="title-2 table-title">Project name:</h2>
-                    <h2 class="space title-2">{{projectName}}</h2>
+                    <h2 class="title-2 table-title">Klantnummer:</h2>
+                    <h2 class="space title-2">{{clientNumber}}</h2>
                 </div>
 
                 <div class="no-padding table-item">
-                    <h2 class="title-2 table-title">Project date:</h2>
-                    <h2 class="space title-2">{{projectDate}} - {{projectDate}}</h2>
+                    <h2 class="title-2 table-title">Voornaam:</h2>
+                    <h2 class="space title-2">{{firstName}}</h2>
                 </div>
-            </div>
-
-
-
-            <div class="project-table container">
-                <div class="no-padding table-item margin-bottom">
-                    <h2 class="title-2 table-title">Project category:</h2>
-                    <h2 class="space title-2">{{projectCategory}}</h2>
-                </div>
-
-                <div class="no-padding table-item margin-bottom">
-                    <h2 class="title-2 table-title">General details:</h2>
-                    <h2 class="space title-2">{{generalDetails}}</h2>
-                </div>
-
                 <div class="no-padding table-item">
-                    <h2 class="title-2 table-title">Client preferences:</h2>
-                    <h2 class="space title-2">{{clientPreferences}}</h2>
+                    <h2 class="title-2 table-title">Achternaam:</h2>
+                    <h2 class="space title-2">{{lastName}}</h2>
                 </div>
-            </div>
-
-        </div>
-
-
-
-
-        {{!-- Project location --}}
-        <div class="p-x h-fit margin-2-bottom">
-            <h2 class="margin-bottom title-2">Project location</h2>
-
-
-            {{!-- Project location table --}}
-            <div class="project-table container">
-                <div class="no-padding table-item margin-bottom">
-                    <h2 class="title-2 table-title">Street name & number:</h2>
-                    <h2 class="space title-2">{{streetName}} {{number}}</h2>
+                <div class="no-padding table-item">
+                    <h2 class="title-2 table-title">Adres & Huisnummer:</h2>
+                    <h2 class="space title-2">{{StreetName}} {{number}}</h2>
                 </div>
-
-                <div class="no-padding table-item margin-bottom">
-                    <h2 class="title-2 table-title">Postal code & City:</h2>
-                    <h2 class="space title-2">{{postalcode}} {{city}}</h2>
+                <div class="no-padding table-item">
+                    <h2 class="title-2 table-title">Extra adresinformatie:</h2>
+                    <h2 class="space title-2">{{extraAddressinformation}}</h2>
                 </div>
-
-                <div class="no-padding table-item margin-bottom">
-                    <h2 class="title-2 table-title">Country:</h2>
+                <div class="no-padding table-item">
+                    <h2 class="title-2 table-title">Postcode & Stad:</h2>
+                    <h2 class="space title-2">{{postalCode}}, {{city}}</h2>
+                </div>
+                <div class="no-padding table-item">
+                    <h2 class="title-2 table-title">Land:</h2>
                     <h2 class="space title-2">{{country}}</h2>
                 </div>
-                <div class="no-padding table-item margin-bottom">
-                    <h2 class="title-2 table-title">Parts of the house:</h2>
-                    <h2 class="space title-2">{{partsOfthehouse}}</h2>
+                <div class="no-padding table-item">
+                    <h2 class="title-2 table-title">E-mail:</h2>
+                    <h2 class="space title-2">{{emailaddress}}</h2>
                 </div>
                 <div class="no-padding table-item">
-                    <h2 class="title-2 table-title">Floor number:</h2>
-                    <h2 class="space title-2">{{floorNumber}}</h2>
+                    <h2 class="title-2 table-title">Telefoon 1:</h2>
+                    <h2 class="space title-2">{{telephonenumber1}}</h2>
                 </div>
-
+                <div class="no-padding table-item">
+                    <h2 class="title-2 table-title">Telefoon 2:</h2>
+                    <h2 class="space title-2">{{telephonenumber2}}</h2>
+                </div>
             </div>
 
 
         </div>
-
-
-
-
-        {{!-- <div class="p-x footer">
-            <p class="paragraph margin-bottom">Good luck!</p>
-            <div>
-                <img src="cid:colored-logo" class="no-padding" alt="Example Image">
-            </div>
-        </div> --}}
 
 
         <div class="footer p-x">
 
-            <p class="paragraph margin-bottom">Good luck!</p>
+            <p class="paragraph margin-bottom">Veel succes!</p>
 
             <div class="margin-top">
 
                 <p class="paragraph margin-bottom" style="font-weight: bold;">GreenTeam</p>
-                {{!-- <p class="paragraph margin-bottom">Vloeren & Trappen</p> --}}
-                <p class="paragraph margin-bottom">Floors & Stairs</p>
+                <p class="paragraph margin-bottom">Vloeren & Trappen</p>
 
-                {{!-- <img src="cid:colored-logo" class="no-padding" alt="Example Image"> --}}
-
-                {{!-- <img src="cid:colored-logo" class="no-padding" alt="Example Image"> --}}
             </div>
-            {{!-- <img src="../../../public/images/colored-logo.png" class="no-padding" alt="Example Image"> --}}
-
 
         </div>
 

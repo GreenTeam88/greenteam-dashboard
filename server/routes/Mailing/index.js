@@ -15,19 +15,13 @@ router.post('/', sendEmailConroller)
 
 router.get('/', (req, res) => {
 
-    // res.send('hello')
-
-    // res.render('welcome', { title: 'Welcome!', message: 'Hello from Handlebars!' });
-    // res.render('en/admin/welcome');
-
-
-    res.render("en/admin/collaboration-proposal-accepted", {
+    // res.render("en/admin/quotation-accepted", {
+    res.render("en/subContractor/email-confirmed", {
         projectnumber: "123456",
         nameSubcontractor: "Sub contractor"
     });
 
 
 })
-
 
 module.exports = router

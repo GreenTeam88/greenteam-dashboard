@@ -74,11 +74,10 @@ const sendEmailConroller = async (req, res) => {
         // Read the image file (make sure you have an image file on your server or local path)
         const logoPath = path.join(__dirname, '../public/images/logo.png');
         const coloredLogoPath = path.join(__dirname, '../public/images/colored-logo.png');
+        // const headerVector = path.join(__dirname, '../public/images/header-vector.png');
 
-        // console.log('logoPath', logoPath)
 
-
-        // Send the email 
+        // Send the email j
         const info = await transporter.sendMail({
             from: EMAIL_CONTACT_USER, // Sender address
             to, // List of recipients
@@ -87,21 +86,27 @@ const sendEmailConroller = async (req, res) => {
             context: data,
             attachments: [
                 {
-                    filename: 'logo.jpg',
+                    filename: 'logo.png',
                     path: logoPath, // Path to the image
                     cid: 'logo', // The CID identifier to reference the image inline
                 },
                 {
-                    filename: 'colored-logo.jpg',
+                    filename: 'colored-logo.png',
                     path: coloredLogoPath, // Path to the image
                     cid: 'colored-logo', // The CID identifier to reference the image inline
                 },
+                // {
+                //     filename: 'header-vector.png',
+                //     path: headerVector, // Path to the image
+                //     cid: 'header-vector', // The CID identifier to reference the image inline
+                // },
             ],
         });
 
 
         // Return the success message 
         res.status(200).send('Message sent successfully.')
+        console.log(info)
 
     } catch (error) {
         console.log('error', error)

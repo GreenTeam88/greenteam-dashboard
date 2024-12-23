@@ -236,15 +236,12 @@
 
         {{!-- The header of the template --}}
         <div class="header-box container margin-2-bottom">
-            {{!-- <div class="show-on-mobile-only no-padding">
-                <img src="cid:logo" alt="Example Image" class="main-logo margin-bottom">
-            </div> --}}
 
 
             <div class="no-padding text-container">
 
                 <p>Subject</p>
-                <h2 class="title-1 margin-2-bottom">Collaboration proposal accepted!</h2>
+                <h2 class="title-1 margin-2-bottom">New dates proposal</h2>
 
                 <p class="margin-top">Project number</p>
                 {{!-- This is the project name --}}
@@ -264,9 +261,53 @@
         {{!-- The text for dear GreenTeam --}}
         <div class="p-x  margin-2-bottom">
             <h2 class="margin-bottom title-1">Dear GreenTeam</h2>
-            <p class="paragraph">We are excited to let you know that <strong>{{nameSubcontractor}}</strong> has accepted
-                to collaborate
-                with you on project <strong>{{projectNumber}}</strong>.</p>
+            <p class="paragraph">
+                We have some exciting news: {{namesubcontractor}} has shared their availability for {{projectNumber}}
+                Please review and consider these new dates.
+            </p>
+        </div>
+
+
+
+        {{!-- Reason of declining text --}}
+        <div class="p-x  margin-2-bottom">
+            <h2 class="margin-bottom title-2" style="color: red;">Reason of declining</h2>
+
+            <p class="paragraph">
+                {{nameSubcontractor}} did not enter any reason.
+            </p>
+        </div>
+
+
+
+        {{!-- Available days --}}
+        <div class="p-x h-fit">
+            <h2 class="margin-bottom title-2">Available days</h2>
+
+
+            {{!-- Available days table --}}
+            <div class="project-table container">
+                <div class="no-padding table-item margin-bottom">
+                    <h2 class="title-2 table-title">18th September:</h2>
+                    <h2 class="title-2 space">08:00 AM - 09:00 AM - 01:00 PM</h2>
+                </div>
+
+                <div class="no-padding table-item margin-bottom">
+                    <h2 class="title-2 table-title">18th September:</h2>
+                    <h2 class="space title-2">No time selection</h2>
+                </div>
+
+                <div class="no-padding table-item">
+                    <h2 class="title-2 table-title">18th September:</h2>
+                    <h2 class="space title-2">Entire day</h2>
+                </div>
+
+                <div class="no-padding table-item">
+                    <h2 class="title-2 table-title">18th September:</h2>
+                    <h2 class="space title-2">08:00 AM - 09:00 AM - 01:00 PM - 01:00 PM</h2>
+                </div>
+            </div>
+
         </div>
 
 
@@ -355,32 +396,16 @@
         </div>
 
 
-
-
-        {{!-- <div class="p-x footer">
-            <p class="paragraph margin-bottom">Good luck!</p>
-            <div>
-                <img src="cid:colored-logo" class="no-padding" alt="Example Image">
-            </div>
-        </div> --}}
-
-
         <div class="footer p-x">
 
-            <p class="paragraph margin-bottom">Good luck!</p>
+            <p class="paragraph margin-bottom">Best regards,</p>
 
             <div class="margin-top">
 
                 <p class="paragraph margin-bottom" style="font-weight: bold;">GreenTeam</p>
-                {{!-- <p class="paragraph margin-bottom">Vloeren & Trappen</p> --}}
                 <p class="paragraph margin-bottom">Floors & Stairs</p>
 
-                {{!-- <img src="cid:colored-logo" class="no-padding" alt="Example Image"> --}}
-
-                {{!-- <img src="cid:colored-logo" class="no-padding" alt="Example Image"> --}}
             </div>
-            {{!-- <img src="../../../public/images/colored-logo.png" class="no-padding" alt="Example Image"> --}}
-
 
         </div>
 

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+
+        .show-on-mobile-only {
+            display: none;
+            width: 100%;
+        }
+
+
+        .main-container {
+            padding: 0;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+
+        .w-fit {
+            width: fit-content;
+        }
+
+        .h-fit {
+            height: fit-content;
+        }
+
+
+        .container {
+            margin-bottom: 10px;
+            padding: 15px;
+        }
+
+        .p-x {
+            padding-top: 0;
+            padding-bottom: 0;
+            padding-left: 50px;
+            padding-right: 50px;
+        }
+
+        .no-padding {
+            padding: 0;
+        }
+
+
+
+        .paragraph {
+            font-size: 15px;
+        }
+
+
+
+        .header-box {
+            background: #217946;
+            display: flex;
+            position: relative;
+        }
+
+
+        .header-box .image-container {
+            display: flex;
+        }
+
+
+        .header-box .image-container img {
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+
+
+
+        a {
+            color: black;
+        }
+
+        .blue-link {
+            color: blue;
+        }
+
+        .btn {
+            padding: 10px;
+            text-decoration: none;
+            display: flex;
+            border: solid 1px #F56900;
+            width: fit-content;
+        }
+
+        .btn p {
+            color: #F56900;
+        }
+
+        .colored-btn {
+            background-color: #F56900;
+        }
+
+        .colored-btn p {
+            color: white;
+        }
+
+
+        .header-box p,
+        .header-box h2 {
+            color: white;
+        }
+
+
+        .header-box .text-container {
+            width: 100%;
+            margin-top: 17px;
+        }
+
+        .title-1 {
+            font-size: 20px;
+        }
+
+        .title-2 {
+            font-size: 15px;
+        }
+
+        .margin-top {
+            margin-top: 10px;
+        }
+
+        .margin-2-top {
+            margin-top: 20px;
+        }
+
+        .margin-bottom {
+            margin-bottom: 10px;
+        }
+
+
+
+
+        .margin-2-bottom {
+            margin-bottom: 30px;
+        }
+
+
+
+
+
+        .project-table {
+            background: #F569001A;
+            border: solid 1px Orange;
+            height: fit-content;
+            width: 75%;
+        }
+
+
+        .table-item {
+            display: flex;
+        }
+
+
+
+        .main-logo {
+            width: 250px;
+            height: 100px;
+        }
+
+
+        .project-table h2:nth-child(2) {
+            flex: 1;
+            text-align: start;
+        }
+
+
+        .table-title {
+            width: 170px;
+        }
+
+
+
+        .footer img {
+            width: 120px;
+            height: 60px;
+        }
+
+
+
+        @media (max-width:700px) {
+
+
+            .header-box .text-container {
+                margin-top: 0;
+            }
+
+            .project-table {
+                padding-left: 20px;
+                width: auto;
+            }
+
+            .header-box .image-container img {
+                display: none;
+            }
+
+            .show-on-mobile-only {
+                display: flex;
+                width: 100%;
+                height: fit-content;
+            }
+
+
+            .show-on-mobile-only .main-logo {
+                height: 80px;
+                width: auto;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+
+            .title-1 {
+                font-size: 16px;
+            }
+
+            .title-2 {
+                font-size: 12px;
+            }
+
+
+            .table-title {
+                width: 140px;
+            }
+
+
+
+            .header-box {
+                display: block;
+            }
+
+
+            .p-x {
+                padding-top: 0;
+                padding-bottom: 0;
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+    <div class="main-container">
+
+        <div class="show-on-mobile-only no-padding margin-2-bottom">
+            <img src="cid:colored-logo" alt="Example Image" class="main-logo">
+        </div>
+
+
+        {{!-- The header of the template --}}
+        <div class="header-box container margin-2-bottom">
+
+
+            <div class="no-padding text-container">
+
+                <p>Onderwerp</p>
+                <h2 class="title-1 margin-2-bottom">Email bevestigen</h2>
+
+                <p class="margin-top">Onderaannemersnummer</p>
+                {{!-- This is the project name --}}
+                <h2 class="title-1">{{subcontratorNumber}}</h2>
+
+            </div>
+
+
+            <div class="image-container">
+                <img src="cid:logo" alt="Example Image" class="main-logo">
+            </div>
+
+        </div>
+
+
+
+        {{!-- The text for dear GreenTeam --}}
+        <div class="p-x  margin-2-bottom">
+            <h2 class="margin-bottom title-1">Hi {{subcontractorName}}, je bent bijna onderdeel van GreenTeam!</h2>
+
+            <p class="paragraph">
+                We kijken ernaar uit om samen te werken aan toekomstige projecten. Om ervoor te zorgen dat alles soepel
+                verloopt, vragen wij om je e-mail te bevestigen en een nieuw wachtwoord voor je persoonlijke account aan
+                te maken!
+            </p>
+
+
+            <a href="/" class="colored-btn btn margin-2-top">
+                <p>Email bevestigen</p>
+            </a>
+        </div>
+
+
+
+        <div class="p-x  margin-2-bottom">
+            <p class="paragraph margin-bottom">Does the button not work? Please copy this link and paste or enter it
+                into a browser.</p>
+
+            <a href="https://www.example.com/confirm-email" class="blue-link">https://www.example.com/confirm-email</a>
+
+        </div>
+
+        <div class="footer p-x">
+
+            <p class="paragraph margin-bottom">Bedankt voor je interesse.</p>
+
+            <p class="paragraph margin-bottom">Met vriendelijke groet,</p>
+
+            <div class="margin-top">
+
+                <p class="paragraph margin-bottom" style="font-weight: bold;">GreenTeam</p>
+                <p class="paragraph margin-bottom">Vloeren & Trappen</p>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</body>
+
+</html>

@@ -79,6 +79,34 @@
 
 
 
+        a {
+            color: black;
+        }
+
+        .blue-link {
+            color: blue;
+        }
+
+        .btn {
+            padding: 10px;
+            text-decoration: none;
+            display: flex;
+            border: solid 1px #F56900;
+            width: fit-content;
+        }
+
+        .btn p {
+            color: #F56900;
+        }
+
+        .colored-btn {
+            background-color: #F56900;
+        }
+
+        .colored-btn p {
+            color: white;
+        }
+
 
         .header-box p,
         .header-box h2 {
@@ -236,15 +264,12 @@
 
         {{!-- The header of the template --}}
         <div class="header-box container margin-2-bottom">
-            {{!-- <div class="show-on-mobile-only no-padding">
-                <img src="cid:logo" alt="Example Image" class="main-logo margin-bottom">
-            </div> --}}
 
 
             <div class="no-padding text-container">
 
                 <p>Subject</p>
-                <h2 class="title-1 margin-2-bottom">Collaboration proposal accepted!</h2>
+                <h2 class="title-1 margin-2-bottom">Project accepted!</h2>
 
                 <p class="margin-top">Project number</p>
                 {{!-- This is the project name --}}
@@ -263,17 +288,25 @@
 
         {{!-- The text for dear GreenTeam --}}
         <div class="p-x  margin-2-bottom">
-            <h2 class="margin-bottom title-1">Dear GreenTeam</h2>
-            <p class="paragraph">We are excited to let you know that <strong>{{nameSubcontractor}}</strong> has accepted
-                to collaborate
-                with you on project <strong>{{projectNumber}}</strong>.</p>
+
+            <h2 class="margin-bottom title-1">Dear {{subcontractorName}},</h2>
+
+            <p class="paragraph margin-bottom">
+                Thank you for accepting our collaboration proposal for project {{projectnumber}}. We are thrilled to
+                have you on board! Your expertise in {{specialty}} will be invaluable to the success of this project.
+            </p>
+            <p class="paragraph">
+                Here are the confirmed project details:
+            </p>
+
         </div>
 
 
 
 
+
         {{!-- Project details --}}
-        <div class="p-x h-fit">
+        <div class="p-x h-fit margin-2-bottom">
             <h2 class="margin-bottom title-2">Project details</h2>
 
 
@@ -281,7 +314,7 @@
             <div class="project-table container">
                 <div class="no-padding table-item margin-bottom">
                     <h2 class="title-2 table-title">Project number:</h2>
-                    <h2 class="title-2 space">{{projectNumber}}</h2>
+                    <h2 class="space title-2">{{projectNumber}}</h2>
                 </div>
 
                 <div class="no-padding table-item margin-bottom">
@@ -289,12 +322,12 @@
                     <h2 class="space title-2">{{projectName}}</h2>
                 </div>
 
-                <div class="no-padding table-item">
+                <div class="no-padding table-item margin-bottom">
                     <h2 class="title-2 table-title">Project date:</h2>
                     <h2 class="space title-2">{{projectDate}} - {{projectDate}}</h2>
                 </div>
-            </div>
 
+            </div>
 
 
             <div class="project-table container">
@@ -308,11 +341,13 @@
                     <h2 class="space title-2">{{generalDetails}}</h2>
                 </div>
 
-                <div class="no-padding table-item">
+                <div class="no-padding table-item margin-bottom">
                     <h2 class="title-2 table-title">Client preferences:</h2>
                     <h2 class="space title-2">{{clientPreferences}}</h2>
                 </div>
+
             </div>
+
 
         </div>
 
@@ -326,14 +361,14 @@
 
             {{!-- Project location table --}}
             <div class="project-table container">
-                <div class="no-padding table-item margin-bottom">
-                    <h2 class="title-2 table-title">Street name & number:</h2>
-                    <h2 class="space title-2">{{streetName}} {{number}}</h2>
-                </div>
 
                 <div class="no-padding table-item margin-bottom">
+                    <h2 class="title-2 table-title">Street name & number:</h2>
+                    <h2 class="space title-2">{{streetname}} {{number}}</h2>
+                </div>
+                <div class="no-padding table-item margin-bottom">
                     <h2 class="title-2 table-title">Postal code & City:</h2>
-                    <h2 class="space title-2">{{postalcode}} {{city}}</h2>
+                    <h2 class="space title-2">{{postalcode}}, {{city}}</h2>
                 </div>
 
                 <div class="no-padding table-item margin-bottom">
@@ -357,12 +392,8 @@
 
 
 
-        {{!-- <div class="p-x footer">
-            <p class="paragraph margin-bottom">Good luck!</p>
-            <div>
-                <img src="cid:colored-logo" class="no-padding" alt="Example Image">
-            </div>
-        </div> --}}
+
+
 
 
         <div class="footer p-x">
@@ -372,15 +403,9 @@
             <div class="margin-top">
 
                 <p class="paragraph margin-bottom" style="font-weight: bold;">GreenTeam</p>
-                {{!-- <p class="paragraph margin-bottom">Vloeren & Trappen</p> --}}
                 <p class="paragraph margin-bottom">Floors & Stairs</p>
 
-                {{!-- <img src="cid:colored-logo" class="no-padding" alt="Example Image"> --}}
-
-                {{!-- <img src="cid:colored-logo" class="no-padding" alt="Example Image"> --}}
             </div>
-            {{!-- <img src="../../../public/images/colored-logo.png" class="no-padding" alt="Example Image"> --}}
-
 
         </div>
 
