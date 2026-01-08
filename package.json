@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "next",
-    "build": "next build",
+    "build": "prisma generate && next build",
+    "postinstall": "prisma generate",
     "start": "next start",
     "type-check": "tsc --noEmit",
     "lint": "eslint  --fix --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\"",
