@@ -1,0 +1,132 @@
+// Prisma schema for GreenTeam Dashboard
+// Calculator builder models for dynamic form generation
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// CALCULATOR BUILDER MODELS
+// ============================================
+
+model Product {
+  id                String   @id @default(cuid())
+  name              String
+  slug              String   @unique
+  description       String?
+  baseImageUrl      String?
+  baseImagePublicId String?
+  status            String   @default("draft") // draft | published
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  // Relations
+  steps FormStep[]
+
+  @@map("products")
+}
+
+model FormStep {
+  id          String   @id @default(cuid())
+  productId   String
+  order       Int // Order of the step in the form
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  product   Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
+  questions Question[]
+
+  @@unique([productId, order])
+  @@map("form_steps")
+}
+
+model Question {
+  id     String @id @default(cuid())
+  stepId String
+  order  Int // Order of the question within the step
+
+  type     StepType
+  question String
+  required Boolean  @default(true)
+
+  // Pricing configuration
+  pricingImpact PricingImpact @default(NONE)
+  pricePerUnit  Float?
+  unit          String?
+  minValue      Float?
+  maxValue      Float?
+  defaultValue  Float?
+  placeholder   String?
+  minLength     Int?
+  maxLength     Int?
+  multiline     Boolean       @default(false)
+
+  // FILE_UPLOAD type fields
+  acceptedFileTypes String?
+  maxFileSize       Int?
+  allowMultiple     Boolean @default(false)
+
+  // COUNT_SELECTED pricing: count items above this threshold
+  countThreshold Int?
+
+  // Conditional logic - format: { questionId: "xxx", value: "yes" } or { operator: "OR", conditions: [...] }
+  conditionalOn Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  step    FormStep     @relation(fields: [stepId], references: [id], onDelete: Cascade)
+  options StepOption[]
+
+  @@unique([stepId, order])
+  @@map("questions")
+}
+
+model StepOption {
+  id            String  @id @default(cuid())
+  questionId    String
+  label         String // Display text
+  value         String // Internal value
+  price         Float? // Price for this option (for BASE pricing)
+  imageUrl      String? // Optional image URL for this option
+  imagePublicId String?
+  order         Int // Order in the list
+  isExclusive   Boolean @default(false) // When selected, clears other selections (for "Nee" options)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@unique([questionId, order])
+  @@map("step_options")
+}
+
+// ============================================
+// ENUMS
+// ============================================
+
+enum StepType {
+  SELECT // Dropdown/radio selection
+  NUMBER // Number input
+  TEXT // Text input
+  CHECKBOX // Multiple selection
+  FILE_UPLOAD // File upload
+}
+
+enum PricingImpact {
+  BASE // Sets the base price (first step usually)
+  MULTIPLIER // Multiplies current price
+  ADDITIVE // Adds fixed amount (quantity * pricePerUnit)
+  COUNT_SELECTED // Counts selected items above threshold × pricePerUnit (for floor costs)
+  NONE // No pricing impact
+}

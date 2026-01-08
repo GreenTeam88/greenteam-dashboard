@@ -1,6 +1,7 @@
 'use client';
 
 // import Image from 'next/image';
+import { Calculator } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -14,6 +15,9 @@ import { ReactComponent as PlanIcon } from '@/assets/icons/PlanIcon.svg';
 import { ReactComponent as QuestionIcon } from '@/assets/icons/QuestionIcon.svg';
 import { ReactComponent as SubcontractorIcon } from '@/assets/icons/SubcontractorIcon.svg';
 
+// Wrapper component to make Lucide icons compatible with the sidebar pattern
+const CalculatorIcon = () => <Calculator className="h-5 w-5 text-current" />;
+
 export default function Sidebar() {
   const pathname = usePathname();
   const links = [
@@ -22,6 +26,12 @@ export default function Sidebar() {
     { text: 'Quotations', href: '/dashboard/quotations', icon: LayersIcon, active: pathname.includes('/quotations') },
     { text: 'Invoicing', href: '/dashboard/invoicing', icon: DocumentIcon, active: pathname.includes('/invoicing') },
     { text: 'Pricelist', href: '/dashboard/pricelist', icon: EuroIcon, active: pathname.includes('/pricelist') },
+    {
+      text: 'Calculators',
+      href: '/dashboard/calculators',
+      icon: CalculatorIcon,
+      active: pathname.includes('/calculators'),
+    },
     {
       text: 'Subcontractors',
       href: '/dashboard/subcontractors',
