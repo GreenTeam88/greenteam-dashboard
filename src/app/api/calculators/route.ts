@@ -2,9 +2,6 @@ import { NextResponse } from 'next/server';
 
 import prisma from '@/lib/prisma';
 
-// Force dynamic rendering to prevent build-time database connection
-export const dynamic = 'force-dynamic';
-
 // GET /api/calculators - Get all published calculators
 export async function GET() {
   try {
