@@ -7,17 +7,14 @@ import { useRouter } from 'next/navigation';
 import * as React from 'react';
 import { toast } from 'sonner';
 
+import {
+  deleteCalculator,
+  duplicateCalculator,
+  publishCalculator,
+  unpublishCalculator,
+} from '@/app/actions/calculatorActions';
 import CustomDataTable from '@/components/custom/CustomDataTable';
 import { CustomToolTip } from '@/components/custom/CustomToolTip';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -28,13 +25,16 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
-  deleteCalculator,
-  duplicateCalculator,
-  publishCalculator,
-  unpublishCalculator,
-} from '@/app/actions/calculatorActions';
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { cn } from '@/lib/utils';
 
 import type { ProductTableRow } from '@/types/calculator';
 
@@ -307,10 +307,7 @@ export default function CalculatorsDataTable({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel
-              className="bg-gray-100 text-gray-700 hover:bg-gray-200"
-              disabled={isDeleting}
-            >
+            <AlertDialogCancel className="bg-gray-100 text-gray-700 hover:bg-gray-200" disabled={isDeleting}>
               Cancel
             </AlertDialogCancel>
             <AlertDialogAction

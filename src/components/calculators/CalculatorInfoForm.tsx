@@ -1,10 +1,11 @@
 'use client';
 
+import { FileText, Info, Link2 } from 'lucide-react';
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { FileText, Link2, Info } from 'lucide-react';
 
 interface CalculatorInfoFormProps {
   calculatorName: string;
@@ -96,9 +97,7 @@ export function CalculatorInfoForm({
             rows={3}
             className="resize-none bg-white focus:border-bgPrimaryGreen focus:ring-bgPrimaryGreen"
           />
-          <p className="text-xs text-gray-500">
-            This description may be shown to users on the calculator page.
-          </p>
+          <p className="text-xs text-gray-500">This description may be shown to users on the calculator page.</p>
         </div>
       </CardContent>
     </Card>

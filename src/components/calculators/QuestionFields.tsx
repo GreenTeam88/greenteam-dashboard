@@ -1,15 +1,27 @@
 'use client';
 
+import {
+  CheckSquare,
+  DollarSign,
+  Hash,
+  HelpCircle,
+  Image as ImageIcon,
+  List,
+  Plus,
+  Trash2,
+  Type,
+  Upload,
+} from 'lucide-react';
+
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Plus, Trash2, Image as ImageIcon, HelpCircle, DollarSign, Hash, Type, Upload, CheckSquare, List } from 'lucide-react';
+import { uploadToCloudinary } from '@/lib/cloudinary';
 import { ConditionalLogicSelector } from './ConditionalLogicSelector';
 import { DeleteConfirmation } from './DeleteConfirmation';
-import { uploadToCloudinary } from '@/lib/cloudinary';
 
-import type { StepFormData, QuestionFormData, OptionFormData, StepType, PricingImpact } from '@/types/calculator';
+import type { OptionFormData, PricingImpact, QuestionFormData, StepFormData, StepType } from '@/types/calculator';
 
 interface QuestionFieldsProps {
   step: StepFormData;
@@ -77,7 +89,9 @@ export function QuestionFields({
         </div>
         <div className="flex items-center gap-2">
           {/* Pricing Impact Badge */}
-          <span className={`rounded-full border px-2.5 py-0.5 text-xs font-medium ${pricingImpactColors[pricingImpact]}`}>
+          <span
+            className={`rounded-full border px-2.5 py-0.5 text-xs font-medium ${pricingImpactColors[pricingImpact]}`}
+          >
             {pricingImpact === 'NONE' ? 'No pricing' : pricingImpact.toLowerCase()}
           </span>
           {step.questions.length > 1 && (
@@ -140,7 +154,10 @@ export function QuestionFields({
 
           <div className="space-y-1.5">
             <Label className="text-xs font-medium text-gray-700">Pricing Impact</Label>
-            <Select value={pricingImpact} onValueChange={(value: PricingImpact) => handleUpdate({ pricingImpact: value })}>
+            <Select
+              value={pricingImpact}
+              onValueChange={(value: PricingImpact) => handleUpdate({ pricingImpact: value })}
+            >
               <SelectTrigger className="h-10 bg-white">
                 <div className="flex items-center gap-2">
                   <DollarSign className="h-4 w-4 text-gray-400" />
@@ -185,7 +202,9 @@ export function QuestionFields({
 
         {/* Question Label */}
         <div className="space-y-1.5">
-          <Label className="text-xs font-medium text-gray-700">Question Text <span className="text-red-500">*</span></Label>
+          <Label className="text-xs font-medium text-gray-700">
+            Question Text <span className="text-red-500">*</span>
+          </Label>
           <Input
             value={question.question || ''}
             onChange={(e) => handleUpdate({ question: e.target.value })}
@@ -301,12 +320,12 @@ export function QuestionFields({
         {/* COUNT_SELECTED Pricing Field (for floor costs, etc.) */}
         {pricingImpact === 'COUNT_SELECTED' && (
           <div className="rounded-lg border border-teal-100 bg-teal-50 p-3">
-            <Label className="mb-3 block text-xs font-medium text-teal-700">
-              Count Selected Pricing Settings
-            </Label>
+            <Label className="mb-3 block text-xs font-medium text-teal-700">Count Selected Pricing Settings</Label>
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-1">
-                <Label className="text-xs text-teal-600">Price Per Item <span className="text-red-500">*</span></Label>
+                <Label className="text-xs text-teal-600">
+                  Price Per Item <span className="text-red-500">*</span>
+                </Label>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">€</span>
                   <Input
@@ -332,7 +351,8 @@ export function QuestionFields({
               </div>
             </div>
             <p className="mt-2 text-xs text-teal-600">
-              Counts selected items with numeric value above threshold. E.g., for floors: set threshold to 0 to only count floors above ground level (€25 each).
+              Counts selected items with numeric value above threshold. E.g., for floors: set threshold to 0 to only
+              count floors above ground level (€25 each).
             </p>
           </div>
         )}

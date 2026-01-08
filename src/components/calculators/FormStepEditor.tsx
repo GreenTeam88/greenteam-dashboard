@@ -1,15 +1,16 @@
 'use client';
 
-import { useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { useSortable } from '@dnd-kit/sortable';
-import { GripVertical, ChevronDown, ChevronUp, Plus, Layers } from 'lucide-react';
-import { QuestionFields } from './QuestionFields';
-import { DeleteConfirmation } from './DeleteConfirmation';
+import { ChevronDown, ChevronUp, GripVertical, Layers, Plus } from 'lucide-react';
+import { useState } from 'react';
 
-import type { StepFormData, QuestionFormData, OptionFormData } from '@/types/calculator';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { DeleteConfirmation } from './DeleteConfirmation';
+import { QuestionFields } from './QuestionFields';
+
+import type { OptionFormData, QuestionFormData, StepFormData } from '@/types/calculator';
 
 interface FormStepEditorProps {
   step: StepFormData;
@@ -194,11 +195,7 @@ export function FormStepEditor({
           <span>
             {step.questions.length} {step.questions.length === 1 ? 'question' : 'questions'} configured
           </span>
-          <button
-            type="button"
-            onClick={() => setCollapsed(false)}
-            className="text-textGreenPrimary hover:underline"
-          >
+          <button type="button" onClick={() => setCollapsed(false)} className="text-textGreenPrimary hover:underline">
             Click to expand
           </button>
         </div>

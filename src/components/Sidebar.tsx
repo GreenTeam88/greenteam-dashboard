@@ -1,9 +1,9 @@
 'use client';
 
 // import Image from 'next/image';
+import { Calculator } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Calculator } from 'lucide-react';
 
 import { ReactComponent as DocumentIcon } from '@/assets/icons/DocumentIcon.svg';
 import { ReactComponent as EuroIcon } from '@/assets/icons/EuroIcon.svg';

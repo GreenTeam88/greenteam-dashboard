@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+
 import { uploadToS3 } from '@/lib/s3';
 
 export async function POST(request: NextRequest) {
@@ -6,10 +7,7 @@ export async function POST(request: NextRequest) {
     // Check if AWS credentials are configured
     if (!process.env.AWS_ACCESS_KEY_ID || !process.env.AWS_SECRET_ACCESS_KEY) {
       console.error('AWS credentials not configured');
-      return NextResponse.json(
-        { error: 'AWS credentials not configured' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'AWS credentials not configured' }, { status: 500 });
     }
 
     const formData = await request.formData();
@@ -37,9 +35,6 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Upload error:', error);
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    return NextResponse.json(
-      { error: `Failed to upload file: ${errorMessage}` },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: `Failed to upload file: ${errorMessage}` }, { status: 500 });
   }
 }

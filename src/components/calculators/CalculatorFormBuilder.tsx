@@ -1,27 +1,32 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import {
-  DndContext,
   closestCenter,
+  DndContext,
+  DragEndEvent,
   KeyboardSensor,
   PointerSensor,
   useSensor,
   useSensors,
-  DragEndEvent,
 } from '@dnd-kit/core';
-import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Plus, Loader2 } from 'lucide-react';
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+import { Loader2, Plus } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
+import { createCalculator, updateCalculator } from '@/app/actions/calculatorActions';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CalculatorInfoForm } from './CalculatorInfoForm';
 import { FormStepEditor } from './FormStepEditor';
-import { createCalculator, updateCalculator } from '@/app/actions/calculatorActions';
 
-import type { Product, StepFormData, QuestionFormData, OptionFormData, ProductStatus } from '@/types/calculator';
+import type { OptionFormData, Product, ProductStatus, QuestionFormData, StepFormData } from '@/types/calculator';
 
 interface CalculatorFormBuilderProps {
   initialData?: Product;
@@ -307,6 +312,7 @@ export default function CalculatorFormBuilder({ initialData, isEdit = false }: C
         };
       });
 
+      /* eslint-disable @typescript-eslint/no-unused-vars, no-unused-vars */
       const data = {
         name: calculatorName,
         slug,
@@ -314,16 +320,17 @@ export default function CalculatorFormBuilder({ initialData, isEdit = false }: C
         baseImageUrl: null,
         baseImagePublicId: null,
         status,
-        steps: stepsWithDescriptions.map(({ tempId: stepTempId, id: _stepId, ...s }) => ({
+        steps: stepsWithDescriptions.map(({ tempId: stepTempId, id: stepId, ...s }) => ({
           ...s,
           tempId: stepTempId,
-          questions: s.questions.map(({ tempId: questionTempId, id: _questionId, options, ...q }) => ({
+          questions: s.questions.map(({ tempId: questionTempId, id: questionId, options, ...q }) => ({
             ...q,
             tempId: questionTempId,
-            options: options.map(({ tempId: _optionTempId, id: _optionId, ...o }) => o),
+            options: options.map(({ tempId: optionTempId, id: optionId, ...o }) => o),
           })),
         })),
       };
+      /* eslint-enable @typescript-eslint/no-unused-vars, no-unused-vars */
 
       const result =
         isEdit && initialData?.id ? await updateCalculator(initialData.id, data) : await createCalculator(data);

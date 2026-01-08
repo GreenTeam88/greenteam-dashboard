@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
+import { getCalculatorsForTable } from '@/app/actions/calculatorActions';
 import CalculatorsDataTable from '@/components/calculators/CalculatorsDataTable';
 import SortBy from '@/components/SortBy';
-import { getCalculatorsForTable } from '@/app/actions/calculatorActions';
 
 import type { ProductTableRow } from '@/types/calculator';
 

@@ -5,7 +5,7 @@ import { revalidatePath } from 'next/cache';
 
 import prisma from '@/lib/prisma';
 
-import type { ProductFormData, Product, ProductTableRow, ActionResult } from '@/types/calculator';
+import type { ActionResult, Product, ProductFormData, ProductTableRow } from '@/types/calculator';
 
 // ============================================
 // SHARED TYPES AND HELPERS FOR CONDITIONAL LOGIC
@@ -115,28 +115,25 @@ export async function createCalculator(formData: ProductFormData): Promise<Actio
 
           for (const questionData of stepData.questions) {
             const questionRecord = questionData as unknown as Record<string, unknown>;
+            /* eslint-disable @typescript-eslint/no-unused-vars, no-unused-vars */
             const {
               tempId,
               options,
               conditionalOn,
               id: questionId,
-              stepId: _stepId,
-              createdAt: _createdAt,
-              updatedAt: _updatedAt,
+              stepId,
+              createdAt,
+              updatedAt,
               ...restOfQuestion
             } = questionRecord;
+            /* eslint-enable @typescript-eslint/no-unused-vars, no-unused-vars */
 
             // Clean up option data
             const optionsArray = options as Record<string, unknown>[] | undefined;
             const cleanedOptions = optionsArray?.map((o) => {
-              const {
-                tempId: _optionTempId,
-                id: _optionId,
-                questionId: _optionQuestionId,
-                createdAt: _optCreatedAt,
-                updatedAt: _optUpdatedAt,
-                ...optionData
-              } = o;
+              /* eslint-disable @typescript-eslint/no-unused-vars, no-unused-vars */
+              const { tempId, id, questionId, createdAt, updatedAt, ...optionData } = o;
+              /* eslint-enable @typescript-eslint/no-unused-vars, no-unused-vars */
               // Remove undefined values
               const cleaned: Record<string, unknown> = {};
               for (const [key, value] of Object.entries(optionData)) {
@@ -270,16 +267,18 @@ export async function updateCalculator(productId: string, formData: ProductFormD
 
           for (const questionData of stepData.questions) {
             const questionRecord = questionData as unknown as Record<string, unknown>;
+            /* eslint-disable @typescript-eslint/no-unused-vars, no-unused-vars */
             const {
               tempId,
               options,
               conditionalOn,
               id: questionId,
-              stepId: _stepId, // Remove stepId - Prisma handles this via relation
-              createdAt: _createdAt,
-              updatedAt: _updatedAt,
+              stepId,
+              createdAt,
+              updatedAt,
               ...restOfQuestion
             } = questionRecord;
+            /* eslint-enable @typescript-eslint/no-unused-vars, no-unused-vars */
 
             console.log(`Creating question:`, restOfQuestion.question);
             console.log(`Options count:`, (options as unknown[])?.length || 0);
@@ -288,14 +287,9 @@ export async function updateCalculator(productId: string, formData: ProductFormD
             // Clean up option data - remove fields that shouldn't be in nested create
             const optionsArray = options as Record<string, unknown>[] | undefined;
             const cleanedOptions = optionsArray?.map((o) => {
-              const {
-                tempId: _optionTempId,
-                id: _optionId,
-                questionId: _questionId, // Remove questionId - Prisma handles this via relation
-                createdAt: _createdAt,
-                updatedAt: _updatedAt,
-                ...optionData
-              } = o;
+              /* eslint-disable @typescript-eslint/no-unused-vars, no-unused-vars */
+              const { tempId, id, questionId, createdAt, updatedAt, ...optionData } = o;
+              /* eslint-enable @typescript-eslint/no-unused-vars, no-unused-vars */
               // Remove undefined values
               const cleaned: Record<string, unknown> = {};
               for (const [key, value] of Object.entries(optionData)) {

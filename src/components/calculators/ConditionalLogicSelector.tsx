@@ -1,19 +1,20 @@
 'use client';
 
-import { useState } from 'react';
-import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { GitBranch, Info, Plus, X } from 'lucide-react';
+import { useState } from 'react';
+
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { isConditionalLogic, isConditionalRule } from '@/types/calculator';
 
 import type {
-  StepFormData,
-  QuestionFormData,
-  ConditionalRule,
   ConditionalLogic,
   ConditionalOperator,
+  ConditionalRule,
+  QuestionFormData,
+  StepFormData,
 } from '@/types/calculator';
-import { isConditionalLogic, isConditionalRule } from '@/types/calculator';
 
 interface ConditionalLogicSelectorProps {
   step: StepFormData;
@@ -165,13 +166,7 @@ export function ConditionalLogicSelector({ step, question, allSteps, updateQuest
           )}
         </div>
         {!isFirstQuestionInFirstStep && availableOptions.length > 0 && (
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={addCondition}
-            className="h-7 text-xs"
-          >
+          <Button type="button" variant="outline" size="sm" onClick={addCondition} className="h-7 text-xs">
             <Plus className="mr-1 h-3 w-3" />
             Add Condition
           </Button>
