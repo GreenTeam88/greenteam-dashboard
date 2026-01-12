@@ -229,7 +229,19 @@ export function QuestionFields({
 
         {/* FILE_UPLOAD Specific Fields */}
         {type === 'FILE_UPLOAD' && (
-          <div className="rounded-lg border border-gray-100 bg-gray-50 p-3">
+          <div className="rounded-lg border border-gray-100 bg-gray-50 p-3 space-y-3">
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id={`required-upload-${question.tempId}`}
+                checked={question.required}
+                onChange={(e) => handleUpdate({ required: e.target.checked })}
+                className="h-4 w-4 rounded border-gray-300 text-bgPrimaryGreen focus:ring-bgPrimaryGreen"
+              />
+              <Label htmlFor={`required-upload-${question.tempId}`} className="cursor-pointer text-sm text-gray-700">
+                Mandatory upload (user must upload a file)
+              </Label>
+            </div>
             <div className="flex items-center gap-2">
               <input
                 type="checkbox"
