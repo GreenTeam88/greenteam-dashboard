@@ -21,6 +21,9 @@ export interface ConditionalLogic {
   conditions: ConditionalRule[];
 }
 
+// Price variants type - maps service/variant name to price
+export type PriceVariants = Record<string, number>;
+
 // Database models (from Prisma)
 export interface StepOption {
   id: string;
@@ -32,6 +35,7 @@ export interface StepOption {
   imagePublicId: string | null;
   order: number;
   isExclusive?: boolean; // When selected, deselects all other options
+  priceVariants?: PriceVariants | null; // Different prices per service type
 }
 
 export interface Question {
@@ -58,6 +62,10 @@ export interface Question {
   conditionalOn: ConditionalRule | ConditionalLogic | null;
   // For COUNT_SELECTED pricing: count items matching criteria and multiply by pricePerUnit
   countThreshold?: number; // Only count items > this value (e.g., 0 for floors above ground)
+  // Multiply price by another question's value (for Traprenovatie: price × number of treads)
+  multiplyByQuestionId?: string | null;
+  // Price variants: which question's answer determines the price variant to use
+  variantSourceQuestionId?: string | null;
   options: StepOption[];
 }
 
@@ -93,6 +101,7 @@ export interface OptionFormData {
   imagePublicId: string | null;
   order: number;
   isExclusive?: boolean;
+  priceVariants?: PriceVariants | null;
 }
 
 export interface QuestionFormData {
@@ -117,6 +126,8 @@ export interface QuestionFormData {
   allowMultiple: boolean;
   conditionalOn: ConditionalRule | ConditionalLogic | null;
   countThreshold?: number | null;
+  multiplyByQuestionId?: string | null;
+  variantSourceQuestionId?: string | null;
   options: OptionFormData[];
 }
 

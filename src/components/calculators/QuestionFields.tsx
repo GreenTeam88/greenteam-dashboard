@@ -21,7 +21,7 @@ import { uploadToCloudinary } from '@/lib/cloudinary';
 import { ConditionalLogicSelector } from './ConditionalLogicSelector';
 import { DeleteConfirmation } from './DeleteConfirmation';
 
-import type { OptionFormData, PricingImpact, QuestionFormData, StepFormData, StepType } from '@/types/calculator';
+import type { OptionFormData, PricingImpact, PriceVariants, QuestionFormData, StepFormData, StepType } from '@/types/calculator';
 
 interface QuestionFieldsProps {
   step: StepFormData;
@@ -72,6 +72,31 @@ export function QuestionFields({
 
   const handleUpdate = (updates: Partial<QuestionFormData>) => {
     updateQuestion(step.tempId!, question.tempId!, updates);
+  };
+
+  // Get the variant source question's options (for showing price variant inputs)
+  const variantSourceQuestion = question.variantSourceQuestionId
+    ? allSteps.flatMap((s) => s.questions).find((q) => (q.tempId || q.id) === question.variantSourceQuestionId)
+    : null;
+  const variantOptions = variantSourceQuestion?.options || [];
+
+  // Helper to update a price variant for an option
+  const updatePriceVariant = (optionTempId: string, variantLabel: string, price: number | null) => {
+    const option = options.find((o) => o.tempId === optionTempId);
+    if (!option) return;
+
+    const currentVariants: PriceVariants = option.priceVariants || {};
+    const newVariants: PriceVariants = { ...currentVariants };
+
+    if (price === null || price === 0) {
+      delete newVariants[variantLabel];
+    } else {
+      newVariants[variantLabel] = price;
+    }
+
+    updateOption(step.tempId!, question.tempId!, optionTempId, {
+      priceVariants: Object.keys(newVariants).length > 0 ? newVariants : null,
+    });
   };
 
   return (
@@ -369,6 +394,113 @@ export function QuestionFields({
           </div>
         )}
 
+        {/* Multiply By Question Field - for multiplying option price by another question's value */}
+        {(pricingImpact === 'BASE' || pricingImpact === 'ADDITIVE') && (type === 'SELECT' || type === 'CHECKBOX') && (
+          <div className="rounded-lg border border-indigo-100 bg-indigo-50 p-3">
+            <Label className="mb-2 block text-xs font-medium text-indigo-700">
+              Multiply Price By Question Value (Optional)
+            </Label>
+            <Select
+              value={question.multiplyByQuestionId || 'none'}
+              onValueChange={(value) => handleUpdate({ multiplyByQuestionId: value === 'none' ? null : value })}
+            >
+              <SelectTrigger className="h-10 bg-white">
+                <SelectValue placeholder="Select a question..." />
+              </SelectTrigger>
+              <SelectContent className="bg-white">
+                <SelectItem value="none">
+                  <span className="text-gray-500">No multiplication (use option price as-is)</span>
+                </SelectItem>
+                {/* Show all questions from previous steps and current step that come before this question */}
+                {allSteps.flatMap((s) =>
+                  s.questions
+                    .filter((q) => {
+                      // Only show questions that come before this one
+                      const currentStepOrder = step.order;
+                      const currentQuestionOrder = question.order;
+
+                      if (s.order < currentStepOrder) {
+                        return true; // All questions from previous steps
+                      }
+                      if (s.order === currentStepOrder && q.order < currentQuestionOrder) {
+                        return true; // Questions in same step but before this one
+                      }
+                      return false;
+                    })
+                    .filter((q) => {
+                      // Only show questions that can have numeric values
+                      return q.type === 'NUMBER' || q.type === 'SELECT';
+                    })
+                    .map((q) => (
+                      <SelectItem key={q.tempId || q.id} value={q.tempId || q.id || ''}>
+                        <div className="flex flex-col">
+                          <span className="font-medium">{q.question || 'Unnamed question'}</span>
+                          <span className="text-xs text-gray-500">
+                            Step {s.order + 1} • {q.type}
+                          </span>
+                        </div>
+                      </SelectItem>
+                    ))
+                )}
+              </SelectContent>
+            </Select>
+            <p className="mt-1.5 text-xs text-indigo-600">
+              When set, the selected option&apos;s price will be multiplied by the value from the chosen question.
+              <br />
+              Example: €300 (Rondom) × 15 (treads) = €4,500
+            </p>
+          </div>
+        )}
+
+        {/* Price Variants Source - ONLY show if there are SELECT questions with 3+ options before this */}
+        {pricingImpact === 'BASE' && (type === 'SELECT' || type === 'CHECKBOX') && (() => {
+          const serviceQuestions = allSteps.flatMap((s) =>
+            s.questions.filter((q) => {
+              if (s.order < step.order) return q.type === 'SELECT' && q.options.length >= 3;
+              if (s.order === step.order && q.order < question.order) return q.type === 'SELECT' && q.options.length >= 3;
+              return false;
+            })
+          );
+          if (serviceQuestions.length === 0) return null;
+
+          return (
+            <div className="rounded border border-dashed border-gray-300 p-2">
+              <label className="flex cursor-pointer items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={!!question.variantSourceQuestionId}
+                  onChange={(e) => {
+                    if (e.target.checked && serviceQuestions.length > 0) {
+                      handleUpdate({ variantSourceQuestionId: serviceQuestions[0].tempId || serviceQuestions[0].id });
+                    } else {
+                      handleUpdate({ variantSourceQuestionId: null });
+                    }
+                  }}
+                  className="h-4 w-4 rounded border-gray-300"
+                />
+                <span className="text-xs text-gray-600">Different prices per service (for Traprenovatie)</span>
+              </label>
+              {question.variantSourceQuestionId && serviceQuestions.length > 1 && (
+                <Select
+                  value={question.variantSourceQuestionId || ''}
+                  onValueChange={(value) => handleUpdate({ variantSourceQuestionId: value })}
+                >
+                  <SelectTrigger className="mt-2 h-8 text-xs bg-white">
+                    <SelectValue placeholder="Select service question..." />
+                  </SelectTrigger>
+                  <SelectContent className="bg-white">
+                    {serviceQuestions.map((q) => (
+                      <SelectItem key={q.tempId || q.id} value={q.tempId || q.id || ''}>
+                        {q.question || 'Unnamed'} ({q.options.length} options)
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            </div>
+          );
+        })()}
+
         {/* SELECT or CHECKBOX Options Field */}
         {(type === 'SELECT' || type === 'CHECKBOX') && (
           <div className="space-y-3">
@@ -451,6 +583,39 @@ export function QuestionFields({
                           </div>
                         )}
                       </div>
+
+                      {/* Price Variants - compact grid when variant source is selected */}
+                      {pricingImpact === 'BASE' && variantOptions.length > 0 && (
+                        <div className="mt-2 rounded border border-emerald-200 bg-emerald-50 p-2">
+                          <div className="grid grid-cols-3 gap-2">
+                            {variantOptions.map((variant) => (
+                              <div key={variant.tempId || variant.value} className="flex flex-col">
+                                <label className="text-[10px] font-medium text-emerald-700 mb-0.5 truncate" title={variant.label}>
+                                  {variant.label}
+                                </label>
+                                <div className="relative">
+                                  <span className="absolute left-1.5 top-1/2 -translate-y-1/2 text-xs text-gray-400">€</span>
+                                  <Input
+                                    type="number"
+                                    step="0.01"
+                                    value={option.priceVariants?.[variant.label] || ''}
+                                    onChange={(e) =>
+                                      updatePriceVariant(
+                                        option.tempId!,
+                                        variant.label,
+                                        parseFloat(e.target.value) || null
+                                      )
+                                    }
+                                    placeholder={String(option.price || 0)}
+                                    className="h-8 bg-white text-sm pl-5"
+                                    title={variant.label}
+                                  />
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
 
                       {/* Image Upload and Exclusive Option Row */}
                       <div className="flex items-center justify-between gap-2">
