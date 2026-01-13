@@ -76,6 +76,14 @@ model Question {
   // COUNT_SELECTED pricing: count items above this threshold
   countThreshold Int?
 
+  // Multiply price by another question's value (for Traprenovatie: price × number of treads)
+  // When set, the selected option's price will be multiplied by the numeric value from the referenced question
+  multiplyByQuestionId String?
+
+  // Price variants: use different prices based on a previous answer (e.g., service type)
+  // References the question whose answer determines which price variant to use
+  variantSourceQuestionId String?
+
   // Conditional logic - format: { questionId: "xxx", value: "yes" } or { operator: "OR", conditions: [...] }
   conditionalOn Json?
 
@@ -100,6 +108,10 @@ model StepOption {
   imagePublicId String?
   order         Int // Order in the list
   isExclusive   Boolean @default(false) // When selected, clears other selections (for "Nee" options)
+
+  // Price variants: different prices based on service type
+  // Format: { "PVC": 300, "Laminaat": 300, "Hout": 350, ... }
+  priceVariants Json?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

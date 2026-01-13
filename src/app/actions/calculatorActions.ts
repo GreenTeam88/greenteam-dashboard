@@ -171,7 +171,7 @@ export async function createCalculator(formData: ProductFormData): Promise<Actio
           }
         }
 
-        // Second pass: update conditional logic with remapped IDs
+        // Second pass: update conditional logic and multiplyByQuestionId with remapped IDs
         for (const { id, conditionalOn } of questionsToUpdate) {
           const remappedConditional = remapConditionalIdsBase(conditionalOn, questionIdMap);
           if (remappedConditional) {
@@ -180,6 +180,40 @@ export async function createCalculator(formData: ProductFormData): Promise<Actio
               data: {
                 conditionalOn: remappedConditional as unknown as Prisma.InputJsonValue,
               },
+            });
+          }
+        }
+
+        // Third pass: update multiplyByQuestionId and variantSourceQuestionId references
+        const allQuestions = await tx.question.findMany({
+          where: {
+            step: {
+              productId: product.id,
+            },
+          },
+        });
+
+        for (const q of allQuestions) {
+          const updates: { multiplyByQuestionId?: string; variantSourceQuestionId?: string } = {};
+
+          if (q.multiplyByQuestionId) {
+            const remappedId = questionIdMap.get(q.multiplyByQuestionId);
+            if (remappedId && remappedId !== q.multiplyByQuestionId) {
+              updates.multiplyByQuestionId = remappedId;
+            }
+          }
+
+          if (q.variantSourceQuestionId) {
+            const remappedId = questionIdMap.get(q.variantSourceQuestionId);
+            if (remappedId && remappedId !== q.variantSourceQuestionId) {
+              updates.variantSourceQuestionId = remappedId;
+            }
+          }
+
+          if (Object.keys(updates).length > 0) {
+            await tx.question.update({
+              where: { id: q.id },
+              data: updates,
             });
           }
         }
@@ -344,6 +378,40 @@ export async function updateCalculator(productId: string, formData: ProductFormD
             });
           }
         }
+
+        // Third pass: update multiplyByQuestionId and variantSourceQuestionId references
+        const allQuestions = await tx.question.findMany({
+          where: {
+            step: {
+              productId: productId,
+            },
+          },
+        });
+
+        for (const q of allQuestions) {
+          const updates: { multiplyByQuestionId?: string; variantSourceQuestionId?: string } = {};
+
+          if (q.multiplyByQuestionId) {
+            const remappedId = questionIdMap.get(q.multiplyByQuestionId);
+            if (remappedId && remappedId !== q.multiplyByQuestionId) {
+              updates.multiplyByQuestionId = remappedId;
+            }
+          }
+
+          if (q.variantSourceQuestionId) {
+            const remappedId = questionIdMap.get(q.variantSourceQuestionId);
+            if (remappedId && remappedId !== q.variantSourceQuestionId) {
+              updates.variantSourceQuestionId = remappedId;
+            }
+          }
+
+          if (Object.keys(updates).length > 0) {
+            await tx.question.update({
+              where: { id: q.id },
+              data: updates,
+            });
+          }
+        }
       },
       { timeout: 15000 }
     );
@@ -480,6 +548,8 @@ export async function duplicateCalculator(productId: string): Promise<ActionResu
                 acceptedFileTypes: question.acceptedFileTypes,
                 maxFileSize: question.maxFileSize,
                 allowMultiple: question.allowMultiple,
+                countThreshold: question.countThreshold,
+                // multiplyByQuestionId will be updated in a second pass
                 options: {
                   create: question.options.map((opt) => ({
                     label: opt.label,
@@ -516,6 +586,37 @@ export async function duplicateCalculator(productId: string): Promise<ActionResu
                 },
               },
             });
+          }
+        }
+
+        // Update multiplyByQuestionId and variantSourceQuestionId references
+        for (const step of original.steps) {
+          for (const question of step.questions) {
+            const updates: { multiplyByQuestionId?: string; variantSourceQuestionId?: string } = {};
+
+            if (question.multiplyByQuestionId) {
+              const newMultiplyById = questionIdMap.get(question.multiplyByQuestionId);
+              if (newMultiplyById) {
+                updates.multiplyByQuestionId = newMultiplyById;
+              }
+            }
+
+            if (question.variantSourceQuestionId) {
+              const newVariantSourceId = questionIdMap.get(question.variantSourceQuestionId);
+              if (newVariantSourceId) {
+                updates.variantSourceQuestionId = newVariantSourceId;
+              }
+            }
+
+            if (Object.keys(updates).length > 0) {
+              const newQuestionId = questionIdMap.get(question.id);
+              if (newQuestionId) {
+                await tx.question.update({
+                  where: { id: newQuestionId },
+                  data: updates,
+                });
+              }
+            }
           }
         }
 
