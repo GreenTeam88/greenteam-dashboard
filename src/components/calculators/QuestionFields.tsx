@@ -17,7 +17,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { uploadToCloudinary } from '@/lib/cloudinary';
+import { uploadFile } from '@/lib/upload';
 import { ConditionalLogicSelector } from './ConditionalLogicSelector';
 import { DeleteConfirmation } from './DeleteConfirmation';
 
@@ -657,7 +657,7 @@ export function QuestionFields({
                                 onChange={(e) => {
                                   const file = e.target.files ? e.target.files[0] : null;
                                   if (file) {
-                                    uploadToCloudinary(file).then((data) => {
+                                    uploadFile(file).then((data) => {
                                       updateOption(step.tempId!, question.tempId!, option.tempId!, {
                                         imageUrl: data.secure_url,
                                       });
