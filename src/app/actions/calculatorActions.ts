@@ -194,7 +194,7 @@ export async function createCalculator(formData: ProductFormData): Promise<Actio
         });
 
         for (const q of allQuestions) {
-          const updates: { multiplyByQuestionId?: string; variantSourceQuestionId?: string } = {};
+          const updates: { multiplyByQuestionId?: string; variantSourceQuestionId?: string; multipliesPriceOfQuestionId?: string } = {};
 
           if (q.multiplyByQuestionId) {
             const remappedId = questionIdMap.get(q.multiplyByQuestionId);
@@ -207,6 +207,13 @@ export async function createCalculator(formData: ProductFormData): Promise<Actio
             const remappedId = questionIdMap.get(q.variantSourceQuestionId);
             if (remappedId && remappedId !== q.variantSourceQuestionId) {
               updates.variantSourceQuestionId = remappedId;
+            }
+          }
+
+          if (q.multipliesPriceOfQuestionId) {
+            const remappedId = questionIdMap.get(q.multipliesPriceOfQuestionId);
+            if (remappedId && remappedId !== q.multipliesPriceOfQuestionId) {
+              updates.multipliesPriceOfQuestionId = remappedId;
             }
           }
 
@@ -389,7 +396,7 @@ export async function updateCalculator(productId: string, formData: ProductFormD
         });
 
         for (const q of allQuestions) {
-          const updates: { multiplyByQuestionId?: string; variantSourceQuestionId?: string } = {};
+          const updates: { multiplyByQuestionId?: string; variantSourceQuestionId?: string; multipliesPriceOfQuestionId?: string } = {};
 
           if (q.multiplyByQuestionId) {
             const remappedId = questionIdMap.get(q.multiplyByQuestionId);
@@ -402,6 +409,13 @@ export async function updateCalculator(productId: string, formData: ProductFormD
             const remappedId = questionIdMap.get(q.variantSourceQuestionId);
             if (remappedId && remappedId !== q.variantSourceQuestionId) {
               updates.variantSourceQuestionId = remappedId;
+            }
+          }
+
+          if (q.multipliesPriceOfQuestionId) {
+            const remappedId = questionIdMap.get(q.multipliesPriceOfQuestionId);
+            if (remappedId && remappedId !== q.multipliesPriceOfQuestionId) {
+              updates.multipliesPriceOfQuestionId = remappedId;
             }
           }
 
@@ -589,10 +603,10 @@ export async function duplicateCalculator(productId: string): Promise<ActionResu
           }
         }
 
-        // Update multiplyByQuestionId and variantSourceQuestionId references
+        // Update multiplyByQuestionId, variantSourceQuestionId, and multipliesPriceOfQuestionId references
         for (const step of original.steps) {
           for (const question of step.questions) {
-            const updates: { multiplyByQuestionId?: string; variantSourceQuestionId?: string } = {};
+            const updates: { multiplyByQuestionId?: string; variantSourceQuestionId?: string; multipliesPriceOfQuestionId?: string } = {};
 
             if (question.multiplyByQuestionId) {
               const newMultiplyById = questionIdMap.get(question.multiplyByQuestionId);
@@ -605,6 +619,13 @@ export async function duplicateCalculator(productId: string): Promise<ActionResu
               const newVariantSourceId = questionIdMap.get(question.variantSourceQuestionId);
               if (newVariantSourceId) {
                 updates.variantSourceQuestionId = newVariantSourceId;
+              }
+            }
+
+            if (question.multipliesPriceOfQuestionId) {
+              const newMultipliesPriceOfId = questionIdMap.get(question.multipliesPriceOfQuestionId);
+              if (newMultipliesPriceOfId) {
+                updates.multipliesPriceOfQuestionId = newMultipliesPriceOfId;
               }
             }
 

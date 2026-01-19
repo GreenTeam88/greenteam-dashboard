@@ -66,6 +66,8 @@ export interface Question {
   multiplyByQuestionId?: string | null;
   // Price variants: which question's answer determines the price variant to use
   variantSourceQuestionId?: string | null;
+  // For NUMBER/SELECT: this question's value multiplies the price from referenced question
+  multipliesPriceOfQuestionId?: string | null;
   options: StepOption[];
 }
 
@@ -128,6 +130,7 @@ export interface QuestionFormData {
   countThreshold?: number | null;
   multiplyByQuestionId?: string | null;
   variantSourceQuestionId?: string | null;
+  multipliesPriceOfQuestionId?: string | null;
   options: OptionFormData[];
 }
 

@@ -101,6 +101,9 @@ export default function CalculatorFormBuilder({ initialData, isEdit = false }: C
       maxFileSize: null,
       allowMultiple: false,
       conditionalOn: null,
+      multiplyByQuestionId: null,
+      variantSourceQuestionId: null,
+      multipliesPriceOfQuestionId: null,
       options: [],
     };
     const newStep: StepFormData = {
@@ -162,6 +165,9 @@ export default function CalculatorFormBuilder({ initialData, isEdit = false }: C
             maxFileSize: null,
             allowMultiple: false,
             conditionalOn: null,
+            multiplyByQuestionId: null,
+            variantSourceQuestionId: null,
+            multipliesPriceOfQuestionId: null,
             options: [],
           };
           return { ...step, questions: [...step.questions, newQuestion] };

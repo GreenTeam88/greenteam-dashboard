@@ -330,6 +330,64 @@ export function QuestionFields({
           </div>
         )}
 
+        {/* Multiplies Price Of Question - for NUMBER inputs */}
+        {type === 'NUMBER' && (
+          <div className="rounded-lg border border-green-100 bg-green-50 p-3">
+            <Label className="mb-2 block text-xs font-medium text-green-700">
+              Multiplies Price From Question (Optional)
+            </Label>
+            <Select
+              value={question.multipliesPriceOfQuestionId || 'none'}
+              onValueChange={(value) => handleUpdate({ multipliesPriceOfQuestionId: value === 'none' ? null : value })}
+            >
+              <SelectTrigger className="h-10 bg-white">
+                <SelectValue placeholder="Select a question..." />
+              </SelectTrigger>
+              <SelectContent className="bg-white">
+                <SelectItem value="none">
+                  <span className="text-gray-500">No multiplication (use as standalone value)</span>
+                </SelectItem>
+                {/* Show SELECT/CHECKBOX questions with BASE pricing from previous steps or earlier in current step */}
+                {allSteps.flatMap((s) =>
+                  s.questions
+                    .filter((q) => {
+                      // Only show questions that come before this one
+                      const currentStepOrder = step.order;
+                      const currentQuestionOrder = question.order;
+
+                      if (s.order < currentStepOrder) {
+                        return true; // All questions from previous steps
+                      }
+                      if (s.order === currentStepOrder && q.order < currentQuestionOrder) {
+                        return true; // Questions in same step but before this one
+                      }
+                      return false;
+                    })
+                    .filter((q) => {
+                      // Only show SELECT/CHECKBOX questions with BASE pricing (they have option prices)
+                      return (q.type === 'SELECT' || q.type === 'CHECKBOX') && q.pricingImpact === 'BASE';
+                    })
+                    .map((q) => (
+                      <SelectItem key={q.tempId || q.id} value={q.tempId || q.id || ''}>
+                        <div className="flex flex-col">
+                          <span className="font-medium">{q.question || 'Unnamed question'}</span>
+                          <span className="text-xs text-gray-500">
+                            Step {s.order + 1} • {q.type} • BASE pricing
+                          </span>
+                        </div>
+                      </SelectItem>
+                    ))
+                )}
+              </SelectContent>
+            </Select>
+            <p className="mt-1.5 text-xs text-green-600">
+              When set, this number value will be multiplied by the selected option&apos;s price from the chosen question.
+              <br />
+              Example: 50 (m²) × €30 (service price) = €1,500
+            </p>
+          </div>
+        )}
+
         {/* ADDITIVE Pricing Field */}
         {pricingImpact === 'ADDITIVE' && (
           <div className="rounded-lg border border-orange-100 bg-orange-50 p-3">
