@@ -84,6 +84,10 @@ model Question {
   // References the question whose answer determines which price variant to use
   variantSourceQuestionId String?
 
+  // For NUMBER/SELECT questions: multiply this question's value by the price from another question
+  // Used when quantity input should multiply a service price (e.g., m² × service price per m²)
+  multipliesPriceOfQuestionId String?
+
   // Conditional logic - format: { questionId: "xxx", value: "yes" } or { operator: "OR", conditions: [...] }
   conditionalOn Json?
 
