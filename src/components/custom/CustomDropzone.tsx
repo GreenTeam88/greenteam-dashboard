@@ -9,8 +9,8 @@ const FileSvgDraw = () => {
   return (
     <div className={'flex flex-col gap-y-4 items-center'}>
       <div className={'flex flex-col gap-y-1 items-center'}>
-        <h4 className={'text-textBlack text-sm font-semibold'}>Drag and drop files here or upload</h4>
-        <p className={'text-xs text-textBlack40'}>Accepted file types: JPEG, Doc, PDF, PNG</p>
+        <h4 className={'text-textBlack text-sm font-semibold'}>Sleep bestand hierheen of upload</h4>
+        <p className={'text-xs text-textBlack40'}>Geaccepteerde bestandstypen: JPEG, PNG</p>
       </div>
       <Button
         type={'button'}

@@ -4,7 +4,6 @@ import { uploadToS3 } from '@/lib/s3';
 
 export async function POST(request: NextRequest) {
   try {
-    // Check if AWS credentials are configured
     if (!process.env.AWS_ACCESS_KEY_ID || !process.env.AWS_SECRET_ACCESS_KEY) {
       console.error('AWS credentials not configured');
       return NextResponse.json({ error: 'AWS credentials not configured' }, { status: 500 });
