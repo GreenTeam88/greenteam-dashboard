@@ -1,6 +1,6 @@
 // Calculator Builder Type Definitions
 
-export type StepType = 'SELECT' | 'NUMBER' | 'TEXT' | 'CHECKBOX' | 'FILE_UPLOAD';
+export type StepType = 'SELECT' | 'NUMBER' | 'TEXT' | 'TEXT_ONLY' | 'CHECKBOX' | 'FILE_UPLOAD';
 
 export type PricingImpact = 'BASE' | 'MULTIPLIER' | 'ADDITIVE' | 'NONE' | 'COUNT_SELECTED';
 

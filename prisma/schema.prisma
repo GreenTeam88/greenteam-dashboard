@@ -135,6 +135,7 @@ enum StepType {
   SELECT // Dropdown/radio selection
   NUMBER // Number input
   TEXT // Text input
+  TEXT_ONLY // Text input (letters only, no numbers)
   CHECKBOX // Multiple selection
   FILE_UPLOAD // File upload
 }
