@@ -733,7 +733,7 @@ export async function getAllCalculators(): Promise<Product[]> {
         ...step,
         questions: step.questions.map((question) => ({
           ...question,
-          type: question.type as 'SELECT' | 'NUMBER' | 'TEXT' | 'CHECKBOX' | 'FILE_UPLOAD',
+          type: question.type as 'SELECT' | 'NUMBER' | 'TEXT' | 'TEXT_ONLY' | 'CHECKBOX' | 'FILE_UPLOAD',
           pricingImpact: question.pricingImpact as 'BASE' | 'MULTIPLIER' | 'ADDITIVE' | 'NONE' | 'COUNT_SELECTED',
           conditionalOn: question.conditionalOn as ConditionalOnBase,
         })),
@@ -775,7 +775,7 @@ export async function getCalculatorById(id: string): Promise<Product | null> {
         ...step,
         questions: step.questions.map((question) => ({
           ...question,
-          type: question.type as 'SELECT' | 'NUMBER' | 'TEXT' | 'CHECKBOX' | 'FILE_UPLOAD',
+          type: question.type as 'SELECT' | 'NUMBER' | 'TEXT' | 'TEXT_ONLY' | 'CHECKBOX' | 'FILE_UPLOAD',
           pricingImpact: question.pricingImpact as 'BASE' | 'MULTIPLIER' | 'ADDITIVE' | 'NONE' | 'COUNT_SELECTED',
           conditionalOn: question.conditionalOn as ConditionalOnBase,
         })),
@@ -817,7 +817,7 @@ export async function getCalculatorBySlug(slug: string): Promise<Product | null>
         ...step,
         questions: step.questions.map((question) => ({
           ...question,
-          type: question.type as 'SELECT' | 'NUMBER' | 'TEXT' | 'CHECKBOX' | 'FILE_UPLOAD',
+          type: question.type as 'SELECT' | 'NUMBER' | 'TEXT' | 'TEXT_ONLY' | 'CHECKBOX' | 'FILE_UPLOAD',
           pricingImpact: question.pricingImpact as 'BASE' | 'MULTIPLIER' | 'ADDITIVE' | 'NONE' | 'COUNT_SELECTED',
           conditionalOn: question.conditionalOn as ConditionalOnBase,
         })),

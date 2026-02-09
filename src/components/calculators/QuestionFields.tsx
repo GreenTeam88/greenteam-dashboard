@@ -8,6 +8,7 @@ import {
   Image as ImageIcon,
   List,
   Plus,
+  TextCursorInput,
   Trash2,
   Type,
   Upload,
@@ -46,6 +47,7 @@ const questionTypeIcons: Record<StepType, React.ReactNode> = {
   NUMBER: <Hash className="h-4 w-4" />,
   CHECKBOX: <CheckSquare className="h-4 w-4" />,
   TEXT: <Type className="h-4 w-4" />,
+  TEXT_ONLY: <TextCursorInput className="h-4 w-4" />,
   FILE_UPLOAD: <Upload className="h-4 w-4" />,
 };
 
@@ -167,6 +169,12 @@ export function QuestionFields({
                     <span>Text Input</span>
                   </div>
                 </SelectItem>
+                <SelectItem value="TEXT_ONLY">
+                  <div className="flex items-center gap-2">
+                    <TextCursorInput className="h-4 w-4 text-gray-500" />
+                    <span>Text Only (Letters)</span>
+                  </div>
+                </SelectItem>
                 <SelectItem value="FILE_UPLOAD">
                   <div className="flex items-center gap-2">
                     <Upload className="h-4 w-4 text-gray-500" />
@@ -243,6 +251,19 @@ export function QuestionFields({
         {type === 'TEXT' && (
           <div className="rounded-lg border border-gray-100 bg-gray-50 p-3">
             <Label className="mb-2 block text-xs font-medium text-gray-600">Text Input Settings</Label>
+            <Input
+              value={question.placeholder || ''}
+              onChange={(e) => handleUpdate({ placeholder: e.target.value || null })}
+              placeholder="Placeholder text (optional)"
+              className="bg-white"
+            />
+          </div>
+        )}
+
+        {/* TEXT_ONLY Input Specific Fields */}
+        {type === 'TEXT_ONLY' && (
+          <div className="rounded-lg border border-gray-100 bg-gray-50 p-3">
+            <Label className="mb-2 block text-xs font-medium text-gray-600">Text Only Settings</Label>
             <Input
               value={question.placeholder || ''}
               onChange={(e) => handleUpdate({ placeholder: e.target.value || null })}
