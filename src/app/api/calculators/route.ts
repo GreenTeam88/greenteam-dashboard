@@ -24,7 +24,7 @@ export async function GET() {
           },
         },
       },
-      orderBy: { createdAt: 'desc' },
+      orderBy: { order: 'asc' },
     });
 
     // Transform the data for the frontend

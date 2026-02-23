@@ -87,6 +87,10 @@ export async function createCalculator(formData: ProductFormData): Promise<Actio
 
     const result = await prisma.$transaction(
       async (tx) => {
+        // Get the next order value
+        const maxOrder = await tx.product.aggregate({ _max: { order: true } });
+        const nextOrder = (maxOrder._max.order ?? -1) + 1;
+
         // Create the product
         const product = await tx.product.create({
           data: {
@@ -96,6 +100,7 @@ export async function createCalculator(formData: ProductFormData): Promise<Actio
             baseImageUrl: formData.baseImageUrl || null,
             baseImagePublicId: formData.baseImagePublicId || null,
             status: formData.status || 'draft',
+            order: nextOrder,
           },
         });
 
@@ -516,6 +521,10 @@ export async function duplicateCalculator(productId: string): Promise<ActionResu
 
     const result = await prisma.$transaction(
       async (tx) => {
+        // Get the next order value
+        const maxOrder = await tx.product.aggregate({ _max: { order: true } });
+        const nextOrder = (maxOrder._max.order ?? -1) + 1;
+
         const newProduct = await tx.product.create({
           data: {
             name: `${original.name} (Copy)`,
@@ -524,6 +533,7 @@ export async function duplicateCalculator(productId: string): Promise<ActionResu
             baseImageUrl: original.baseImageUrl,
             baseImagePublicId: original.baseImagePublicId,
             status: 'draft',
+            order: nextOrder,
           },
         });
 
@@ -569,6 +579,7 @@ export async function duplicateCalculator(productId: string): Promise<ActionResu
                     label: opt.label,
                     value: opt.value,
                     price: opt.price,
+                    priceVariants: opt.priceVariants || undefined,
                     imageUrl: opt.imageUrl,
                     imagePublicId: opt.imagePublicId,
                     order: opt.order,
@@ -654,6 +665,7 @@ export async function duplicateCalculator(productId: string): Promise<ActionResu
       name: result.name,
       slug: result.slug,
       status: result.status as 'draft' | 'published',
+      order: result.order,
       stepsCount,
       questionsCount,
       createdAt: result.createdAt,
@@ -723,7 +735,7 @@ export async function getAllCalculators(): Promise<Product[]> {
           },
         },
       },
-      orderBy: { createdAt: 'desc' },
+      orderBy: { order: 'asc' },
     });
 
     return products.map((product) => ({
@@ -842,7 +854,7 @@ export async function getCalculatorsForTable(): Promise<ProductTableRow[]> {
           },
         },
       },
-      orderBy: { createdAt: 'desc' },
+      orderBy: { order: 'asc' },
     });
 
     return products.map((product) => ({
@@ -850,6 +862,7 @@ export async function getCalculatorsForTable(): Promise<ProductTableRow[]> {
       name: product.name,
       slug: product.slug,
       status: product.status as 'draft' | 'published',
+      order: product.order,
       stepsCount: product.steps.length,
       questionsCount: product.steps.reduce((acc, step) => acc + step.questions.length, 0),
       createdAt: product.createdAt,
@@ -858,5 +871,30 @@ export async function getCalculatorsForTable(): Promise<ProductTableRow[]> {
   } catch (error) {
     console.error('Error fetching calculators for table:', error);
     return [];
+  }
+}
+
+// ============================================
+// REORDER CALCULATORS
+// ============================================
+export async function reorderCalculators(
+  reorderData: Array<{ id: string; order: number }>
+): Promise<ActionResult> {
+  try {
+    await prisma.$transaction(
+      reorderData.map(({ id, order }) =>
+        prisma.product.update({
+          where: { id },
+          data: { order },
+        })
+      )
+    );
+
+    revalidatePath('/dashboard/calculators');
+
+    return { success: true, message: 'Calculators reordered successfully' };
+  } catch (error) {
+    console.error('Error reordering calculators:', error);
+    return { success: false, error: 'Failed to reorder calculators' };
   }
 }
