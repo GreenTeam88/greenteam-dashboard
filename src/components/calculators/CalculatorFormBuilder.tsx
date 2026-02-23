@@ -357,8 +357,8 @@ export default function CalculatorFormBuilder({ initialData, isEdit = false }: C
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      {/* Submission Header */}
-      <div className="flex items-center justify-end gap-4">
+      {/* Submission Header - Sticky */}
+      <div className="sticky top-0 z-20 flex items-center justify-end gap-4 rounded-lg bg-white/95 px-4 py-3 shadow-sm backdrop-blur-sm">
         <label className="flex items-center space-x-2">
           <input
             type="checkbox"
@@ -468,25 +468,6 @@ export default function CalculatorFormBuilder({ initialData, isEdit = false }: C
         </CardContent>
       </Card>
 
-      {/* Submission Footer */}
-      <div className="flex items-center justify-end gap-4">
-        <label className="flex items-center space-x-2">
-          <input
-            type="checkbox"
-            checked={status === 'published'}
-            onChange={(e) => setStatus(e.target.checked ? 'published' : 'draft')}
-            className="h-4 w-4 rounded border-gray-300 text-bgPrimaryGreen focus:ring-bgPrimaryGreen"
-          />
-          <span className="text-sm">Published</span>
-        </label>
-        <Button type="button" variant="outline" onClick={() => router.back()} disabled={isSubmitting}>
-          Cancel
-        </Button>
-        <Button type="submit" className="bg-bgPrimaryGreen hover:bg-bgPrimaryGreen/90" disabled={isSubmitting}>
-          {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          {isSubmitting ? 'Saving...' : isEdit ? 'Update Calculator' : 'Save Calculator'}
-        </Button>
-      </div>
     </form>
   );
 }

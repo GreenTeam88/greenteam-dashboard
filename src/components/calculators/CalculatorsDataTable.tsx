@@ -1,7 +1,22 @@
 'use client';
 
-import { ColumnDef } from '@tanstack/react-table';
-import { MoreHorizontal, Plus, Trash2 } from 'lucide-react';
+import {
+  closestCenter,
+  DndContext,
+  DragEndEvent,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+import { GripVertical, MoreHorizontal, Plus, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import * as React from 'react';
@@ -11,9 +26,9 @@ import {
   deleteCalculator,
   duplicateCalculator,
   publishCalculator,
+  reorderCalculators,
   unpublishCalculator,
 } from '@/app/actions/calculatorActions';
-import CustomDataTable from '@/components/custom/CustomDataTable';
 import { CustomToolTip } from '@/components/custom/CustomToolTip';
 import {
   AlertDialog,
@@ -26,7 +41,6 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -34,6 +48,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { cn } from '@/lib/utils';
 
 import type { ProductTableRow } from '@/types/calculator';
@@ -73,7 +88,7 @@ function StatusBadge({ status }: { status: 'published' | 'draft' }) {
   );
 }
 
-const TableHeader = ({ activeFilter, setActiveFilter }: Omit<CalculatorsDataTableProps, 'calculators'>) => {
+const ListHeader = ({ activeFilter, setActiveFilter }: Omit<CalculatorsDataTableProps, 'calculators'>) => {
   const filterTypes = ['All', 'Published', 'Draft'];
   return (
     <div className="flex items-center justify-between border-b border-b-borderGray">
@@ -107,6 +122,127 @@ const TableHeader = ({ activeFilter, setActiveFilter }: Omit<CalculatorsDataTabl
   );
 };
 
+// Sortable row component
+function SortableRow({
+  calculator,
+  isDndEnabled,
+  onEdit,
+  onDuplicate,
+  onTogglePublish,
+  onDelete,
+}: {
+  calculator: ProductTableRow;
+  isDndEnabled: boolean;
+  onEdit: (id: string) => void;
+  onDuplicate: (id: string) => void;
+  onTogglePublish: (id: string, status: string) => void;
+  onDelete: (calculator: ProductTableRow) => void;
+}) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id: calculator.id,
+    disabled: !isDndEnabled,
+  });
+
+  const style = {
+    transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined,
+    transition,
+    zIndex: isDragging ? 10 : undefined,
+    opacity: isDragging ? 0.5 : 1,
+  };
+
+  const date = new Date(calculator.updatedAt);
+
+  return (
+    <TableRow ref={setNodeRef} style={style} className="hover:bg-bgLightGreen">
+      {/* Drag Handle */}
+      <TableCell className="w-10 px-2">
+        {isDndEnabled ? (
+          <div
+            {...attributes}
+            {...listeners}
+            className="flex h-8 w-8 cursor-grab items-center justify-center rounded-md transition-colors hover:bg-gray-100 active:cursor-grabbing"
+          >
+            <GripVertical className="h-4 w-4 text-gray-400" />
+          </div>
+        ) : (
+          <div className="flex h-8 w-8 items-center justify-center">
+            <GripVertical className="h-4 w-4 text-gray-200" />
+          </div>
+        )}
+      </TableCell>
+
+      {/* Name */}
+      <TableCell>
+        <Link
+          href={`/dashboard/calculators/${calculator.id}/edit`}
+          className="cursor-pointer font-medium text-textGreenPrimary hover:underline"
+        >
+          {calculator.name}
+        </Link>
+      </TableCell>
+
+      {/* Slug */}
+      <TableCell>
+        <CustomToolTip limit={20} text={calculator.slug} />
+      </TableCell>
+
+      {/* Steps */}
+      <TableCell>{calculator.stepsCount}</TableCell>
+
+      {/* Questions */}
+      <TableCell>{calculator.questionsCount}</TableCell>
+
+      {/* Status */}
+      <TableCell>
+        <StatusBadge status={calculator.status} />
+      </TableCell>
+
+      {/* Last Updated */}
+      <TableCell>
+        <span className="text-sm text-gray-500">{date.toLocaleDateString()}</span>
+      </TableCell>
+
+      {/* Actions */}
+      <TableCell>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <MoreHorizontal className="h-4 w-4 outline-none" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="bg-white" align="end">
+            <DropdownMenuItem
+              className="text-textGreenPrimary hover:bg-bgLightGreenHover hover:font-[500]"
+              onClick={() => onEdit(calculator.id)}
+            >
+              Edit
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="text-textBlack hover:bg-bgLightGreenHover hover:font-[500]"
+              onClick={() => onDuplicate(calculator.id)}
+            >
+              Duplicate
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="text-textBlack hover:bg-bgLightGreenHover hover:font-[500]"
+              onClick={() => onTogglePublish(calculator.id, calculator.status)}
+            >
+              {calculator.status === 'published' ? 'Unpublish' : 'Publish'}
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              className="text-statusRed hover:bg-red-50 hover:font-[500]"
+              onClick={() => onDelete(calculator)}
+            >
+              Delete
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </TableCell>
+    </TableRow>
+  );
+}
+
 export default function CalculatorsDataTable({
   calculators: initialCalculators,
   activeFilter,
@@ -123,6 +259,43 @@ export default function CalculatorsDataTable({
     setCalculators(initialCalculators);
   }, [initialCalculators]);
 
+  // DnD is only enabled when viewing "All" (no filter active)
+  const isDndEnabled = activeFilter === 'All';
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  const handleDragEnd = async (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (over && active.id !== over.id) {
+      const oldIndex = calculators.findIndex((c) => c.id === active.id);
+      const newIndex = calculators.findIndex((c) => c.id === over.id);
+
+      const reordered = arrayMove(calculators, oldIndex, newIndex).map((calc, index) => ({
+        ...calc,
+        order: index,
+      }));
+
+      // Optimistic update
+      setCalculators(reordered);
+
+      // Persist to database
+      const reorderData = reordered.map((calc) => ({ id: calc.id, order: calc.order }));
+      const result = await reorderCalculators(reorderData);
+
+      if (!result.success) {
+        // Revert on failure
+        setCalculators(calculators);
+        toast.error(result.error || 'Failed to reorder calculators');
+      }
+    }
+  };
+
   const openDeleteDialog = (calculator: ProductTableRow) => {
     setCalculatorToDelete(calculator);
     setDeleteDialogOpen(true);
@@ -136,7 +309,6 @@ export default function CalculatorsDataTable({
     setIsDeleting(false);
 
     if (result.success) {
-      // Update local state to remove the deleted calculator
       setCalculators((prev) => prev.filter((calc) => calc.id !== calculatorToDelete.id));
       toast.success('Calculator deleted successfully');
       setDeleteDialogOpen(false);
@@ -149,8 +321,7 @@ export default function CalculatorsDataTable({
   const handleDuplicate = async (id: string) => {
     const result = await duplicateCalculator(id);
     if (result.success && result.data) {
-      // Add the duplicated calculator to the local state
-      setCalculators((prev) => [result.data as ProductTableRow, ...prev]);
+      setCalculators((prev) => [...prev, result.data as ProductTableRow]);
       toast.success('Calculator duplicated successfully');
     } else {
       toast.error(result.error || 'Failed to duplicate calculator');
@@ -161,7 +332,6 @@ export default function CalculatorsDataTable({
     const result = currentStatus === 'published' ? await unpublishCalculator(id) : await publishCalculator(id);
 
     if (result.success) {
-      // Update the status in local state
       const newStatus = currentStatus === 'published' ? 'draft' : 'published';
       setCalculators((prev) =>
         prev.map((calc) => (calc.id === id ? { ...calc, status: newStatus as 'published' | 'draft' } : calc))
@@ -171,111 +341,6 @@ export default function CalculatorsDataTable({
       toast.error(result.error || 'Failed to update status');
     }
   };
-
-  const columns: ColumnDef<ProductTableRow>[] = [
-    {
-      id: 'select',
-      header: ({ table }) => (
-        <Checkbox
-          checked={table.getIsAllPageRowsSelected()}
-          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-          aria-label="Select all"
-        />
-      ),
-      cell: ({ row }) => (
-        <Checkbox
-          checked={row.getIsSelected()}
-          onCheckedChange={(value) => row.toggleSelected(!!value)}
-          aria-label="Select row"
-        />
-      ),
-      enableSorting: false,
-      enableHiding: false,
-    },
-    {
-      accessorKey: 'name',
-      header: 'Name',
-      cell: ({ row }) => (
-        <Link
-          href={`/dashboard/calculators/${row.original.id}/edit`}
-          className="cursor-pointer font-medium text-textGreenPrimary hover:underline"
-        >
-          {row.getValue('name')}
-        </Link>
-      ),
-    },
-    {
-      accessorKey: 'slug',
-      header: 'Slug',
-      cell: ({ row }) => <CustomToolTip limit={20} text={row.getValue('slug')} />,
-    },
-    {
-      accessorKey: 'stepsCount',
-      header: 'Steps',
-      cell: ({ row }) => <span>{row.getValue('stepsCount')}</span>,
-    },
-    {
-      accessorKey: 'questionsCount',
-      header: 'Questions',
-      cell: ({ row }) => <span>{row.getValue('questionsCount')}</span>,
-    },
-    {
-      accessorKey: 'status',
-      header: 'Status',
-      cell: ({ row }) => <StatusBadge status={row.getValue('status')} />,
-    },
-    {
-      accessorKey: 'updatedAt',
-      header: 'Last Updated',
-      cell: ({ row }) => {
-        const date = new Date(row.getValue('updatedAt'));
-        return <span className="text-sm text-gray-500">{date.toLocaleDateString()}</span>;
-      },
-    },
-    {
-      id: 'actions',
-      enableHiding: false,
-      cell: ({ row }) => {
-        const calculator = row.original;
-        return (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <MoreHorizontal className="h-4 w-4 outline-none" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-white" align="end">
-              <DropdownMenuItem
-                className="text-textGreenPrimary hover:bg-bgLightGreenHover hover:font-[500]"
-                onClick={() => router.push(`/dashboard/calculators/${calculator.id}/edit`)}
-              >
-                Edit
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                className="text-textBlack hover:bg-bgLightGreenHover hover:font-[500]"
-                onClick={() => handleDuplicate(calculator.id)}
-              >
-                Duplicate
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                className="text-textBlack hover:bg-bgLightGreenHover hover:font-[500]"
-                onClick={() => handleTogglePublish(calculator.id, calculator.status)}
-              >
-                {calculator.status === 'published' ? 'Unpublish' : 'Publish'}
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
-                className="text-statusRed hover:bg-red-50 hover:font-[500]"
-                onClick={() => openDeleteDialog(calculator)}
-              >
-                Delete
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        );
-      },
-    },
-  ];
 
   // Filter data based on activeFilter
   const filteredData = React.useMemo(() => {
@@ -287,11 +352,54 @@ export default function CalculatorsDataTable({
 
   return (
     <>
-      <CustomDataTable<ProductTableRow>
-        columns={columns}
-        data={filteredData}
-        header={<TableHeader activeFilter={activeFilter} setActiveFilter={setActiveFilter} />}
-      />
+      <div className="w-full">
+        <ListHeader activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
+        <Table className="bg-white">
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-10 px-2" />
+              <TableHead>Name</TableHead>
+              <TableHead>Slug</TableHead>
+              <TableHead>Steps</TableHead>
+              <TableHead>Questions</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Last Updated</TableHead>
+              <TableHead className="w-10" />
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {isDndEnabled ? (
+              <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+                <SortableContext items={filteredData.map((c) => c.id)} strategy={verticalListSortingStrategy}>
+                  {filteredData.map((calculator) => (
+                    <SortableRow
+                      key={calculator.id}
+                      calculator={calculator}
+                      isDndEnabled={isDndEnabled}
+                      onEdit={(id) => router.push(`/dashboard/calculators/${id}/edit`)}
+                      onDuplicate={handleDuplicate}
+                      onTogglePublish={handleTogglePublish}
+                      onDelete={openDeleteDialog}
+                    />
+                  ))}
+                </SortableContext>
+              </DndContext>
+            ) : (
+              filteredData.map((calculator) => (
+                <SortableRow
+                  key={calculator.id}
+                  calculator={calculator}
+                  isDndEnabled={false}
+                  onEdit={(id) => router.push(`/dashboard/calculators/${id}/edit`)}
+                  onDuplicate={handleDuplicate}
+                  onTogglePublish={handleTogglePublish}
+                  onDelete={openDeleteDialog}
+                />
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </div>
 
       {/* Delete Confirmation Modal */}
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>

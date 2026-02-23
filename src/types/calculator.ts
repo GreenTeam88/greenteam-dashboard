@@ -174,6 +174,7 @@ export interface ProductTableRow {
   name: string;
   slug: string;
   status: ProductStatus;
+  order: number;
   stepsCount: number;
   questionsCount: number;
   createdAt: Date;
