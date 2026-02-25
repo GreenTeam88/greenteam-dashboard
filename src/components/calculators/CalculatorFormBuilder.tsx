@@ -343,7 +343,9 @@ export default function CalculatorFormBuilder({ initialData, isEdit = false }: C
 
       if (result.success) {
         toast.success(`Calculator ${isEdit ? 'updated' : 'created'} successfully!`);
-        router.push('/dashboard/calculators');
+        if (!isEdit) {
+          router.push('/dashboard/calculators');
+        }
       } else {
         toast.error(result.error || 'Failed to save calculator');
       }
