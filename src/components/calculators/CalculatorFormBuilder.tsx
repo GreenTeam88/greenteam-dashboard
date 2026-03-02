@@ -271,7 +271,9 @@ export default function CalculatorFormBuilder({ initialData, isEdit = false }: C
               if (q.tempId === questionTempId) {
                 return {
                   ...q,
-                  options: q.options.filter((opt) => opt.tempId !== optionTempId),
+                  options: q.options
+                    .filter((opt) => opt.tempId !== optionTempId)
+                    .map((opt, index) => ({ ...opt, order: index })),
                 };
               }
               return q;
