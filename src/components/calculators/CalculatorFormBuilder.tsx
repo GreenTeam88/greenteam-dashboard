@@ -41,14 +41,17 @@ export default function CalculatorFormBuilder({ initialData, isEdit = false }: C
   const [calculatorDescription, setCalculatorDescription] = useState(initialData?.description || '');
   const [steps, setSteps] = useState<StepFormData[]>(() => {
     if (initialData?.steps) {
-      return initialData.steps.map((step) => ({
+      return initialData.steps.map((step, stepIdx) => ({
         ...step,
+        order: stepIdx,
         tempId: step.id || `step-${Date.now()}-${Math.random()}`,
-        questions: step.questions.map((q) => ({
+        questions: step.questions.map((q, qIdx) => ({
           ...q,
+          order: qIdx,
           tempId: q.id || `question-${Date.now()}-${Math.random()}`,
-          options: q.options.map((o) => ({
+          options: q.options.map((o, oIdx) => ({
             ...o,
+            order: oIdx,
             tempId: o.id || `option-${Date.now()}-${Math.random()}`,
           })),
         })),
