@@ -26,6 +26,20 @@ interface ComplexConditionalBase {
 
 type ConditionalOnBase = SimpleConditionalBase | ComplexConditionalBase | null;
 
+// Helper to validate imageUrl (must be actual image file URL, not a route path)
+function validateImageUrl(imageUrl: string | null | undefined): void {
+  if (!imageUrl) return; // null/undefined is OK
+
+  // Check if it's a valid image file URL
+  const imageExtensionRegex = /\.(jpg|jpeg|png|gif|webp|svg)$/i;
+
+  if (!imageExtensionRegex.test(imageUrl)) {
+    throw new Error(
+      `Invalid imageUrl: "${imageUrl}". Image URL must end with a valid image extension (.jpg, .jpeg, .png, .gif, .webp, .svg). Route paths like "/traprenovatie/hout-look" are not allowed.`
+    );
+  }
+}
+
 // Helper to check if conditional is complex (has operator)
 function isComplexConditionalBase(cond: unknown): cond is ComplexConditionalBase {
   return cond !== null && typeof cond === 'object' && 'operator' in cond && 'conditions' in cond;
@@ -139,6 +153,12 @@ export async function createCalculator(formData: ProductFormData): Promise<Actio
               /* eslint-disable @typescript-eslint/no-unused-vars, no-unused-vars */
               const { tempId, id, questionId, createdAt, updatedAt, ...optionData } = o;
               /* eslint-enable @typescript-eslint/no-unused-vars, no-unused-vars */
+
+              // Validate imageUrl before processing
+              if ('imageUrl' in optionData) {
+                validateImageUrl(optionData.imageUrl as string | null | undefined);
+              }
+
               // Remove undefined values
               const cleaned: Record<string, unknown> = {};
               for (const [key, value] of Object.entries(optionData)) {
@@ -336,6 +356,12 @@ export async function updateCalculator(productId: string, formData: ProductFormD
               /* eslint-disable @typescript-eslint/no-unused-vars, no-unused-vars */
               const { tempId, id, questionId, createdAt, updatedAt, ...optionData } = o;
               /* eslint-enable @typescript-eslint/no-unused-vars, no-unused-vars */
+
+              // Validate imageUrl before processing
+              if ('imageUrl' in optionData) {
+                validateImageUrl(optionData.imageUrl as string | null | undefined);
+              }
+
               // Remove undefined values
               const cleaned: Record<string, unknown> = {};
               for (const [key, value] of Object.entries(optionData)) {
