@@ -90,7 +90,7 @@ export function QuestionFields({
     const currentVariants: PriceVariants = option.priceVariants || {};
     const newVariants: PriceVariants = { ...currentVariants };
 
-    if (price === null || price === 0) {
+    if (price === null) {
       delete newVariants[variantLabel];
     } else {
       newVariants[variantLabel] = price;
@@ -535,8 +535,8 @@ export function QuestionFields({
         {pricingImpact === 'BASE' && (type === 'SELECT' || type === 'CHECKBOX') && (() => {
           const serviceQuestions = allSteps.flatMap((s) =>
             s.questions.filter((q) => {
-              if (s.order < step.order) return q.type === 'SELECT' && q.options.length >= 3;
-              if (s.order === step.order && q.order < question.order) return q.type === 'SELECT' && q.options.length >= 3;
+              if (s.order < step.order) return q.type === 'SELECT' && q.options.length >= 2;
+              if (s.order === step.order && q.order < question.order) return q.type === 'SELECT' && q.options.length >= 2;
               return false;
             })
           );
@@ -649,10 +649,10 @@ export function QuestionFields({
                               <Input
                                 type="number"
                                 step="0.01"
-                                value={option.price || ''}
+                                value={option.price ?? ''}
                                 onChange={(e) =>
                                   updateOption(step.tempId!, question.tempId!, option.tempId!, {
-                                    price: parseFloat(e.target.value) || null,
+                                    price: e.target.value === '' ? null : parseFloat(e.target.value),
                                   })
                                 }
                                 placeholder="0.00"
@@ -677,12 +677,12 @@ export function QuestionFields({
                                   <Input
                                     type="number"
                                     step="0.01"
-                                    value={option.priceVariants?.[variant.label] || ''}
+                                    value={option.priceVariants?.[variant.label] ?? ''}
                                     onChange={(e) =>
                                       updatePriceVariant(
                                         option.tempId!,
                                         variant.label,
-                                        parseFloat(e.target.value) || null
+                                        e.target.value === '' ? null : parseFloat(e.target.value)
                                       )
                                     }
                                     placeholder={String(option.price || 0)}
