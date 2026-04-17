@@ -243,25 +243,62 @@ export default function CalculatorFormBuilder({ initialData, isEdit = false }: C
     optionTempId: string,
     updates: Partial<OptionFormData>
   ) => {
-    setSteps(
-      steps.map((step) => {
-        if (step.tempId === stepTempId) {
-          return {
-            ...step,
-            questions: step.questions.map((q) => {
+    setSteps((prevSteps) => {
+      // Find the current label of the option being updated
+      let oldLabel: string | null = null;
+      let ownerQuestionId: string | null = null;
+
+      if (updates.label !== undefined) {
+        for (const s of prevSteps) {
+          if (s.tempId === stepTempId) {
+            for (const q of s.questions) {
               if (q.tempId === questionTempId) {
-                return {
-                  ...q,
-                  options: q.options.map((opt) => (opt.tempId === optionTempId ? { ...opt, ...updates } : opt)),
-                };
+                ownerQuestionId = q.tempId || q.id || null;
+                const opt = q.options.find((o) => o.tempId === optionTempId);
+                if (opt && opt.label !== updates.label) {
+                  oldLabel = opt.label;
+                }
+                break;
               }
-              return q;
-            }),
-          };
+            }
+            break;
+          }
         }
-        return step;
-      })
-    );
+      }
+
+      return prevSteps.map((step) => ({
+        ...step,
+        questions: step.questions.map((q) => {
+          // Apply the option update itself
+          if (step.tempId === stepTempId && q.tempId === questionTempId) {
+            return {
+              ...q,
+              options: q.options.map((opt) => (opt.tempId === optionTempId ? { ...opt, ...updates } : opt)),
+            };
+          }
+
+          // Cascade label rename to dependent questions' priceVariants
+          if (oldLabel !== null && ownerQuestionId && q.variantSourceQuestionId === ownerQuestionId) {
+            const renamedFrom = oldLabel;
+            return {
+              ...q,
+              options: q.options.map((opt) => {
+                if (opt.priceVariants && renamedFrom in opt.priceVariants) {
+                  const { [renamedFrom]: movedPrice, ...rest } = opt.priceVariants;
+                  return {
+                    ...opt,
+                    priceVariants: { ...rest, [updates.label!]: movedPrice },
+                  };
+                }
+                return opt;
+              }),
+            };
+          }
+
+          return q;
+        }),
+      }));
+    });
   };
 
   const deleteOption = (stepTempId: string, questionTempId: string, optionTempId: string) => {

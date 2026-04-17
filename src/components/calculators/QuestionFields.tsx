@@ -90,7 +90,7 @@ export function QuestionFields({
     const currentVariants: PriceVariants = option.priceVariants || {};
     const newVariants: PriceVariants = { ...currentVariants };
 
-    if (price === null || price === 0) {
+    if (price === null) {
       delete newVariants[variantLabel];
     } else {
       newVariants[variantLabel] = price;
@@ -351,11 +351,14 @@ export function QuestionFields({
           </div>
         )}
 
-        {/* Multiplies Price Of Question - for NUMBER inputs */}
-        {type === 'NUMBER' && (
+        {/* Multiplies Price Of Question - for NUMBER inputs and SELECT/CHECKBOX MULTIPLIER questions */}
+        {(type === 'NUMBER' ||
+          ((type === 'SELECT' || type === 'CHECKBOX') && pricingImpact === 'MULTIPLIER')) && (
           <div className="rounded-lg border border-green-100 bg-green-50 p-3">
             <Label className="mb-2 block text-xs font-medium text-green-700">
-              Multiplies Price From Question (Optional)
+              {pricingImpact === 'MULTIPLIER'
+                ? 'What should this multiplier scale? (Optional)'
+                : 'Multiplies Price From Question (Optional)'}
             </Label>
             <Select
               value={question.multipliesPriceOfQuestionId || 'none'}
@@ -366,7 +369,11 @@ export function QuestionFields({
               </SelectTrigger>
               <SelectContent className="bg-white">
                 <SelectItem value="none">
-                  <span className="text-gray-500">No multiplication (use as standalone value)</span>
+                  <span className="text-gray-500">
+                    {pricingImpact === 'MULTIPLIER'
+                      ? 'Everything (scales the whole total)'
+                      : 'No multiplication (use as standalone value)'}
+                  </span>
                 </SelectItem>
                 {/* Show SELECT/CHECKBOX questions with BASE pricing from previous steps or earlier in current step */}
                 {allSteps.flatMap((s) =>
@@ -402,9 +409,22 @@ export function QuestionFields({
               </SelectContent>
             </Select>
             <p className="mt-1.5 text-xs text-green-600">
-              When set, this number value will be multiplied by the selected option&apos;s price from the chosen question.
-              <br />
-              Example: 50 (m²) × €30 (service price) = €1,500
+              {pricingImpact === 'MULTIPLIER' ? (
+                <>
+                  Leave as &quot;Everything&quot; to scale the whole total (default). Pick a specific question to scale
+                  only that question&apos;s price — other base-priced questions stay untouched.
+                  <br />
+                  Example: &quot;Aantal treden&quot; set to &quot;Dichte trap bekleden&quot; → only stair cladding is
+                  multiplied, plateau is not.
+                </>
+              ) : (
+                <>
+                  When set, this number value will be multiplied by the selected option&apos;s price from the chosen
+                  question.
+                  <br />
+                  Example: 50 (m²) × €30 (service price) = €1,500
+                </>
+              )}
             </p>
           </div>
         )}
@@ -535,8 +555,8 @@ export function QuestionFields({
         {pricingImpact === 'BASE' && (type === 'SELECT' || type === 'CHECKBOX') && (() => {
           const serviceQuestions = allSteps.flatMap((s) =>
             s.questions.filter((q) => {
-              if (s.order < step.order) return q.type === 'SELECT' && q.options.length >= 3;
-              if (s.order === step.order && q.order < question.order) return q.type === 'SELECT' && q.options.length >= 3;
+              if (s.order < step.order) return q.type === 'SELECT' && q.options.length >= 2;
+              if (s.order === step.order && q.order < question.order) return q.type === 'SELECT' && q.options.length >= 2;
               return false;
             })
           );
@@ -649,10 +669,10 @@ export function QuestionFields({
                               <Input
                                 type="number"
                                 step="0.01"
-                                value={option.price || ''}
+                                value={option.price ?? ''}
                                 onChange={(e) =>
                                   updateOption(step.tempId!, question.tempId!, option.tempId!, {
-                                    price: parseFloat(e.target.value) || null,
+                                    price: e.target.value === '' ? null : parseFloat(e.target.value),
                                   })
                                 }
                                 placeholder="0.00"
@@ -677,12 +697,12 @@ export function QuestionFields({
                                   <Input
                                     type="number"
                                     step="0.01"
-                                    value={option.priceVariants?.[variant.label] || ''}
+                                    value={option.priceVariants?.[variant.label] ?? ''}
                                     onChange={(e) =>
                                       updatePriceVariant(
                                         option.tempId!,
                                         variant.label,
-                                        parseFloat(e.target.value) || null
+                                        e.target.value === '' ? null : parseFloat(e.target.value)
                                       )
                                     }
                                     placeholder={String(option.price || 0)}
