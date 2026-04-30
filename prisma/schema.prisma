@@ -92,6 +92,10 @@ model Question {
   // Conditional logic - format: { questionId: "xxx", value: "yes" } or { operator: "OR", conditions: [...] }
   conditionalOn Json?
 
+  // Tooltip: when hasTooltip is true, show an info icon next to the question label that reveals `tooltip` text on hover/tap
+  hasTooltip Boolean @default(false)
+  tooltip    String?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -117,6 +121,10 @@ model StepOption {
   // Price variants: different prices based on service type
   // Format: { "PVC": 300, "Laminaat": 300, "Hout": 350, ... }
   priceVariants Json?
+
+  // Tooltip: when hasTooltip is true, show an info icon next to this option in the dropdown that reveals `tooltip` text on hover/tap
+  hasTooltip Boolean @default(false)
+  tooltip    String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

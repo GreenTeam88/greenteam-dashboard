@@ -62,6 +62,8 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
           multiplyByQuestionId: question.multiplyByQuestionId,
           variantSourceQuestionId: question.variantSourceQuestionId,
           multipliesPriceOfQuestionId: question.multipliesPriceOfQuestionId,
+          hasTooltip: question.hasTooltip,
+          tooltip: question.tooltip,
           options: question.options.map((opt) => ({
             id: opt.id,
             label: opt.label,
@@ -71,6 +73,8 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
             imageUrl: opt.imageUrl,
             order: opt.order,
             isExclusive: opt.isExclusive,
+            hasTooltip: opt.hasTooltip,
+            tooltip: opt.tooltip,
           })),
         })),
       })),

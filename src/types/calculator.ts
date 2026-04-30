@@ -36,6 +36,8 @@ export interface StepOption {
   order: number;
   isExclusive?: boolean; // When selected, deselects all other options
   priceVariants?: PriceVariants | null; // Different prices per service type
+  hasTooltip?: boolean;
+  tooltip?: string | null;
 }
 
 export interface Question {
@@ -68,6 +70,8 @@ export interface Question {
   variantSourceQuestionId?: string | null;
   // For NUMBER/SELECT: this question's value multiplies the price from referenced question
   multipliesPriceOfQuestionId?: string | null;
+  hasTooltip?: boolean;
+  tooltip?: string | null;
   options: StepOption[];
 }
 
@@ -104,6 +108,8 @@ export interface OptionFormData {
   order: number;
   isExclusive?: boolean;
   priceVariants?: PriceVariants | null;
+  hasTooltip?: boolean;
+  tooltip?: string | null;
 }
 
 export interface QuestionFormData {
@@ -131,6 +137,8 @@ export interface QuestionFormData {
   multiplyByQuestionId?: string | null;
   variantSourceQuestionId?: string | null;
   multipliesPriceOfQuestionId?: string | null;
+  hasTooltip?: boolean;
+  tooltip?: string | null;
   options: OptionFormData[];
 }
 
