@@ -107,6 +107,8 @@ export default function CalculatorFormBuilder({ initialData, isEdit = false }: C
       multiplyByQuestionId: null,
       variantSourceQuestionId: null,
       multipliesPriceOfQuestionId: null,
+      hasTooltip: false,
+      tooltip: null,
       options: [],
     };
     const newStep: StepFormData = {
@@ -225,6 +227,8 @@ export default function CalculatorFormBuilder({ initialData, isEdit = false }: C
                 imageUrl: null,
                 imagePublicId: null,
                 order: q.options.length,
+                hasTooltip: false,
+                tooltip: null,
               };
               return { ...q, options: [...q.options, newOption] };
             }

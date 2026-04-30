@@ -18,6 +18,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
 import { uploadFile } from '@/lib/upload';
 import { ConditionalLogicSelector } from './ConditionalLogicSelector';
 import { DeleteConfirmation } from './DeleteConfirmation';
@@ -245,6 +246,36 @@ export function QuestionFields({
             className="bg-white"
             required
           />
+        </div>
+
+        {/* Question Tooltip */}
+        <div className="rounded-lg border border-bgPrimaryGreen/20 bg-bgLightGreen p-3">
+          <label className="flex cursor-pointer items-center gap-2">
+            <input
+              type="checkbox"
+              checked={!!question.hasTooltip}
+              onChange={(e) => handleUpdate({ hasTooltip: e.target.checked })}
+              className="h-4 w-4 rounded border-gray-300 text-bgPrimaryGreen focus:ring-bgPrimaryGreen"
+            />
+            <span className="text-xs font-medium text-textGreenPrimary">
+              Add tooltip to this question
+            </span>
+          </label>
+          {question.hasTooltip && (
+            <div className="mt-2 space-y-1">
+              <Textarea
+                value={question.tooltip || ''}
+                onChange={(e) => handleUpdate({ tooltip: e.target.value || null })}
+                placeholder="Short explanation shown when the user hovers the info icon next to the question."
+                maxLength={300}
+                rows={2}
+                className="bg-white text-sm"
+              />
+              <p className="text-right text-[10px] text-gray-500">
+                {(question.tooltip || '').length}/300
+              </p>
+            </div>
+          )}
         </div>
 
         {/* TEXT Input Specific Fields */}
@@ -783,6 +814,42 @@ export function QuestionFields({
                             />
                             <span className="text-gray-600">Exclusive</span>
                           </label>
+                        )}
+                      </div>
+
+                      {/* Per-option Tooltip */}
+                      <div className="rounded border border-bgPrimaryGreen/20 bg-bgLightGreen p-2">
+                        <label className="flex cursor-pointer items-center gap-1.5">
+                          <input
+                            type="checkbox"
+                            checked={!!option.hasTooltip}
+                            onChange={(e) =>
+                              updateOption(step.tempId!, question.tempId!, option.tempId!, {
+                                hasTooltip: e.target.checked,
+                              })
+                            }
+                            className="h-3 w-3 rounded border-gray-300 text-bgPrimaryGreen focus:ring-bgPrimaryGreen"
+                          />
+                          <span className="text-xs font-medium text-textGreenPrimary">Tooltip</span>
+                        </label>
+                        {option.hasTooltip && (
+                          <div className="mt-1.5 space-y-1">
+                            <Textarea
+                              value={option.tooltip || ''}
+                              onChange={(e) =>
+                                updateOption(step.tempId!, question.tempId!, option.tempId!, {
+                                  tooltip: e.target.value || null,
+                                })
+                              }
+                              placeholder="Short explanation shown when the user hovers the info icon next to this option."
+                              maxLength={300}
+                              rows={2}
+                              className="bg-white text-xs"
+                            />
+                            <p className="text-right text-[10px] text-gray-500">
+                              {(option.tooltip || '').length}/300
+                            </p>
+                          </div>
                         )}
                       </div>
                     </div>

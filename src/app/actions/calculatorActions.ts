@@ -599,6 +599,8 @@ export async function duplicateCalculator(productId: string): Promise<ActionResu
                 maxFileSize: question.maxFileSize,
                 allowMultiple: question.allowMultiple,
                 countThreshold: question.countThreshold,
+                hasTooltip: question.hasTooltip,
+                tooltip: question.tooltip,
                 // multiplyByQuestionId will be updated in a second pass
                 options: {
                   create: question.options.map((opt) => ({
@@ -610,6 +612,8 @@ export async function duplicateCalculator(productId: string): Promise<ActionResu
                     imagePublicId: opt.imagePublicId,
                     order: opt.order,
                     isExclusive: opt.isExclusive,
+                    hasTooltip: opt.hasTooltip,
+                    tooltip: opt.tooltip,
                   })),
                 },
               },
